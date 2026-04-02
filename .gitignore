@@ -8,5 +8,12 @@ node_modules
 
 onshape
 
-./pkg
+/pkg
 www/pkg/
+
+*.png
+
+/OpenCatEsp32/build/
+/OpenCatEsp32/bootloader_symbols.txt
+
+rom/

@@ -16,7 +16,7 @@ const webpackConfig = {
   mode: isDev ? "development" : "production",
   entry: {
     index: "./src/index.ts",
-    // editor: "./src/editor.ts",
+    editor: "./src/editor.ts",
   },
   devtool: isDev ? "inline-source-map" : false,
   output: {

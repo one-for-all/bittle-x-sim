@@ -115,6 +115,7 @@ dependencies = [
  "futures",
  "gorilla-physics",
  "nalgebra",
+ "tokio",
  "urdf-rs",
  "wasm-bindgen",
  "wasm-bindgen-futures",
