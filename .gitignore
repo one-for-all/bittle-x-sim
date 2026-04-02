@@ -1,0 +1,12 @@
+/target
+
+node_modules
+
+.DS_Store
+
+*.part
+
+onshape
+
+./pkg
+www/pkg/
