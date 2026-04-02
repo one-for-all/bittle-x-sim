@@ -1,6 +1,6 @@
 import * as monaco from "monaco-editor";
 import demo_ino from "./assets/OpenCatEsp32.ino";
-import movement_sequences from "./assets/movement-sequences.h";
+// import movement_sequences from "./assets/movement-sequences.h";
 import default_ino_bin_buffer from "./assets/OpenCatEsp32.ino.bin";
 import default_symbols from "./assets/symbols.txt";
 import readme from "./assets/README.md";
@@ -20,10 +20,10 @@ let files: Record<string, FileEntry> = {
     content: demo_ino,
     language: "cpp",
   },
-  "movement-sequences.h": {
-    content: movement_sequences,
-    language: "cpp",
-  },
+  // "movement-sequences.h": {
+  //   content: movement_sequences,
+  //   language: "cpp",
+  // },
   "README.md": {
     content: readme,
     language: "markdown",

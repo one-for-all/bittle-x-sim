@@ -52,6 +52,9 @@ impl BittleXEsp32Controller {
 
         #[cfg(target_arch = "wasm32")]
         {
+            use gorilla_physics::interface::util::read_web_file;
+            use gorilla_physics::interface::util::read_web_file_bytes;
+
             rom1_data = read_web_file_bytes("rom/wokwi/rom1.bin").await;
             rom0_data = read_web_file_bytes("rom/wokwi/rom0.bin").await;
             symbols.add(&read_web_file("rom/symbols.txt").await);

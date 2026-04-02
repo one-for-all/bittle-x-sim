@@ -16,6 +16,8 @@ use gorilla_physics::{
 use urdf_rs::Robot;
 use wasm_bindgen::prelude::wasm_bindgen;
 
+use crate::control::BittleXEsp32Controller;
+
 pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     let mut state = Hybrid::empty();
 
@@ -38,7 +40,7 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
         body_frame,
         "left_front",
         urdf,
-        Vector3::z_axis(),
+        -Vector3::z_axis(),
         (zero_position_angles[4] as Float).to_radians(),
     );
 
@@ -49,7 +51,7 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
         lf_leg_frame,
         "left_front_knee",
         urdf,
-        Vector3::z_axis(),
+        -Vector3::z_axis(),
         (zero_position_angles[8] as Float).to_radians(),
     );
 
@@ -74,8 +76,8 @@ pub async fn createBittleX() -> InterfaceHybrid {
 
     let mut state = build_bittle_x(&mut meshes, &urdf_robot);
 
-    // let controller = SesameESP32Controller::new().await;
-    let controller = NullArticulatedController {};
+    let controller = BittleXEsp32Controller::new().await;
+    // let controller = NullArticulatedController {};
     state.set_controller(0, controller);
 
     InterfaceHybrid::new(state)
