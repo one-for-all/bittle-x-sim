@@ -21,7 +21,7 @@ use crate::control::BittleXEsp32Controller;
 
 pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     let mut state = Hybrid::empty();
-    // state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.));
+    state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.));
 
     #[rustfmt::skip]
     let zero_position_angles = [
@@ -32,11 +32,12 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
 
     let body_frame = "body";
     let body = build_rigid(body_frame, "chassis", urdf, meshes);
-    let body_joint = Joint::new_fixed(Transform3D::move_z(body_frame, WORLD_FRAME, 0.05));
+    let body_joint = Joint::new_floating(Transform3D::move_z(body_frame, WORLD_FRAME, 0.06));
 
     // left-front
     let lf_leg_frame = "left_front_leg";
-    let lf_leg = build_rigid(lf_leg_frame, "bittle_x_leg", urdf, meshes);
+    let mut lf_leg = build_rigid(lf_leg_frame, "bittle_x_leg", urdf, meshes);
+    add_bittle_knee_collision_point(&mut lf_leg, "left_front", urdf);
     let lf_leg_joint = build_joint(
         lf_leg_frame,
         body_frame,
@@ -60,7 +61,8 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
 
     // right-front
     let rf_leg_frame = "right_front_leg";
-    let rf_leg = build_rigid(rf_leg_frame, "bittle_x_leg_2", urdf, meshes);
+    let mut rf_leg = build_rigid(rf_leg_frame, "bittle_x_leg_2", urdf, meshes);
+    add_bittle_knee_collision_point(&mut rf_leg, "right_front", urdf);
     let rf_leg_joint = build_joint(
         rf_leg_frame,
         body_frame,
@@ -84,7 +86,8 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
 
     // right-back
     let rb_leg_frame = "right_back_leg";
-    let rb_leg = build_rigid(rb_leg_frame, "bittle_x_leg_3", urdf, meshes);
+    let mut rb_leg = build_rigid(rb_leg_frame, "bittle_x_leg_3", urdf, meshes);
+    add_bittle_knee_collision_point(&mut rb_leg, "right_back", urdf);
     let rb_leg_joint = build_joint(
         rb_leg_frame,
         body_frame,
@@ -108,7 +111,8 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
 
     // left-back
     let lb_leg_frame = "left_back_leg";
-    let lb_leg = build_rigid(lb_leg_frame, "bittle_x_leg_4", urdf, meshes);
+    let mut lb_leg = build_rigid(lb_leg_frame, "bittle_x_leg_4", urdf, meshes);
+    add_bittle_knee_collision_point(&mut lb_leg, "left_back", urdf);
     let lb_leg_joint = build_joint(
         lb_leg_frame,
         body_frame,
@@ -175,4 +179,10 @@ fn add_bittle_foot_collision_sphere(rigid: &mut Rigid, which_leg: &str, urdf: &R
     let joint_name = format!("{}_foot_frame", which_leg);
     let point_joint = urdf.joints.iter().find(|&j| j.name == joint_name).unwrap();
     rigid.add_collision_sphere_at(&Vector3::from(point_joint.origin.xyz.0), 0.0055);
+}
+
+fn add_bittle_knee_collision_point(rigid: &mut Rigid, which_leg: &str, urdf: &Robot) {
+    let joint_name = format!("{}_knee_frame", which_leg);
+    let point_joint = urdf.joints.iter().find(|&j| j.name == joint_name).unwrap();
+    rigid.add_point_at(&Vector3::from(point_joint.origin.xyz.0));
 }
