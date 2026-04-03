@@ -506,8 +506,8 @@ void initRobot() {
   skill = new Skill();
   skillList = new SkillList();
   // QA();
-  strcpy(newCmd, "up");
-  loadBySkillName("up");  // must have to avoid memory crash. need to check why.
+  strcpy(newCmd, "rest");
+  loadBySkillName("rest");  // must have to avoid memory crash. need to check why.
 
   // delay(500);
 

@@ -123,9 +123,9 @@
   <!-- Link bittle_x_leg -->
   <link name="bittle_x_leg">
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="1e-09"/>
-      <inertia ixx="1e-09" ixy="0" ixz="0" iyy="1e-09" iyz="0" izz="1e-09"/>
+      <origin xyz="-0.023 1.03756e-06 -0.00195" rpy="0 0 0"/>
+      <mass value="0.00320032"/>
+      <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
     <!-- Part 809_25_v1 -->
     <visual>
@@ -171,9 +171,9 @@
   <!-- Link bittle_x_shank_left -->
   <link name="bittle_x_shank_left">
     <inertial>
-      <origin xyz="-0.00585784 -1.21431e-17 -0.0159776" rpy="0 0 0"/>
-      <mass value="0.014"/>
-      <inertia ixx="6.676e-07" ixy="-2.00673e-22" ixz="-1.38758e-07" iyy="1.16985e-06" iyz="-1.34352e-23" izz="8.41383e-07"/>
+      <origin xyz="-0.00799662 0.00014001 -0.0160518" rpy="0 0 0"/>
+      <mass value="0.0163164"/>
+      <inertia ixx="7.33351e-07" ixy="2.14772e-08" ixz="-1.54392e-07" iyy="2.51211e-06" iyz="1.02325e-09" izz="2.23017e-06"/>
     </inertial>
     <!-- Part shank -->
     <visual>
@@ -225,9 +225,9 @@
   <!-- Link bittle_x_leg_2 -->
   <link name="bittle_x_leg_2">
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="1e-09"/>
-      <inertia ixx="1e-09" ixy="0" ixz="0" iyy="1e-09" iyz="0" izz="1e-09"/>
+      <origin xyz="-0.023 1.03756e-06 -0.00195" rpy="0 0 0"/>
+      <mass value="0.00320032"/>
+      <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
     <!-- Part 809_25_v1_3 -->
     <visual>
@@ -273,9 +273,9 @@
   <!-- Link bittle_x_shank_right -->
   <link name="bittle_x_shank_right">
     <inertial>
-      <origin xyz="-0.00585784 0 -0.0159776" rpy="0 0 0"/>
-      <mass value="0.014"/>
-      <inertia ixx="6.676e-07" ixy="5.3536e-23" ixz="-1.38758e-07" iyy="1.16985e-06" iyz="7.63162e-24" izz="8.41383e-07"/>
+      <origin xyz="-0.00799662 -0.00014001 -0.0160518" rpy="0 0 0"/>
+      <mass value="0.0163164"/>
+      <inertia ixx="7.33351e-07" ixy="-2.14772e-08" ixz="-1.54408e-07" iyy="2.51211e-06" iyz="-1.02466e-09" izz="2.23017e-06"/>
     </inertial>
     <!-- Part shank_2 -->
     <visual>
@@ -327,9 +327,9 @@
   <!-- Link bittle_x_leg_3 -->
   <link name="bittle_x_leg_3">
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="1e-09"/>
-      <inertia ixx="1e-09" ixy="0" ixz="0" iyy="1e-09" iyz="0" izz="1e-09"/>
+      <origin xyz="-0.023 1.03756e-06 -0.00195" rpy="0 0 0"/>
+      <mass value="0.00320032"/>
+      <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
     <!-- Part 809_25_v1_5 -->
     <visual>
@@ -375,9 +375,9 @@
   <!-- Link bittle_x_shank_right_2 -->
   <link name="bittle_x_shank_right_2">
     <inertial>
-      <origin xyz="-0.00585784 0 -0.0159776" rpy="0 0 0"/>
-      <mass value="0.014"/>
-      <inertia ixx="6.676e-07" ixy="5.29105e-23" ixz="-1.38758e-07" iyy="1.16985e-06" iyz="1.42536e-23" izz="8.41383e-07"/>
+      <origin xyz="-0.00799662 -0.00014001 -0.0160518" rpy="0 0 0"/>
+      <mass value="0.0163164"/>
+      <inertia ixx="7.33351e-07" ixy="-2.14772e-08" ixz="-1.54408e-07" iyy="2.51211e-06" iyz="-1.02466e-09" izz="2.23017e-06"/>
     </inertial>
     <!-- Part shank_3 -->
     <visual>
@@ -429,9 +429,9 @@
   <!-- Link bittle_x_leg_4 -->
   <link name="bittle_x_leg_4">
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="1e-09"/>
-      <inertia ixx="1e-09" ixy="0" ixz="0" iyy="1e-09" iyz="0" izz="1e-09"/>
+      <origin xyz="-0.023 1.03756e-06 -0.00195" rpy="0 0 0"/>
+      <mass value="0.00320032"/>
+      <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
     <!-- Part 809_25_v1_7 -->
     <visual>
@@ -477,9 +477,9 @@
   <!-- Link bittle_x_shank_left_2 -->
   <link name="bittle_x_shank_left_2">
     <inertial>
-      <origin xyz="-0.00585784 1.04083e-17 -0.0159776" rpy="0 0 0"/>
-      <mass value="0.014"/>
-      <inertia ixx="6.676e-07" ixy="4.15956e-22" ixz="-1.38758e-07" iyy="1.16985e-06" iyz="2.9579e-23" izz="8.41383e-07"/>
+      <origin xyz="-0.00799662 0.00014001 -0.0160518" rpy="0 0 0"/>
+      <mass value="0.0163164"/>
+      <inertia ixx="7.33351e-07" ixy="2.14772e-08" ixz="-1.54392e-07" iyy="2.51211e-06" iyz="1.02325e-09" izz="2.23017e-06"/>
     </inertial>
     <!-- Part shank_4 -->
     <visual>

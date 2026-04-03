@@ -55,10 +55,40 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
         (zero_position_angles[8] as Float).to_radians(),
     );
 
-    let articulated = Articulated::new(
-        vec![body, lf_leg, lf_shank],
-        vec![body_joint, lf_leg_joint, lf_shank_joint],
+    // right-front
+    let rf_leg_frame = "right_front_leg";
+    let rf_leg = build_rigid(rf_leg_frame, "bittle_x_leg_2", urdf, meshes);
+    let rf_leg_joint = build_joint(
+        rf_leg_frame,
+        body_frame,
+        "right_front",
+        urdf,
+        -Vector3::z_axis(),
+        (zero_position_angles[5] as Float).to_radians(),
     );
+
+    let rf_shank_frame = "right_front_shank";
+    let rf_shank = build_rigid(rf_shank_frame, "bittle_x_shank_right", urdf, meshes);
+    let rf_shank_joint = build_joint(
+        rf_shank_frame,
+        rf_leg_frame,
+        "right_front_knee",
+        urdf,
+        -Vector3::z_axis(),
+        (zero_position_angles[9] as Float).to_radians(),
+    );
+
+    let articulated = Articulated::new(
+        vec![body, lf_leg, lf_shank, rf_leg, rf_shank],
+        vec![
+            body_joint,
+            lf_leg_joint,
+            lf_shank_joint,
+            rf_leg_joint,
+            rf_shank_joint,
+        ],
+    );
+
     state.add_articulated(articulated);
 
     state
