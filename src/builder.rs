@@ -1,7 +1,8 @@
 use gorilla_physics::{
     WORLD_FRAME,
+    collision::halfspace::HalfSpace,
     hybrid::{
-        Hybrid,
+        Hybrid, Rigid,
         articulated::Articulated,
         control::NullArticulatedController,
         mesh::URDFMeshes,
@@ -20,6 +21,7 @@ use crate::control::BittleXEsp32Controller;
 
 pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     let mut state = Hybrid::empty();
+    state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.));
 
     #[rustfmt::skip]
     let zero_position_angles = [
@@ -45,7 +47,8 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     );
 
     let lf_shank_frame = "left_front_shank";
-    let lf_shank = build_rigid(lf_shank_frame, "bittle_x_shank_left", urdf, meshes);
+    let mut lf_shank = build_rigid(lf_shank_frame, "bittle_x_shank_left", urdf, meshes);
+    add_bittle_foot_collision_sphere(&mut lf_shank, "left_front", urdf);
     let lf_shank_joint = build_joint(
         lf_shank_frame,
         lf_leg_frame,
@@ -68,7 +71,8 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     );
 
     let rf_shank_frame = "right_front_shank";
-    let rf_shank = build_rigid(rf_shank_frame, "bittle_x_shank_right", urdf, meshes);
+    let mut rf_shank = build_rigid(rf_shank_frame, "bittle_x_shank_right", urdf, meshes);
+    add_bittle_foot_collision_sphere(&mut rf_shank, "right_front", urdf);
     let rf_shank_joint = build_joint(
         rf_shank_frame,
         rf_leg_frame,
@@ -91,7 +95,8 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     );
 
     let rb_shank_frame = "right_back_shank";
-    let rb_shank = build_rigid(rb_shank_frame, "bittle_x_shank_right_2", urdf, meshes);
+    let mut rb_shank = build_rigid(rb_shank_frame, "bittle_x_shank_right_2", urdf, meshes);
+    add_bittle_foot_collision_sphere(&mut rb_shank, "right_back", urdf);
     let rb_shank_joint = build_joint(
         rb_shank_frame,
         rb_leg_frame,
@@ -114,7 +119,8 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     );
 
     let lb_shank_frame = "left_back_shank";
-    let lb_shank = build_rigid(lb_shank_frame, "bittle_x_shank_left_2", urdf, meshes);
+    let mut lb_shank = build_rigid(lb_shank_frame, "bittle_x_shank_left_2", urdf, meshes);
+    add_bittle_foot_collision_sphere(&mut lb_shank, "left_back", urdf);
     let lb_shank_joint = build_joint(
         lb_shank_frame,
         lb_leg_frame,
@@ -163,4 +169,10 @@ pub async fn createBittleX() -> InterfaceHybrid {
     state.set_controller(0, controller);
 
     InterfaceHybrid::new(state)
+}
+
+fn add_bittle_foot_collision_sphere(rigid: &mut Rigid, which_leg: &str, urdf: &Robot) {
+    let joint_name = format!("{}_foot_frame", which_leg);
+    let point_joint = urdf.joints.iter().find(|&j| j.name == joint_name).unwrap();
+    rigid.add_collision_sphere_at(&Vector3::from(point_joint.origin.xyz.0), 0.0055);
 }

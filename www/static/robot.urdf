@@ -206,6 +206,21 @@
       </material>
     </visual>
   </link>
+  <!-- Frame left_front_foot (dummy link + fixed joint) -->
+  <link name="left_front_foot">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="left_front_foot_frame" type="fixed">
+    <origin xyz="-0.048 -6.93889e-18 -0.0165" rpy="3.14159 1.37705e-30 9.06996e-29"/>
+    <parent link="bittle_x_shank_left"/>
+    <child link="left_front_foot"/>
+    <axis xyz="0 0 0"/>
+  </joint>
   <!-- Joint from bittle_x_leg to bittle_x_shank_left -->
   <joint name="left_front_knee" type="revolute">
     <origin xyz="-0.046 3.68636e-13 -0.00215" rpy="-3.14159 2.77413e-16 1.5708"/>
@@ -308,6 +323,21 @@
       </material>
     </visual>
   </link>
+  <!-- Frame right_front_foot (dummy link + fixed joint) -->
+  <link name="right_front_foot">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="right_front_foot_frame" type="fixed">
+    <origin xyz="-0.048 1.38778e-17 -0.0165" rpy="2.39147e-18 2.77556e-16 -6.93889e-17"/>
+    <parent link="bittle_x_shank_right"/>
+    <child link="right_front_foot"/>
+    <axis xyz="0 0 0"/>
+  </joint>
   <!-- Joint from bittle_x_leg_2 to bittle_x_shank_right -->
   <joint name="right_front_knee" type="revolute">
     <origin xyz="-0.046 3.68691e-13 -0.00215" rpy="-3.14159 -2.80217e-16 -1.5708"/>
@@ -410,6 +440,21 @@
       </material>
     </visual>
   </link>
+  <!-- Frame right_back_foot (dummy link + fixed joint) -->
+  <link name="right_back_foot">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="right_back_foot_frame" type="fixed">
+    <origin xyz="-0.048 6.93889e-18 -0.0165" rpy="4.80984e-18 2.77556e-16 -6.93889e-17"/>
+    <parent link="bittle_x_shank_right_2"/>
+    <child link="right_back_foot"/>
+    <axis xyz="0 0 0"/>
+  </joint>
   <!-- Joint from bittle_x_leg_3 to bittle_x_shank_right_2 -->
   <joint name="right_back_knee" type="revolute">
     <origin xyz="-0.046 3.68643e-13 -0.00215" rpy="3.14159 -2.74609e-16 -1.5708"/>
@@ -512,6 +557,21 @@
       </material>
     </visual>
   </link>
+  <!-- Frame left_back_foot (dummy link + fixed joint) -->
+  <link name="left_back_foot">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="left_back_foot_frame" type="fixed">
+    <origin xyz="-0.048 2.08167e-17 -0.0165" rpy="-3.14159 1.84363e-30 -2.66751e-29"/>
+    <parent link="bittle_x_shank_left_2"/>
+    <child link="left_back_foot"/>
+    <axis xyz="0 0 0"/>
+  </joint>
   <!-- Joint from bittle_x_leg_4 to bittle_x_shank_left_2 -->
   <joint name="left_back_knee" type="revolute">
     <origin xyz="-0.046 3.68643e-13 -0.00215" rpy="-3.14159 2.24001e-16 1.5708"/>
