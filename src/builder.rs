@@ -78,14 +78,66 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
         (zero_position_angles[9] as Float).to_radians(),
     );
 
+    // right-back
+    let rb_leg_frame = "right_back_leg";
+    let rb_leg = build_rigid(rb_leg_frame, "bittle_x_leg_3", urdf, meshes);
+    let rb_leg_joint = build_joint(
+        rb_leg_frame,
+        body_frame,
+        "right_back",
+        urdf,
+        -Vector3::z_axis(),
+        (zero_position_angles[6] as Float).to_radians(),
+    );
+
+    let rb_shank_frame = "right_back_shank";
+    let rb_shank = build_rigid(rb_shank_frame, "bittle_x_shank_right_2", urdf, meshes);
+    let rb_shank_joint = build_joint(
+        rb_shank_frame,
+        rb_leg_frame,
+        "right_back_knee",
+        urdf,
+        -Vector3::z_axis(),
+        (zero_position_angles[10] as Float).to_radians(),
+    );
+
+    // left-back
+    let lb_leg_frame = "left_back_leg";
+    let lb_leg = build_rigid(lb_leg_frame, "bittle_x_leg_4", urdf, meshes);
+    let lb_leg_joint = build_joint(
+        lb_leg_frame,
+        body_frame,
+        "left_back",
+        urdf,
+        -Vector3::z_axis(),
+        (zero_position_angles[7] as Float).to_radians(),
+    );
+
+    let lb_shank_frame = "left_back_shank";
+    let lb_shank = build_rigid(lb_shank_frame, "bittle_x_shank_left_2", urdf, meshes);
+    let lb_shank_joint = build_joint(
+        lb_shank_frame,
+        lb_leg_frame,
+        "left_back_knee",
+        urdf,
+        -Vector3::z_axis(),
+        (zero_position_angles[11] as Float).to_radians(),
+    );
+
     let articulated = Articulated::new(
-        vec![body, lf_leg, lf_shank, rf_leg, rf_shank],
+        vec![
+            body, lf_leg, lf_shank, rf_leg, rf_shank, rb_leg, rb_shank, lb_leg, lb_shank,
+        ],
         vec![
             body_joint,
             lf_leg_joint,
             lf_shank_joint,
             rf_leg_joint,
             rf_shank_joint,
+            rb_leg_joint,
+            rb_shank_joint,
+            lb_leg_joint,
+            lb_shank_joint,
         ],
     );
 
