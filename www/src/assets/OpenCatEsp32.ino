@@ -19,6 +19,7 @@ void setup() {
 }
 
 void loop() {
-  readSignal();
+  // readSignal();
+  read_serial();
   reaction();
 }

@@ -386,41 +386,25 @@ void reaction() {  // Reminder:  reaction() is repeatedly called in the "forever
       delay(delayShort
             + max(0, int(runDelay)));
     }
-    if (skill->period < 0) {
-      if (!strcmp(skill->skillName, "fd")) {  // need to optimize logic to combine "rest" and "fold"
-        shutServos();
-        gyroBalanceQ = false;
-        printToAllPorts('g');
-        idleTimer = 0;
-        token = '\0';
-      } else {
-        if (interruptedDuringBehavior) {
-          loadBySkillName("up");
-        } else
-          skill->convertTargetToPosture(currentAng);
-      }
-      for (int i = 0; i < DOF; i++)
-        currentAdjust[i] = 0;
-      printToAllPorts(token);  // behavior can confirm completion by sending the token back
-    }
+  //   if (skill->period < 0) {
+  //     if (!strcmp(skill->skillName, "fd")) {  // need to optimize logic to combine "rest" and "fold"
+  //       shutServos();
+  //       gyroBalanceQ = false;
+  //       printToAllPorts('g');
+  //       idleTimer = 0;
+  //       token = '\0';
+  //     } else {
+  //       if (interruptedDuringBehavior) {
+  //         loadBySkillName("up");
+  //       } else
+  //         skill->convertTargetToPosture(currentAng);
+  //     }
+  //     for (int i = 0; i < DOF; i++)
+  //       currentAdjust[i] = 0;
+  //     printToAllPorts(token);  // behavior can confirm completion by sending the token back
+  //   }
   }
 
-  // The code from here to the end of reaction() will conditionally run every time loop() in OpenCatEsp32.ino runs
-
-  else if (followFeedbackQ) {  // Conditionally follow servo feedback to gather servo angles
-    if (servoFollow()) {       // don't move the joints if no manual movement is detected
-      reAttachAllServos();
-      setServoP(P_SOFT);
-      workingStiffness = false;
-      transform((int8_t *)newCmd, 1, 2);
-    }
-  } else if (token == T_CPG || token == T_CPG_BIN) {
-    if (cpg != NULL)
-      cpg->sendSignal();
-  } else if (readFeedbackQ)  // Conditionally read servo feedback and print servo angles
-    servoFeedback(measureServoPin);
-  // }
-  //else
   {
     delay(1);  // avoid triggering WDT
   }

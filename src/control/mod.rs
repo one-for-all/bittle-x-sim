@@ -163,4 +163,9 @@ impl ArticulatedController for BittleXEsp32Controller {
     fn get_uart(&self) -> String {
         String::from_utf8(self.esp32.tx_FIFO.clone()).unwrap()
     }
+
+    /// Send UART data to esp32
+    fn send_uart(&mut self, payload: &str) {
+        self.uart_payload.extend(String::from(payload).into_bytes());
+    }
 }

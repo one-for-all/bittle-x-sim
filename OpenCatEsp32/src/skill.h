@@ -246,7 +246,6 @@ public:
     frame = 0;
   }
   void perform() {
-    Serial.println("==== perform");
     if (period < 0) {  // behaviors
       interruptedDuringBehavior = false;
       int8_t repeat = loopCycle[2] >= 0 && loopCycle[2] < 2 ? 0 : loopCycle[2] - 1;
@@ -268,9 +267,6 @@ public:
                 && ((imuException != IMU_EXCEPTION_FLIPPED && !strcmp(skillName, "rc"))    // recovered during recover
                     || (imuException == IMU_EXCEPTION_FLIPPED && strcmp(skillName, "rc"))  // flipped during other skills
                     ))) {
-#ifdef GYRO_PIN
-          print6Axis();
-#endif
           PTHL("imuException: ", imuException);
           PTLF("Behavior interrupted");
           interruptedDuringBehavior = true;
@@ -278,32 +274,6 @@ public:
           return;
         }
         transform(dutyAngles + c * frameSize, angleDataRatio, dutyAngles[DOF + c * frameSize] / 8.0);
-#ifdef GYRO_PIN  // if opt out the gyro, the calculation can be really fast
-        if (dutyAngles[DOF + 2 + c * frameSize]) {
-          int triggerAxis = dutyAngles[DOF + 2 + c * frameSize];
-          int triggerAngle = dutyAngles[DOF + 3 + c * frameSize];
-          float currentYpr = ypr[abs(triggerAxis)];
-          float previousYpr = currentYpr;
-          long triggerTimer = millis();
-          while (1) {
-            print6Axis();
-            currentYpr = ypr[abs(triggerAxis)];
-            if (
-              ((180 - fabs(currentYpr) > 2) // skip the angle when the reading jumps from 180 to -180
-               && (triggerAxis * currentYpr > triggerAxis * triggerAngle && triggerAxis * previousYpr < triggerAxis * triggerAngle))  // the sign of triggerAxis will deterine whether the current angle should be larger or smaller than the trigger angle
-              || millis() - triggerTimer > 2000) { // if the robot stucks by the trigger for more than 3 seconds, it will break.
-              PT(previousYpr);
-              PT(" => ");
-              PT(triggerAngle);
-              PT(" => ");
-              PTL(currentYpr);
-              PTLF("Trigger released");
-              break;
-            }
-            previousYpr = currentYpr;
-          }
-        }
-#endif
         delay(abs(dutyAngles[DOF + 1 + c * frameSize] * 50));
 
         if (repeat != 0 && c != 0 && c == loopCycle[1]) {
@@ -314,15 +284,6 @@ public:
       }
       gyroBalanceQ = gyroBalanceQlag;
     } else {  // postures and gaits
-#ifdef GYRO_PIN
-      if (imuUpdated && gyroBalanceQ && !(frame % imuSkip)) {
-        for (byte i = 0; i < 2; i++) {
-          RollPitchDeviation[i] = ypr[2 - i] - expectedRollPitch[i]; // all in degrees
-          RollPitchDeviation[i] = sign(ypr[2 - i]) * max(float(fabs(RollPitchDeviation[i]) - levelTolerance[i]), float(0)) + yprTilt[2 - i];  // filter out small angles
-        }
-        imuUpdated = false;
-      }
-#endif
       for (int jointIndex = 0; jointIndex < DOF; jointIndex++) {
 #ifndef HEAD
         if (jointIndex == 0)
@@ -353,6 +314,24 @@ public:
         calibratedPWM(jointIndex, duty);
       }
       frame += tStep;
+      if (frame >= abs(period)) {
+        frame = 0;
+
+        // Check if in cycle counting mode and count completed cycles
+        if (cycleCountingMode && period > 1) {
+          completedCycles++;
+          PTH("Completed cycle: ", completedCycles);
+          PTHL(" / ", targetCycles);
+
+          if (completedCycles >= targetCycles) {
+            // Target cycles reached, stop the gait
+            cycleCountingMode = false;
+            completedCycles = 0;
+            targetCycles = 0;
+            PTLF("Cycle target reached, stopping gait");
+          }
+        }
+      }
     }
   }
 };
