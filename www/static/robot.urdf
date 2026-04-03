@@ -5,10 +5,20 @@
   <!-- Link chassis -->
   <link name="chassis">
     <inertial>
-      <origin xyz="-0.0062629 0.00232398 0.00266042" rpy="0 0 0"/>
-      <mass value="0.0632774"/>
-      <inertia ixx="0.000133747" ixy="-2.65932e-08" ixz="-2.24497e-12" iyy="6.47332e-05" iyz="-6.52312e-11" izz="0.000196076"/>
+      <origin xyz="-0.00633043 0.00233255 0.00476295" rpy="0 0 0"/>
+      <mass value="0.0726024"/>
+      <inertia ixx="0.000140326" ixy="-2.69057e-08" ixz="-3.67666e-09" iyy="7.15588e-05" iyz="-7.01499e-09" izz="0.000204689"/>
     </inertial>
+    <!-- Part cover -->
+    <visual>
+      <origin xyz="-0.00644441 0.00234125 -0.000796593" rpy="-7.64781e-13 -0.0174533 1.32918e-14"/>
+      <geometry>
+        <mesh filename="package://assets/cover.stl"/>
+      </geometry>
+      <material name="cover_material">
+        <color rgba="0.286275 0.286275 0.27451 1"/>
+      </material>
+    </visual>
     <!-- Part chassis -->
     <visual>
       <origin xyz="-0.00626294 0.0023266 -0.000269781" rpy="0 -0 0"/>

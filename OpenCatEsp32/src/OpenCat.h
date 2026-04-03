@@ -495,7 +495,7 @@ void initRobot() {
   printToAllPorts(MODEL);
   PTF("Software version: ");
   printToAllPorts(SoftwareVersion);
-  i2cDetect(Wire);
+  // i2cDetect(Wire); // skip I2C detect for now to save time
 
   newBoard = newBoardQ();
   configSetup();

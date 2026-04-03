@@ -7,6 +7,7 @@ stl_files = [
     "kp_v5_body",
     "thighsym_lower",
     "shank",
+    "cover",
 ]
 
 for file in stl_files:

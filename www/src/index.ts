@@ -15,7 +15,7 @@ import("bittle-x").then((furuta) => {
     };
     simulator.graphics.lookAt(cameraPosition);
 
-    simulator.run(50, 0); // 10
+    simulator.run(100, 0); // 10
 
     setSimulator(simulator);
   });
