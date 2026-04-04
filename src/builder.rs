@@ -34,6 +34,17 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     let body = build_rigid(body_frame, "chassis", urdf, meshes);
     let body_joint = Joint::new_floating(Transform3D::move_z(body_frame, WORLD_FRAME, 0.06));
 
+    let head_frame = "head";
+    let head = build_rigid(head_frame, "bittle_x_head", urdf, meshes);
+    let head_joint = build_joint(
+        head_frame,
+        body_frame,
+        "head",
+        urdf,
+        -Vector3::z_axis(),
+        (zero_position_angles[0] as Float).to_radians(),
+    );
+
     // left-front
     let lf_leg_frame = "left_front_leg";
     let mut lf_leg = build_rigid(lf_leg_frame, "bittle_x_leg", urdf, meshes);
@@ -136,10 +147,11 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
 
     let articulated = Articulated::new(
         vec![
-            body, lf_leg, lf_shank, rf_leg, rf_shank, rb_leg, rb_shank, lb_leg, lb_shank,
+            body, head, lf_leg, lf_shank, rf_leg, rf_shank, rb_leg, rb_shank, lb_leg, lb_shank,
         ],
         vec![
             body_joint,
+            head_joint,
             lf_leg_joint,
             lf_shank_joint,
             rf_leg_joint,

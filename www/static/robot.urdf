@@ -5,18 +5,48 @@
   <!-- Link chassis -->
   <link name="chassis">
     <inertial>
-      <origin xyz="-0.00633043 0.00233255 0.00476295" rpy="0 0 0"/>
-      <mass value="0.0726024"/>
-      <inertia ixx="0.000140326" ixy="-2.69057e-08" ixz="-3.67666e-09" iyy="7.15588e-05" iyz="-7.01499e-09" izz="0.000204689"/>
+      <origin xyz="-0.00627301 -0.000563762 -0.000509336" rpy="0 0 0"/>
+      <mass value="0.147477"/>
+      <inertia ixx="0.000230248" ixy="-3.15525e-08" ixz="3.26997e-08" iyy="9.40258e-05" iyz="-7.45156e-06" izz="0.000300231"/>
     </inertial>
+    <!-- Part tail -->
+    <visual>
+      <origin xyz="-0.00639673 0.00254125 -0.0007563" rpy="-7.64786e-13 -3.43475e-16 -5.96644e-17"/>
+      <geometry>
+        <mesh filename="package://assets/tail.stl"/>
+      </geometry>
+      <material name="tail_material">
+        <color rgba="0.443137 0.431373 0.431373 1"/>
+      </material>
+    </visual>
     <!-- Part cover -->
     <visual>
-      <origin xyz="-0.00644441 0.00234125 -0.000796593" rpy="-7.64781e-13 -0.0174533 1.32918e-14"/>
+      <origin xyz="-0.00639673 0.00234125 -0.0003563" rpy="-7.64786e-13 -3.43475e-16 -5.96644e-17"/>
       <geometry>
         <mesh filename="package://assets/cover.stl"/>
       </geometry>
       <material name="cover_material">
         <color rgba="0.286275 0.286275 0.27451 1"/>
+      </material>
+    </visual>
+    <!-- Part front -->
+    <visual>
+      <origin xyz="-0.00629673 0.00251371 -0.000404366" rpy="-7.64666e-13 -2.77556e-17 -5.55112e-17"/>
+      <geometry>
+        <mesh filename="package://assets/front.stl"/>
+      </geometry>
+      <material name="front_material">
+        <color rgba="0 0.65098 1 1"/>
+      </material>
+    </visual>
+    <!-- Part front_2 -->
+    <visual>
+      <origin xyz="-0.00629673 0.00216879 -0.000404366" rpy="7.64666e-13 2.77556e-17 -3.14159"/>
+      <geometry>
+        <mesh filename="package://assets/front.stl"/>
+      </geometry>
+      <material name="front_2_material">
+        <color rgba="0 0.65098 1 1"/>
       </material>
     </visual>
     <!-- Part chassis -->
@@ -31,7 +61,7 @@
     </visual>
     <!-- Part shoulder -->
     <visual>
-      <origin xyz="-0.00617172 0.00234125 -0.00147924" rpy="-7.6513e-13 -0.0349066 2.66472e-14"/>
+      <origin xyz="-0.00629673 0.00234125 -0.000503935" rpy="-7.64666e-13 -2.77556e-17 -5.55112e-17"/>
       <geometry>
         <mesh filename="package://assets/shoulder.stl"/>
       </geometry>
@@ -39,9 +69,29 @@
         <color rgba="0.980392 0.647059 0.239216 1"/>
       </material>
     </visual>
+    <!-- Part neck -->
+    <visual>
+      <origin xyz="-0.00626294 0.00229975 -0.000169598" rpy="4.06342e-13 -0 0"/>
+      <geometry>
+        <mesh filename="package://assets/neck.stl"/>
+      </geometry>
+      <material name="neck_material">
+        <color rgba="0.980392 0.647059 0.239216 1"/>
+      </material>
+    </visual>
+    <!-- Part 809_25_v1 -->
+    <visual>
+      <origin xyz="-0.00626294 -0.0432543 0.010307" rpy="0 -0.523599 1.5708"/>
+      <geometry>
+        <mesh filename="package://assets/809_25_v1.stl"/>
+      </geometry>
+      <material name="809_25_v1_material">
+        <color rgba="0.752941 0.752941 0.752941 1"/>
+      </material>
+    </visual>
     <!-- Part shoulder_2 -->
     <visual>
-      <origin xyz="-0.00635417 0.00231194 -0.00147924" rpy="7.65134e-13 -0.0349066 3.14159"/>
+      <origin xyz="-0.00622916 0.00231194 -0.000503935" rpy="7.64666e-13 -2.77556e-17 3.14159"/>
       <geometry>
         <mesh filename="package://assets/shoulder.stl"/>
       </geometry>
@@ -49,9 +99,29 @@
         <color rgba="0.980392 0.647059 0.239216 1"/>
       </material>
     </visual>
+    <!-- Part battcase -->
+    <visual>
+      <origin xyz="-0.00626294 0.00216463 -0.000369781" rpy="9.25186e-17 -3.69239e-32 -3.41615e-48"/>
+      <geometry>
+        <mesh filename="package://assets/battcase.stl"/>
+      </geometry>
+      <material name="battcase_material">
+        <color rgba="0.286275 0.286275 0.27451 1"/>
+      </material>
+    </visual>
+    <!-- Part battlid -->
+    <visual>
+      <origin xyz="-0.00626294 0.00216463 -0.000469781" rpy="1.00774e-16 -3.68589e-32 -3.41013e-48"/>
+      <geometry>
+        <mesh filename="package://assets/battlid.stl"/>
+      </geometry>
+      <material name="battlid_material">
+        <color rgba="0.6 0.6 0.580392 1"/>
+      </material>
+    </visual>
     <!-- Part kp_v5_shaft -->
     <visual>
-      <origin xyz="0.0154061 0.057074 -0.00906356" rpy="-0.523599 -0.0349066 2.67196e-14"/>
+      <origin xyz="0.0150033 0.057074 -0.00883669" rpy="-0.523599 -4.85723e-17 1.68824e-17"/>
       <geometry>
         <mesh filename="package://assets/kp_v5_shaft.stl"/>
       </geometry>
@@ -61,7 +131,7 @@
     </visual>
     <!-- Part kp_v5_body -->
     <visual>
-      <origin xyz="0.0154061 0.057074 -0.00906356" rpy="-0.523599 -0.0349066 2.67027e-14"/>
+      <origin xyz="0.0150033 0.057074 -0.00883669" rpy="-0.523599 -2.08167e-17 1.05264e-29"/>
       <geometry>
         <mesh filename="package://assets/kp_v5_body.stl"/>
       </geometry>
@@ -71,7 +141,7 @@
     </visual>
     <!-- Part kp_v5_shaft_2 -->
     <visual>
-      <origin xyz="0.0150374 -0.0584915 0.00149552" rpy="-2.61799 -0.0349066 2.67136e-14"/>
+      <origin xyz="0.0150033 -0.0584915 0.00172882" rpy="-2.61799 -0 1.08732e-17"/>
       <geometry>
         <mesh filename="package://assets/kp_v5_shaft.stl"/>
       </geometry>
@@ -81,7 +151,7 @@
     </visual>
     <!-- Part kp_v5_body_2 -->
     <visual>
-      <origin xyz="0.0150374 -0.0584915 0.00149552" rpy="-2.61799 -0.0349066 2.67027e-14"/>
+      <origin xyz="0.0150033 -0.0584915 0.00172882" rpy="-2.61799 -2.08167e-17 1.05264e-29"/>
       <geometry>
         <mesh filename="package://assets/kp_v5_body.stl"/>
       </geometry>
@@ -91,7 +161,7 @@
     </visual>
     <!-- Part kp_v5_shaft_3 -->
     <visual>
-      <origin xyz="-0.027932 -0.0524208 -0.00906356" rpy="-0.523599 -0.0349066 3.14159"/>
+      <origin xyz="-0.0275292 -0.0524208 -0.00883669" rpy="-0.523599 -4.85723e-17 -3.14159"/>
       <geometry>
         <mesh filename="package://assets/kp_v5_shaft.stl"/>
       </geometry>
@@ -101,7 +171,7 @@
     </visual>
     <!-- Part kp_v5_body_3 -->
     <visual>
-      <origin xyz="-0.027932 -0.0524208 -0.00906356" rpy="-0.523599 -0.0349066 3.14159"/>
+      <origin xyz="-0.0275292 -0.0524208 -0.00883669" rpy="-0.523599 -2.08167e-17 3.14159"/>
       <geometry>
         <mesh filename="package://assets/kp_v5_body.stl"/>
       </geometry>
@@ -111,7 +181,7 @@
     </visual>
     <!-- Part kp_v5_shaft_4 -->
     <visual>
-      <origin xyz="-0.0275633 0.0631447 0.00149552" rpy="-2.61799 -0.0349066 3.14159"/>
+      <origin xyz="-0.0275292 0.0631447 0.00172882" rpy="-2.61799 -0 -3.14159"/>
       <geometry>
         <mesh filename="package://assets/kp_v5_shaft.stl"/>
       </geometry>
@@ -121,7 +191,7 @@
     </visual>
     <!-- Part kp_v5_body_4 -->
     <visual>
-      <origin xyz="-0.0275633 0.0631447 0.00149552" rpy="-2.61799 -0.0349066 3.14159"/>
+      <origin xyz="-0.0275292 0.0631447 0.00172882" rpy="-2.61799 -2.08167e-17 3.14159"/>
       <geometry>
         <mesh filename="package://assets/kp_v5_body.stl"/>
       </geometry>
@@ -137,19 +207,9 @@
       <mass value="0.00320032"/>
       <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
-    <!-- Part 809_25_v1 -->
-    <visual>
-      <origin xyz="-0.046 3.68643e-13 -0.00265" rpy="2.77413e-16 -9.24545e-18 3.14159"/>
-      <geometry>
-        <mesh filename="package://assets/809_25_v1.stl"/>
-      </geometry>
-      <material name="809_25_v1_material">
-        <color rgba="0.752941 0.752941 0.752941 1"/>
-      </material>
-    </visual>
     <!-- Part 809_25_v1_2 -->
     <visual>
-      <origin xyz="2.1684e-19 6.93889e-18 -0.0005" rpy="2.00605e-30 -3.72017e-18 -3.12425e-30"/>
+      <origin xyz="-0.046 3.68636e-13 -0.00265" rpy="2.77413e-16 -1.38778e-17 3.14159"/>
       <geometry>
         <mesh filename="package://assets/809_25_v1.stl"/>
       </geometry>
@@ -157,9 +217,19 @@
         <color rgba="0.752941 0.752941 0.752941 1"/>
       </material>
     </visual>
+    <!-- Part 809_25_v1_3 -->
+    <visual>
+      <origin xyz="1.0842e-19 -6.93889e-18 -0.0005" rpy="-2.83643e-33 7.70372e-34 -8.8823e-29"/>
+      <geometry>
+        <mesh filename="package://assets/809_25_v1.stl"/>
+      </geometry>
+      <material name="809_25_v1_3_material">
+        <color rgba="0.752941 0.752941 0.752941 1"/>
+      </material>
+    </visual>
     <!-- Part thighsym_lower -->
     <visual>
-      <origin xyz="0.03 3.68296e-13 -0.002025" rpy="-1.5708 -1.88644e-17 -1.19212e-27"/>
+      <origin xyz="0.03 3.68289e-13 -0.002025" rpy="-1.5708 -1.38778e-17 -1.27782e-27"/>
       <geometry>
         <mesh filename="package://assets/thighsym_lower.stl"/>
       </geometry>
@@ -169,7 +239,7 @@
     </visual>
     <!-- Part thighsym_upper -->
     <visual>
-      <origin xyz="0.03 1.41553e-15 -0.00195" rpy="-1.5708 -1.12923e-17 -5.97622e-28"/>
+      <origin xyz="0.03 1.40166e-15 -0.00195" rpy="-1.5708 -6.93889e-18 -6.83322e-28"/>
       <geometry>
         <mesh filename="package://assets/thighsym_upper.stl"/>
       </geometry>
@@ -188,7 +258,7 @@
     </inertial>
   </link>
   <joint name="left_front_knee_frame" type="fixed">
-    <origin xyz="-0.0554318 3.16941e-13 -0.0041" rpy="1.5708 -1.88644e-17 5.36902e-12"/>
+    <origin xyz="-0.0554318 3.16934e-13 -0.0041" rpy="1.5708 -1.38778e-17 5.36902e-12"/>
     <parent link="bittle_x_leg"/>
     <child link="left_front_knee"/>
     <axis xyz="0 0 0"/>
@@ -241,14 +311,14 @@
     </inertial>
   </link>
   <joint name="left_front_foot_frame" type="fixed">
-    <origin xyz="-0.048 -6.93889e-18 -0.0165" rpy="3.14159 1.37705e-30 9.06996e-29"/>
+    <origin xyz="-0.048 6.93889e-18 -0.0165" rpy="3.14159 -1.14548e-30 -4.49613e-30"/>
     <parent link="bittle_x_shank_left"/>
     <child link="left_front_foot"/>
     <axis xyz="0 0 0"/>
   </joint>
   <!-- Joint from bittle_x_leg to bittle_x_shank_left -->
   <joint name="left_front_knee" type="revolute">
-    <origin xyz="-0.046 3.68636e-13 -0.00215" rpy="-3.14159 2.77413e-16 1.5708"/>
+    <origin xyz="-0.046 3.68629e-13 -0.00215" rpy="-3.14159 2.77413e-16 1.5708"/>
     <parent link="bittle_x_leg"/>
     <child link="bittle_x_shank_left"/>
     <axis xyz="0 0 1"/>
@@ -256,7 +326,7 @@
   </joint>
   <!-- Joint from chassis to bittle_x_leg -->
   <joint name="left_front" type="revolute">
-    <origin xyz="0.0422987 -0.0501588 0.000213389" rpy="-3.14159 -1.53589 3.14159"/>
+    <origin xyz="0.0422033 -0.0501588 -0.000503935" rpy="1.08732e-17 -1.5708 0"/>
     <parent link="chassis"/>
     <child link="bittle_x_leg"/>
     <axis xyz="0 0 1"/>
@@ -269,19 +339,9 @@
       <mass value="0.00320032"/>
       <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
-    <!-- Part 809_25_v1_3 -->
-    <visual>
-      <origin xyz="-0.046 3.68684e-13 -0.00265" rpy="2.80217e-16 9.38109e-18 3.14159"/>
-      <geometry>
-        <mesh filename="package://assets/809_25_v1.stl"/>
-      </geometry>
-      <material name="809_25_v1_3_material">
-        <color rgba="0.752941 0.752941 0.752941 1"/>
-      </material>
-    </visual>
     <!-- Part 809_25_v1_4 -->
     <visual>
-      <origin xyz="0 0 -0.0005" rpy="-1.20409e-30 -4.59429e-18 -2.55195e-29"/>
+      <origin xyz="-0.046 3.68677e-13 -0.00265" rpy="2.80217e-16 -1.58697e-31 3.14159"/>
       <geometry>
         <mesh filename="package://assets/809_25_v1.stl"/>
       </geometry>
@@ -289,9 +349,19 @@
         <color rgba="0.752941 0.752941 0.752941 1"/>
       </material>
     </visual>
+    <!-- Part 809_25_v1_5 -->
+    <visual>
+      <origin xyz="0 0 -0.0005" rpy="-1.33157e-33 3.85186e-33 8.00776e-29"/>
+      <geometry>
+        <mesh filename="package://assets/809_25_v1.stl"/>
+      </geometry>
+      <material name="809_25_v1_5_material">
+        <color rgba="0.752941 0.752941 0.752941 1"/>
+      </material>
+    </visual>
     <!-- Part thighsym_lower_2 -->
     <visual>
-      <origin xyz="0.03 3.68296e-13 -0.002025" rpy="-1.5708 -5.05038e-18 1.33382e-27"/>
+      <origin xyz="0.03 3.68296e-13 -0.002025" rpy="-1.5708 8.47409e-32 1.35446e-27"/>
       <geometry>
         <mesh filename="package://assets/thighsym_lower.stl"/>
       </geometry>
@@ -301,7 +371,7 @@
     </visual>
     <!-- Part thighsym_upper_2 -->
     <visual>
-      <origin xyz="0.03 1.40166e-15 -0.00195" rpy="-1.5708 -8.29178e-18 6.54151e-28"/>
+      <origin xyz="0.03 1.39472e-15 -0.00195" rpy="-1.5708 4.16001e-32 6.74788e-28"/>
       <geometry>
         <mesh filename="package://assets/thighsym_upper.stl"/>
       </geometry>
@@ -320,7 +390,7 @@
     </inertial>
   </link>
   <joint name="right_front_knee_frame" type="fixed">
-    <origin xyz="-0.0554318 3.16934e-13 -0.0041" rpy="1.5708 -5.05038e-18 5.36902e-12"/>
+    <origin xyz="-0.0554318 3.16934e-13 -0.0041" rpy="1.5708 -3.01693e-29 5.36902e-12"/>
     <parent link="bittle_x_leg_2"/>
     <child link="right_front_knee"/>
     <axis xyz="0 0 0"/>
@@ -373,14 +443,14 @@
     </inertial>
   </link>
   <joint name="right_front_foot_frame" type="fixed">
-    <origin xyz="-0.048 1.38778e-17 -0.0165" rpy="2.39147e-18 2.77556e-16 -6.93889e-17"/>
+    <origin xyz="-0.048 6.93889e-18 -0.0165" rpy="7.70372e-33 2.77556e-16 -6.93889e-17"/>
     <parent link="bittle_x_shank_right"/>
     <child link="right_front_foot"/>
     <axis xyz="0 0 0"/>
   </joint>
   <!-- Joint from bittle_x_leg_2 to bittle_x_shank_right -->
   <joint name="right_front_knee" type="revolute">
-    <origin xyz="-0.046 3.68691e-13 -0.00215" rpy="-3.14159 -2.80217e-16 -1.5708"/>
+    <origin xyz="-0.046 3.68677e-13 -0.00215" rpy="3.14159 -2.80217e-16 -1.5708"/>
     <parent link="bittle_x_leg_2"/>
     <child link="bittle_x_shank_right"/>
     <axis xyz="0 0 1"/>
@@ -388,7 +458,7 @@
   </joint>
   <!-- Joint from chassis to bittle_x_leg_2 -->
   <joint name="right_front" type="revolute">
-    <origin xyz="-0.0548246 -0.0501881 0.000213389" rpy="3.14159 -1.53589 2.19137e-11"/>
+    <origin xyz="-0.0547292 -0.0501881 -0.000503935" rpy="-3.14159 -1.5708 0"/>
     <parent link="chassis"/>
     <child link="bittle_x_leg_2"/>
     <axis xyz="0 0 1"/>
@@ -401,19 +471,9 @@
       <mass value="0.00320032"/>
       <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
-    <!-- Part 809_25_v1_5 -->
-    <visual>
-      <origin xyz="-0.046 3.68643e-13 -0.00265" rpy="2.74609e-16 -9.00454e-18 3.14159"/>
-      <geometry>
-        <mesh filename="package://assets/809_25_v1.stl"/>
-      </geometry>
-      <material name="809_25_v1_5_material">
-        <color rgba="0.752941 0.752941 0.752941 1"/>
-      </material>
-    </visual>
     <!-- Part 809_25_v1_6 -->
     <visual>
-      <origin xyz="-2.1684e-19 -6.93889e-18 -0.0005" rpy="-9.63735e-31 3.78817e-18 2.37514e-30"/>
+      <origin xyz="-0.046 3.68656e-13 -0.00265" rpy="2.74609e-16 8.01187e-32 3.14159"/>
       <geometry>
         <mesh filename="package://assets/809_25_v1.stl"/>
       </geometry>
@@ -421,9 +481,19 @@
         <color rgba="0.752941 0.752941 0.752941 1"/>
       </material>
     </visual>
+    <!-- Part 809_25_v1_7 -->
+    <visual>
+      <origin xyz="-1.0842e-19 0 -0.0005" rpy="-6.24617e-33 -1.54074e-33 -4.07539e-29"/>
+      <geometry>
+        <mesh filename="package://assets/809_25_v1.stl"/>
+      </geometry>
+      <material name="809_25_v1_7_material">
+        <color rgba="0.752941 0.752941 0.752941 1"/>
+      </material>
+    </visual>
     <!-- Part thighsym_lower_3 -->
     <visual>
-      <origin xyz="0.03 3.68275e-13 -0.002025" rpy="-1.5708 1.33352e-17 1.27519e-27"/>
+      <origin xyz="0.03 3.68282e-13 -0.002025" rpy="-1.5708 6.93889e-18 1.14721e-27"/>
       <geometry>
         <mesh filename="package://assets/thighsym_lower.stl"/>
       </geometry>
@@ -433,7 +503,7 @@
     </visual>
     <!-- Part thighsym_upper_3 -->
     <visual>
-      <origin xyz="0.03 1.38778e-15 -0.00195" rpy="-1.5708 1.70327e-17 5.96355e-28"/>
+      <origin xyz="0.03 1.40166e-15 -0.00195" rpy="-1.5708 6.93889e-18 5.53229e-28"/>
       <geometry>
         <mesh filename="package://assets/thighsym_upper.stl"/>
       </geometry>
@@ -452,7 +522,7 @@
     </inertial>
   </link>
   <joint name="right_back_knee_frame" type="fixed">
-    <origin xyz="-0.0554318 3.16913e-13 -0.0041" rpy="1.5708 1.33352e-17 5.36902e-12"/>
+    <origin xyz="-0.0554318 3.1692e-13 -0.0041" rpy="1.5708 6.93889e-18 5.36902e-12"/>
     <parent link="bittle_x_leg_3"/>
     <child link="right_back_knee"/>
     <axis xyz="0 0 0"/>
@@ -505,14 +575,14 @@
     </inertial>
   </link>
   <joint name="right_back_foot_frame" type="fixed">
-    <origin xyz="-0.048 6.93889e-18 -0.0165" rpy="4.80984e-18 2.77556e-16 -6.93889e-17"/>
+    <origin xyz="-0.048 6.93889e-18 -0.0165" rpy="9.24446e-33 2.77556e-16 -6.93889e-17"/>
     <parent link="bittle_x_shank_right_2"/>
     <child link="right_back_foot"/>
     <axis xyz="0 0 0"/>
   </joint>
   <!-- Joint from bittle_x_leg_3 to bittle_x_shank_right_2 -->
   <joint name="right_back_knee" type="revolute">
-    <origin xyz="-0.046 3.68643e-13 -0.00215" rpy="3.14159 -2.74609e-16 -1.5708"/>
+    <origin xyz="-0.046 3.6865e-13 -0.00215" rpy="-3.14159 -2.74609e-16 -1.5708"/>
     <parent link="bittle_x_leg_3"/>
     <child link="bittle_x_shank_right_2"/>
     <axis xyz="0 0 1"/>
@@ -520,7 +590,7 @@
   </joint>
   <!-- Joint from chassis to bittle_x_leg_3 -->
   <joint name="right_back" type="revolute">
-    <origin xyz="-0.0548246 0.0548119 0.000213389" rpy="3.14159 -1.53589 2.18867e-11"/>
+    <origin xyz="-0.0547292 0.0548119 -0.000503935" rpy="-3.14159 -1.5708 0"/>
     <parent link="chassis"/>
     <child link="bittle_x_leg_3"/>
     <axis xyz="0 0 1"/>
@@ -533,19 +603,9 @@
       <mass value="0.00320032"/>
       <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
-    <!-- Part 809_25_v1_7 -->
-    <visual>
-      <origin xyz="-0.046 3.68643e-13 -0.00265" rpy="2.24001e-16 -4.44175e-18 3.14159"/>
-      <geometry>
-        <mesh filename="package://assets/809_25_v1.stl"/>
-      </geometry>
-      <material name="809_25_v1_7_material">
-        <color rgba="0.752941 0.752941 0.752941 1"/>
-      </material>
-    </visual>
     <!-- Part 809_25_v1_8 -->
     <visual>
-      <origin xyz="0 0 -0.0005" rpy="-3.59764e-31 5.35392e-18 4.17771e-29"/>
+      <origin xyz="-0.046 3.68636e-13 -0.00265" rpy="2.24001e-16 -1.57156e-31 3.14159"/>
       <geometry>
         <mesh filename="package://assets/809_25_v1.stl"/>
       </geometry>
@@ -553,9 +613,19 @@
         <color rgba="0.752941 0.752941 0.752941 1"/>
       </material>
     </visual>
+    <!-- Part 809_25_v1_9 -->
+    <visual>
+      <origin xyz="0 -6.93889e-18 -0.0005" rpy="6.67781e-33 -9.24446e-33 4.54689e-30"/>
+      <geometry>
+        <mesh filename="package://assets/809_25_v1.stl"/>
+      </geometry>
+      <material name="809_25_v1_9_material">
+        <color rgba="0.752941 0.752941 0.752941 1"/>
+      </material>
+    </visual>
     <!-- Part thighsym_lower_4 -->
     <visual>
-      <origin xyz="0.03 3.68296e-13 -0.002025" rpy="-1.5708 7.96211e-18 -5.55112e-17"/>
+      <origin xyz="0.03 3.68289e-13 -0.002025" rpy="-1.5708 6.16298e-32 -5.55112e-17"/>
       <geometry>
         <mesh filename="package://assets/thighsym_lower.stl"/>
       </geometry>
@@ -565,7 +635,7 @@
     </visual>
     <!-- Part thighsym_upper_4 -->
     <visual>
-      <origin xyz="0.03 1.40166e-15 -0.00195" rpy="-1.5708 4.7207e-18 -5.52545e-28"/>
+      <origin xyz="0.03 1.39472e-15 -0.00195" rpy="-1.5708 1.84889e-32 -5.04871e-28"/>
       <geometry>
         <mesh filename="package://assets/thighsym_upper.stl"/>
       </geometry>
@@ -584,7 +654,7 @@
     </inertial>
   </link>
   <joint name="left_back_knee_frame" type="fixed">
-    <origin xyz="-0.0554318 3.16941e-13 -0.0041" rpy="1.5708 7.96211e-18 5.36897e-12"/>
+    <origin xyz="-0.0554318 3.16934e-13 -0.0041" rpy="1.5708 -2.65902e-28 5.36897e-12"/>
     <parent link="bittle_x_leg_4"/>
     <child link="left_back_knee"/>
     <axis xyz="0 0 0"/>
@@ -637,14 +707,14 @@
     </inertial>
   </link>
   <joint name="left_back_foot_frame" type="fixed">
-    <origin xyz="-0.048 2.08167e-17 -0.0165" rpy="-3.14159 1.84363e-30 -2.66751e-29"/>
+    <origin xyz="-0.048 0 -0.0165" rpy="-3.14159 -1.56548e-30 -1.34966e-29"/>
     <parent link="bittle_x_shank_left_2"/>
     <child link="left_back_foot"/>
     <axis xyz="0 0 0"/>
   </joint>
   <!-- Joint from bittle_x_leg_4 to bittle_x_shank_left_2 -->
   <joint name="left_back_knee" type="revolute">
-    <origin xyz="-0.046 3.68643e-13 -0.00215" rpy="-3.14159 2.24001e-16 1.5708"/>
+    <origin xyz="-0.046 3.68636e-13 -0.00215" rpy="-3.14159 2.24001e-16 1.5708"/>
     <parent link="bittle_x_leg_4"/>
     <child link="bittle_x_shank_left_2"/>
     <axis xyz="0 0 1"/>
@@ -652,9 +722,75 @@
   </joint>
   <!-- Joint from chassis to bittle_x_leg_4 -->
   <joint name="left_back" type="revolute">
-    <origin xyz="0.0422987 0.0548412 0.000213389" rpy="-3.14159 -1.53589 3.14159"/>
+    <origin xyz="0.0422033 0.0548412 -0.000503935" rpy="1.68824e-17 -1.5708 0"/>
     <parent link="chassis"/>
     <child link="bittle_x_leg_4"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="10" lower="-3.141592653589793" upper="3.141592653589793"/>
+  </joint>
+  <!-- Link bittle_x_head -->
+  <link name="bittle_x_head">
+    <inertial>
+      <origin xyz="-0.00717805 -2.62479e-05 -0.0227251" rpy="0 0 0"/>
+      <mass value="0.022581"/>
+      <inertia ixx="4.39226e-06" ixy="-1.68238e-09" ixz="-6.5665e-07" iyy="5.55585e-06" iyz="-1.16009e-08" izz="3.3521e-06"/>
+    </inertial>
+    <!-- Part head_1 -->
+    <visual>
+      <origin xyz="0.0316003 -1.01481e-16 0.0262667" rpy="-2.61799 7.01721e-32 -1.5708"/>
+      <geometry>
+        <mesh filename="package://assets/head_1.stl"/>
+      </geometry>
+      <material name="head_1_material">
+        <color rgba="0.356863 0.682353 0.933333 1"/>
+      </material>
+    </visual>
+    <!-- Part head_3 -->
+    <visual>
+      <origin xyz="0.0316003 -0.000126582 0.0262667" rpy="-2.61799 -2.18301e-32 -1.5708"/>
+      <geometry>
+        <mesh filename="package://assets/head_3.stl"/>
+      </geometry>
+      <material name="head_3_material">
+        <color rgba="1 0.670588 0.313725 1"/>
+      </material>
+    </visual>
+    <!-- Part head_2 -->
+    <visual>
+      <origin xyz="0.0316003 -0.000126582 0.0262667" rpy="-2.61799 7.01721e-32 -1.5708"/>
+      <geometry>
+        <mesh filename="package://assets/head_2.stl"/>
+      </geometry>
+      <material name="head_2_material">
+        <color rgba="1 0.670588 0.313725 1"/>
+      </material>
+    </visual>
+    <!-- Part kp_v5_shaft_9 -->
+    <visual>
+      <origin xyz="0.0061 -0.0061 -0.0272" rpy="-1.5708 -1.5708 0"/>
+      <geometry>
+        <mesh filename="package://assets/kp_v5_shaft.stl"/>
+      </geometry>
+      <material name="kp_v5_shaft_9_material">
+        <color rgba="0.627451 0.627451 0.627451 1"/>
+      </material>
+    </visual>
+    <!-- Part kp_v5_body_9 -->
+    <visual>
+      <origin xyz="0.0061 -0.0061 -0.0272" rpy="-1.5708 -1.5708 0"/>
+      <geometry>
+        <mesh filename="package://assets/kp_v5_body.stl"/>
+      </geometry>
+      <material name="kp_v5_body_9_material">
+        <color rgba="0.152941 0.239216 0.2 1"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Joint from chassis to bittle_x_head -->
+  <joint name="head" type="revolute">
+    <origin xyz="-0.00626294 -0.0435043 0.01074" rpy="3.14159 -0.523599 1.5708"/>
+    <parent link="chassis"/>
+    <child link="bittle_x_head"/>
     <axis xyz="0 0 1"/>
     <limit effort="10" velocity="10" lower="-3.141592653589793" upper="3.141592653589793"/>
   </joint>

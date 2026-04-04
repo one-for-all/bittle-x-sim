@@ -8,6 +8,14 @@ stl_files = [
     "thighsym_lower",
     "shank",
     "cover",
+    "front",
+    "neck",
+    "head_1",
+    "head_2",
+    "head_3",
+    "tail",
+    "battlid",
+    "battcase",
 ]
 
 for file in stl_files:

@@ -16,7 +16,7 @@ use nalgebra::{DVector, dvector};
 pub struct BittleXEsp32Controller {
     pub esp32: ESP32,
 
-    pub servos: [PetoiP1S; 8],
+    pub servos: [PetoiP1S; 9],
 
     uart_payload: VecDeque<u8>, // data pending to be fed into esp32 uart0
 }
@@ -79,7 +79,7 @@ impl BittleXEsp32Controller {
 
         Self {
             esp32,
-            servos: [PetoiP1S::new(); 8],
+            servos: [PetoiP1S::new(); 9],
             uart_payload: VecDeque::new(),
         }
     }
@@ -91,7 +91,7 @@ impl ArticulatedController for BittleXEsp32Controller {
         let Hz = ((CPU_FREQUENCY * 1000_000) / CPU_SLOWDOWN_FACTOR) as Float;
         let n_steps = (dt * Hz) as usize;
 
-        let pins = [23, 19, 4, 15, 12, 13, 33, 32];
+        let pins = [18, 23, 19, 4, 15, 12, 13, 33, 32];
 
         let mut count = 0;
         let max_count = 10; // 100
