@@ -136,7 +136,7 @@ async function buildZipBuffer(): Promise<ArrayBuffer> {
 
 async function runCode() {
   const runButton = document.getElementById("runButton") as HTMLButtonElement;
-  const stopButton = document.getElementById("stopButton") as HTMLButtonElement;
+  // const stopButton = document.getElementById("stopButton") as HTMLButtonElement;
   const outputDiv = document.getElementById("buildOutput");
   const outputContent = document.getElementById("outputContent");
 
@@ -150,7 +150,7 @@ async function runCode() {
   // Disable button and show loading
   runButton.disabled = true;
   runButton.innerHTML = "<span>⏳</span><span>Compiling...</span>";
-  stopButton.disabled = true;
+  // stopButton.disabled = true;
 
   outputDiv.classList.add("show");
   outputContent.innerHTML = "<div>Compiling esp32 project...</div>";
@@ -227,7 +227,7 @@ async function runCode() {
   } finally {
     runButton.disabled = false;
     runButton.innerHTML = "<span>🔨</span><span>Run</span>";
-    stopButton.disabled = false;
+    // stopButton.disabled = false;
   }
 }
 
@@ -235,9 +235,9 @@ document.getElementById("closeOutput").addEventListener("click", async () => {
   document.getElementById("buildOutput").classList.remove("show");
 });
 
-document.getElementById("stopButton").addEventListener("click", async () => {
-  reset_simulator(default_ino_bin, default_symbols);
-});
+// document.getElementById("stopButton").addEventListener("click", async () => {
+//   reset_simulator(default_ino_bin, default_symbols);
+// });
 
 type CompileStringsResult = {
   inoBinBytes: Uint8Array;
