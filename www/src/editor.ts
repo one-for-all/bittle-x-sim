@@ -231,7 +231,7 @@ async function runCode() {
     console.error("Compile error:", error);
   } finally {
     runButton.disabled = false;
-    runButton.innerHTML = "<span>🔨</span><span>Run</span>";
+    runButton.innerHTML = "<span>🔨</span><span>Compile</span>";
     // stopButton.disabled = false;
   }
 }
