@@ -10,7 +10,6 @@ onshape/
 
 www/pkg/
 
-/pkg/
 *.png
 
 /OpenCatEsp32/build/
