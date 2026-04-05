@@ -55,70 +55,6 @@ void showModuleStatus() {
                  || moduleActivatedQfunction(EXTENSION_QUICK_DEMO));
 }
 
-void reconfigureTheActiveModule(char *moduleCode) {
-  if (moduleCode[0] == '?') {
-    showModuleStatus();
-    return;
-  }
-  bool statusChangedQ = false;
-
-  // Determine target module and operation type based on the elegant original design
-  char targetModule = moduleCode[0];
-  bool isCloseOnlyOperation = false;
-
-  // Handle 'X' or 'X~' -> close all
-  if (strlen(moduleCode) == 0 || (strlen(moduleCode) >= 1 && (moduleCode[0] == '~' || moduleCode[0] == '\n'))) {
-    targetModule = '-'; // Use '-' to represent close all, avoiding confusion
-  }
-  // Handle 'Xc' -> close specific module (lowercase)
-  else if (strlen(moduleCode) >= 1 && islower(moduleCode[0])) {
-    targetModule = toupper(moduleCode[0]); // Convert to uppercase for module identification
-    isCloseOnlyOperation = true; // Only close this specific module, don't enable anything
-  }
-  // Handle 'XC' -> enable specific module (uppercase) - use original logic
-  for (byte i = 0; i < sizeof(moduleList) / sizeof(char); i++) {                                               // disable unneeded modules
-    if (!moduleActivatedQ[i]) continue;
-
-    // For lowercase: only process target module; For original logic: only process non-target modules
-    if ((isCloseOnlyOperation && moduleList[i] != targetModule) ||
-        (!isCloseOnlyOperation && moduleList[i] == targetModule)) continue;
-
-    // Original logic: protect voice and backtouch unless closing all
-    if (!isCloseOnlyOperation &&
-        (moduleList[i] == EXTENSION_VOICE || moduleList[i] == EXTENSION_BACKTOUCH) &&
-        targetModule != '-') continue;
-
-    // Unified disable logic
-    PTHL("- disable", moduleNames[i]);
-    stopModule(moduleList[i]);
-    moduleActivatedQ[i] = false;
-    statusChangedQ = true;
-  }
-
-  // Original logic: enable target module (skip for close-only operations)
-  if (!isCloseOnlyOperation) {
-    for (byte i = 0; i < sizeof(moduleList) / sizeof(char); i++) {
-      if (moduleList[i] == targetModule && !moduleActivatedQ[i]) {
-        PTHL("+  enable", moduleNames[i]);
-        moduleActivatedQ[i] = true;
-        statusChangedQ = true;
-      }
-    }
-  }
-
-  if (statusChangedQ){  // if the status of the modules has changed, show the new status
-#ifndef I2C_EEPROM_ADDRESS
-    config.putBytes("moduleState", moduleActivatedQ, sizeof(moduleList) / sizeof(char));
-#endif
-    showModuleStatus();
-    for (byte i = 0; i < sizeof(moduleList) / sizeof(char); i++) {
-      if (moduleList[i] == targetModule && moduleActivatedQ[i]) {
-        initModule(moduleList[i]);
-      }
-    }
-  }
-}
-
 void initModuleManager() {
   byte moduleCount = sizeof(moduleList) / sizeof(char);
   PTHL("Module count: ", moduleCount);
@@ -190,39 +126,4 @@ void read_serial() {
       newCmd[cmdLen + 1] = '\0';
     newCmdIdx = 2;
   }
-}
-
-void readSignal() {
-  moduleIndex = activeModuleIdx();
-  read_serial();  //  newCmdIdx = 2
-
-  long current = millis();
-  if (newCmdIdx)
-    idleTimer = millis() + IDLE_TIME;
-  else if (token != T_SERVO_CALIBRATE && token != T_SERVO_FOLLOW && token != T_SERVO_FEEDBACK && current - idleTimer > 0) {
-    if (moduleIndex == -1)  // no active module
-      return;
-    // powerSaver -> 4
-    // other -> 5
-    // randomMind -> 100
-  }
-}
-
-// — read human sensors (top level) —
-void readHuman() {
-}
-// — generate behavior by fusing all sensors and instruction
-String decision() {
-  return "";
-}
-
-void read_sound() {
-}
-
-void read_GPS() {
-}
-
-void readEnvironment() {
-  read_sound();
-  read_GPS();
 }

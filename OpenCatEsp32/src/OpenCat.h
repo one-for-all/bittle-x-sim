@@ -495,7 +495,6 @@ void initRobot() {
   printToAllPorts(MODEL);
   PTF("Software version: ");
   printToAllPorts(SoftwareVersion);
-  // i2cDetect(Wire); // skip I2C detect for now to save time
 
   newBoard = newBoardQ();
   configSetup();
@@ -505,11 +504,9 @@ void initRobot() {
   newCmd[0] = '\0';
   skill = new Skill();
   skillList = new SkillList();
-  // QA();
-  strcpy(newCmd, "rest");
-  loadBySkillName("rest");  // must have to avoid memory crash. need to check why.
 
-  // delay(500);
+  strcpy(newCmd, "rest");
+  loadBySkillName("rest");
 
   initModuleManager();
   PTL("Ready!");

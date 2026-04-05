@@ -30,13 +30,22 @@
     <body>
         <div class="container">
             <div class="file-bar" id="fileBar">
-                <button class="run-button" id="runButton">
-                    <span>🔨</span>
-                    <span>Run</span></button
-                ><button class="stop-button" id="stopButton" disabled="true">
-                    <span>⏹</span>
-                    <span>Stop</span>
-                </button>
+                <div class="file-tab-scroll" id="fileTabScroll">
+                    <!-- file tabs go here -->
+                </div>
+                <div class="file-bar-actions" id="fileBarActions">
+                    <button class="run-button" id="runButton">
+                        <span>🔨</span>
+                        <span>Run</span></button
+                    ><button
+                        class="stop-button"
+                        id="stopButton"
+                        disabled="true"
+                    >
+                        <span>⏹</span>
+                        <span>Reset</span>
+                    </button>
+                </div>
             </div>
             <div id="editor"></div>
             <div class="build-output" id="buildOutput">

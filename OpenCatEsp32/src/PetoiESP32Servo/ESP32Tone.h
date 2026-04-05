@@ -14,6 +14,4 @@ void tone(int pin, unsigned int frequency, unsigned long duration, double volume
 
 void noTone(int pin);
 
-
-
 #endif /* LIBRARIES_ESP32SERVO_SRC_ESP32TONE_H_ */

@@ -213,87 +213,9 @@ void reaction() {  // Reminder:  reaction() is repeatedly called in the "forever
           }
           break;
         }
-      case T_EXTENSION:
-        {
-          // PTH("cmdLen = ", cmdLen);
-          if (newCmd[0] == '?')
-            showModuleStatus();
-          else if (newCmd[0] != 'U' || (newCmd[0] == 'U' && cmdLen == 1)) {  // when reading the distance from ultrasonic sensor, the cmdLen is 3.
-            // and we don't want to change the activation status of the ultrasonic sensor behavior
-            reconfigureTheActiveModule(newCmd);
-          }
-
-          // deal with the following command
-          switch (newCmd[0]) {
-          }
-          break;
-        }
       case T_LISTED_BIN:  // list of all 16 joint: angle0, angle2,... angle15 (binary encoding)
         {
           transform((int8_t *)newCmd, 1, transformSpeed);  // need to add angleDataRatio if the angles are large
-          break;
-        }
-      case T_CPG:
-        {
-          // a: amplitude
-          // t: loopStep
-          // d: delay
-          // p: phase
-          // s: shift
-// {20,-8,4,3,1,2,35,1,35,1},//small
-// {36,-8,4,3,1,2,35,1,35,1},//large
-// {16,-6,-4,3,1,3,21,51,31,1},//walk
-// {20,-14,4,3,1,2,70,70,1,1},//bound
-// {23,-10,8,3,3,1,70,70,1,1},//bound2
-// {17,0,0,3,1,3,1,75,50,25},//heng
-// {15,-4,-4,3,1,3,36,52,52,36},//heng2
-// {18,0,0,3,1,2,35,46,35,46}//turnR
-          updateCPG();
-          break;
-        }
-      case T_CPG_BIN:
-        {
-          // Binary CPG parameters: 12 int8_t values + '~' terminator
-          // Apply the parameters directly to CPG
-          amplitude = (int8_t)newCmd[0];
-          sideRatio = (int8_t)newCmd[1];
-          stateSwitchAngle = (int8_t)newCmd[2];
-          shift[0] = (int8_t)newCmd[3];
-          shift[1] = (int8_t)newCmd[4];
-          loopDelay = (int8_t)newCmd[5];
-          skipStep[0] = (int8_t)newCmd[6];
-          skipStep[1] = (int8_t)newCmd[7];
-          phase[0] = (int8_t)newCmd[8];
-          phase[1] = (int8_t)newCmd[9];
-          phase[2] = (int8_t)newCmd[10];
-          phase[3] = (int8_t)newCmd[11];
-
-          if (cpg == NULL)
-            cpg = new CPG(300, skipStep);
-          else if (skipStep[0] != cpg->_skipStep[0] || skipStep[1] != cpg->_skipStep[1]) {
-            delete cpg;
-            cpg = new CPG(300, skipStep);
-          }
-          cpg->setPar(amplitude, sideRatio, stateSwitchAngle, loopDelay, shift, phase);
-          cpg->printCPG();
-          gyroBalanceQ = false;
-          break;
-        }
-      case T_SIGNAL_GEN:  // resolution, speed, jointIdx, midpoint, amp, freq,phase
-        {
-          char *pch = strtok(newCmd, " ,");
-          int inLen = 0;
-          int8_t pars[60];  // allows 12 joints 5*12 = 60
-          while (pch != NULL) {
-            pars[inLen++] = atoi(pch);  //@@@ cast
-            pch = strtok(NULL, " ,\t");
-          }
-          // for (int i = 0; i < inLen; i++)
-          //   PTT(pars[i], ' ');
-          // PTL();
-          int8_t resolution = pars[0];
-          int8_t speed = pars[1];
-          signalGenerator(resolution, speed, pars + 2, inLen, 1);
           break;
         }
       case T_TEMP:

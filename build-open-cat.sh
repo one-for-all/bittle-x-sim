@@ -24,6 +24,6 @@ cp -r rom www/static/rom
 cp OpenCatEsp32/OpenCatEsp32.ino www/src/assets/
 cp -r OpenCatEsp32/src www/src/assets/
 
-# default compiled binary and symbol for when user hits stop
+# default compiled binary and symbol for when user hits reset
 cp OpenCatEsp32/build/OpenCatEsp32.ino.bin www/src/assets/
 cp OpenCatEsp32/build/symbols.txt www/src/assets/

@@ -9,6 +9,20 @@
     min-height: 35px;
     display: flex;
     align-items: center;
+    overflow: hidden; /* prevent the bar itself from growing */
+}
+
+/* file scroll tabs */
+.file-tab-scroll {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    flex: 1; /* take all space left of the buttons */
+    min-width: 0; /* allow flex item to shrink below content size */
+    scrollbar-width: none; /* Firefox: hide scrollbar */
+}
+.file-tab-scroll::-webkit-scrollbar {
+    display: none; /* Chrome/Safari: hide scrollbar */
 }
 .file-tab {
     padding: 8px 16px;
@@ -36,6 +50,16 @@
 }
 .file-icon {
     font-size: 14px;
+}
+
+/* buttons */
+.file-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-left: 8px;
+    flex-shrink: 0; /* never shrink — always visible */
+    background: #2d2d30;
 }
 .run-button {
     margin-left: auto;
@@ -93,6 +117,7 @@
     opacity: 0.6;
 }
 
+/* build and serial output */
 .build-output {
     position: absolute;
     bottom: 0;

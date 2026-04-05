@@ -8,7 +8,7 @@
     // "**/dist",
     // "**/.git",
     // "*.log"
-    "www/src/assets/src",
+    // "www/src/assets/src",
     "www/src/assets/OpenCatEsp32.ino",
     "*.map",
   ],

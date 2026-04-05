@@ -8,6 +8,11 @@ declare module "*.h" {
   export default content;
 }
 
+declare module "*.cpp" {
+  const content: string;
+  export default content;
+}
+
 declare module "*.md" {
   const content: string;
   export default content;

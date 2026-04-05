@@ -20,16 +20,33 @@ let files: Record<string, FileEntry> = {
     content: demo_ino,
     language: "cpp",
   },
-  // "movement-sequences.h": {
-  //   content: movement_sequences,
-  //   language: "cpp",
-  // },
   "README.md": {
     content: readme,
     language: "markdown",
   },
 };
 let currentFile: string = null;
+
+// 1. Create the Webpack context
+// Arguments: (Directory, Search Subdirectories?, Regex to match files)
+const filesContext = require.context(
+  "./assets/src",
+  true,
+  /\.(cpp|c|h|hpp|ino)$/i,
+);
+
+// 2. Iterate through all the matched files
+filesContext.keys().forEach((key) => {
+  // 'key' looks like: "./main.cpp" or "./utils/config.h"
+  // filesContext(key) returns the raw string content (thanks to your asset/source rule)
+  const fileContent = filesContext(key);
+
+  // add to files record
+  files[key.replace(/^\.\//, "")] = {
+    content: fileContent,
+    language: "cpp",
+  };
+});
 
 const editor = monaco.editor.create(document.getElementById("editor")!, {
   language: "cpp",
@@ -49,10 +66,8 @@ renderFileBar();
 openFile(Object.keys(files)[0]);
 
 function renderFileBar() {
-  const fileBar = document.getElementById("fileBar");
-  const runButton = document.getElementById("runButton");
-  const stopButton = document.getElementById("stopButton");
-  fileBar.innerHTML = "";
+  const fileTabScroll = document.getElementById("fileTabScroll");
+  fileTabScroll.innerHTML = "";
 
   Object.keys(files).forEach((filename) => {
     const tab = document.createElement("div");
@@ -65,11 +80,8 @@ function renderFileBar() {
     tab.innerHTML = `<span class="file-icon">${icon}</span><span>${filename}</span>`;
     tab.onclick = () => openFile(filename);
 
-    fileBar.appendChild(tab);
+    fileTabScroll.appendChild(tab);
   });
-
-  fileBar.appendChild(runButton);
-  fileBar.appendChild(stopButton);
 }
 
 function openFile(filename: string) {
@@ -96,14 +108,31 @@ function getFileIcon(filename: string) {
 }
 
 // Build and Run the code
-const url = "https://esp32-compile-api-t2qhjccmsa-uc.a.run.app";
+// const url = "https://esp32-compile-api-t2qhjccmsa-uc.a.run.app";
+const url = "http://localhost:8081";
 
 document.getElementById("runButton").addEventListener("click", async () => {
   await runCode();
 });
 
-// console.log(stand_symbols);
-// console.log(stand_ino_bin.length);
+async function buildZipBuffer(): Promise<ArrayBuffer> {
+  const zip = new JSZip();
+
+  // Do not zip the following files inside src directory
+  let zip_file_names = Object.keys(files).filter(
+    (key) => key != "demo.ino" && key != "README.md",
+  );
+
+  zip_file_names.forEach((zip_file_name) => {
+    zip.file("src/" + zip_file_name, files[zip_file_name].content);
+  });
+
+  // Zip the main ino file
+  zip.file("demo.ino", files["demo.ino"].content);
+
+  // Generate the zip as an ArrayBuffer
+  return await zip.generateAsync({ type: "arraybuffer" });
+}
 
 async function runCode() {
   const runButton = document.getElementById("runButton") as HTMLButtonElement;
@@ -116,8 +145,7 @@ async function runCode() {
     files[currentFile].content = editor.getValue();
   }
 
-  const ino_source = files["demo.ino"].content; // get sesame.ino file content
-  const header_source = files["movement-sequences.h"].content;
+  const ino_source = files["demo.ino"].content; // get demo.ino file content
 
   // Disable button and show loading
   runButton.disabled = true;
@@ -128,11 +156,9 @@ async function runCode() {
   outputContent.innerHTML = "<div>Compiling esp32 project...</div>";
 
   try {
-    const result = await compileArduinoFromStrings(
-      url,
-      ino_source,
-      header_source,
-    );
+    const zipBuffer = await buildZipBuffer();
+
+    const result = await compileArduinoFromStrings(url, ino_source, zipBuffer);
 
     let output = "";
     // if (result.stdout) {
@@ -165,17 +191,7 @@ async function runCode() {
     //   simulator.hybrid.reboot_code_controller(0, result.hex);
     //   // simulator.pendulum_raised = false;
     // }
-    let simulator = getSimulator();
-    simulator.hybrid.reset();
-    let targets = [135, 45, 45, 135, 0, 180, 0, 180];
-    for (let i = 0; i < targets.length; i++) {
-      simulator.hybrid.set_joint_q(i + 1, targets[i] * (Math.PI / 180)); // skip first floating joint
-    }
-    simulator.hybrid.reboot_esp32_controller(
-      0,
-      result.inoBinBytes,
-      result.symbolsText,
-    );
+    reset_simulator(result.inoBinBytes, result.symbolsText);
   } catch (error) {
     const ansi = new AnsiToHtml();
     let cleanLog = error.message;
@@ -220,13 +236,7 @@ document.getElementById("closeOutput").addEventListener("click", async () => {
 });
 
 document.getElementById("stopButton").addEventListener("click", async () => {
-  let simulator = getSimulator();
-  simulator.hybrid.reset();
-  let targets = [135, 45, 45, 135, 0, 180, 0, 180];
-  for (let i = 0; i < targets.length; i++) {
-    simulator.hybrid.set_joint_q(i + 1, targets[i] * (Math.PI / 180)); // skip first floating joint
-  }
-  simulator.hybrid.reboot_esp32_controller(0, default_ino_bin, default_symbols);
+  reset_simulator(default_ino_bin, default_symbols);
 });
 
 type CompileStringsResult = {
@@ -237,18 +247,18 @@ type CompileStringsResult = {
 async function compileArduinoFromStrings(
   apiBaseUrl: string,
   inoSource: string,
-  headerSource: string,
+  zipBuffer: ArrayBuffer,
 ): Promise<CompileStringsResult> {
   const form = new FormData();
   form.set(
     "ino_file",
     new Blob([inoSource], { type: "text/plain" }),
-    "sesame.ino",
+    "demo.ino",
   );
   form.set(
-    "header_file",
-    new Blob([headerSource], { type: "text/plain" }),
-    "movement-sequences.h",
+    "zip_bundle",
+    new Blob([zipBuffer], { type: "application/zip" }),
+    "src.zip",
   );
 
   const response = await fetch(`${apiBaseUrl.replace(/\/+$/, "")}/compile`, {
@@ -317,3 +327,15 @@ serialSend.addEventListener("click", sendSerialData);
 serialInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") sendSerialData();
 });
+
+/// Reset the simulator and controller
+function reset_simulator(ino_bin: Uint8Array, symbols: string) {
+  let simulator = getSimulator();
+  simulator.hybrid.reset();
+  let targets = [135, 190, 190, 80, 80, 190, 80, 80, 190];
+
+  for (let i = 0; i < targets.length; i++) {
+    simulator.hybrid.set_joint_q(i + 1, targets[i] * (Math.PI / 180)); // skip first floating joint
+  }
+  simulator.hybrid.reboot_esp32_controller(0, ino_bin, symbols);
+}

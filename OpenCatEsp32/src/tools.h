@@ -42,10 +42,6 @@ char getUserInputChar(int waitTimeout = 0) {  //take only the first character, a
   return result;
 }
 
-//template <typename T> int8_t sign(T val) {
-//  return (T(0) < val) - (val < T(0));
-//}
-
 void printRange(int r0 = 0, int r1 = 0) {
   if (r1 == 0)
     for (byte i = 0; i < r0; i++) {
@@ -95,11 +91,6 @@ template<typename T> String list2String(T *arr, byte len = DOF) {
     //PT('\t');
   }
   return temp;
-}
-
-template<typename T> void printTable(T *list) {
-  printRange(0, DOF);
-  printList(list, DOF);
 }
 
 template<typename T> int strlenUntil(T *s, char terminator) {
@@ -195,9 +186,6 @@ void printCmd() {
 }
 
 void resetCmd() {
-  // PTL("Reset Cmd");
-  // printCmd();
-
   lastToken = token;
   newCmdIdx = 0;
   if (token != T_SKILL && token != T_SKILL_DATA && token != T_SERVO_CALIBRATE && token != T_SERVO_FEEDBACK && token != T_SERVO_FOLLOW && token != T_CPG && token != T_CPG_BIN)

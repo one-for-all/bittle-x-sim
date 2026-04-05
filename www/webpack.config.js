@@ -49,6 +49,10 @@ const webpackConfig = {
         type: "asset/source",
       },
       {
+        test: /\.cpp/,
+        type: "asset/source",
+      },
+      {
         test: /\.md$/,
         type: "asset/source",
       },

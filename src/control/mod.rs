@@ -148,6 +148,31 @@ impl ArticulatedController for BittleXEsp32Controller {
         DVector::from_vec(torques)
     }
 
+    fn reboot_esp32(&mut self, app_bin: Vec<u8>, new_symbols: &str) {
+        let mut symbols = self.esp32.symbols.clone();
+        symbols.add(new_symbols);
+
+        let rom1_data: Vec<u8> = self.esp32.rom1_data.clone();
+        let rom0_data: Vec<u8> = self.esp32.rom0_data.clone();
+        let bootloader_data: Vec<u8> = self.esp32.bootloader_data.clone();
+        let partition_table_data: Vec<u8> = self.esp32.partition_table_data.clone();
+        let app_data: Vec<u8> = app_bin;
+
+        let esp32 = ESP32::new(
+            rom1_data,
+            rom0_data,
+            bootloader_data,
+            partition_table_data,
+            app_data,
+            symbols,
+        );
+
+        self.esp32 = esp32;
+        for servo in self.servos.iter_mut() {
+            servo.reset();
+        }
+    }
+
     fn debug(&mut self) {
         self.esp32.print_uart();
         for servo in self.servos.iter() {

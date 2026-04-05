@@ -15,15 +15,16 @@
   },
   "dependencies": {
     "ansi-to-html": "^0.7.2",
+    "bittle-x": "file:../pkg",
     "gorilla-physics-ui": "file:../../gorilla-physics/www",
     "jszip": "^3.10.1",
     "monaco-editor": "^0.55.1",
     "monaco-editor-webpack-plugin": "^7.1.1",
-    "bittle-x": "file:../pkg",
     "three": "^0.152.0"
   },
   "devDependencies": {
     "@types/three": "^0.144.0",
+    "@types/webpack-env": "^1.18.8",
     "@wasm-tool/wasm-pack-plugin": "^1.1.0",
     "arraybuffer-loader": "^1.0.8",
     "copy-webpack-plugin": "^11.0.0",
