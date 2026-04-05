@@ -1,4 +1,3 @@
-// modify the model and board definitions
 //***********************
 #define BITTLE  // Petoi 9 DOF robot dog: 1 on head + 8 on leg
 
@@ -14,7 +13,7 @@ void setup() {
   while (Serial.available() && Serial.read())
     ;  // empty buffer
 
-  Serial.println("init robot");
+  Serial.println("Hello robot!");
   initRobot();
 }
 

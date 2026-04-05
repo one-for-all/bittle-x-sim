@@ -58,6 +58,7 @@ const editor = monaco.editor.create(document.getElementById("editor")!, {
 
 editor.onDidChangeModelContent(() => {
   if (currentFile) {
+    editor.setScrollTop(0);
     files[currentFile].content = editor.getValue();
   }
 });
@@ -108,8 +109,9 @@ function getFileIcon(filename: string) {
 }
 
 // Build and Run the code
-// const url = "https://esp32-compile-api-t2qhjccmsa-uc.a.run.app";
-const url = "http://localhost:8081";
+// const url = "http://localhost:8081";
+const url =
+  "https://esp32-compile-api-v2-0-12-452188812531.us-central1.run.app";
 
 document.getElementById("runButton").addEventListener("click", async () => {
   await runCode();
@@ -138,6 +140,7 @@ async function runCode() {
   const runButton = document.getElementById("runButton") as HTMLButtonElement;
   // const stopButton = document.getElementById("stopButton") as HTMLButtonElement;
   const outputDiv = document.getElementById("buildOutput");
+  outputDiv.scrollTop = 0; // scroll to top
   const outputContent = document.getElementById("outputContent");
 
   // Save current file content
@@ -153,7 +156,8 @@ async function runCode() {
   // stopButton.disabled = true;
 
   outputDiv.classList.add("show");
-  outputContent.innerHTML = "<div>Compiling esp32 project...</div>";
+  outputContent.innerHTML =
+    '<div class="success">Compiling esp32 project...</div>';
 
   try {
     const zipBuffer = await buildZipBuffer();
@@ -174,6 +178,7 @@ async function runCode() {
     // }
 
     if (result.inoBinBytes) {
+      outputDiv.scrollTop = 0; // scroll to top
       output +=
         '<div class="success">✓ Compile successful!\nbin file generated (' +
         result.inoBinBytes.length +

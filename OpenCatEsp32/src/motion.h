@@ -47,7 +47,6 @@ void transform(T *target, byte angleDataRatio = 1, float speedRatio = 1, byte of
         if (WALKING_DOF == 12 && i < 4)
           continue;
         float dutyAng = (target[i - offset] * angleDataRatio + (steps == 0 ? 0 : (1 + cos(M_PI * s / steps)) / 2 * diff[i - offset]));
-        // Serial.printf("%d: %f\t", (int8_t)i, dutyAng);
         calibratedPWM(i, dutyAng);
       }
       delay((DOF - offset) / 2);

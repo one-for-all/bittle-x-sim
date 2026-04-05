@@ -125,9 +125,6 @@ public:
 
     for (int i = 0; i < 2; i++) {
       expectedRollPitch[i] = (int8_t)newCmd[1 + i];
-#ifdef GYRO_PIN
-      yprTilt[2 - i] = 0;
-#endif
     }
     angleDataRatio = (int8_t)newCmd[3];
     byte baseHeader = 4;
@@ -137,12 +134,6 @@ public:
     }
     inplaceShift();
     periodGlobal = period;
-
-    Serial.println("formatSkill");
-    for (int i = 0; i < 16; i++) {
-      Serial.print(dutyAngles[i]);
-      Serial.print("\t");
-    }
   }
 #define PRINT_SKILL_DATA
   void info() {
@@ -193,9 +184,7 @@ public:
     for (int k = 0; k < abs(period); k++) {
       if (period <= 1) {                                         // behavior
         dutyAngles[k * frameSize] = -dutyAngles[k * frameSize];  // head and tail panning angles
-#ifndef ROBOT_ARM  // avoid mirroring the pincers' movements
         dutyAngles[k * frameSize + 2] = -dutyAngles[k * frameSize + 2];
-#endif
       }
       for (byte col = (period > 1) ? 0 : 2; col < ((period > 1) ? WALKING_DOF : DOF) / 2; col++) {
         int8_t temp = dutyAngles[k * frameSize + 2 * col];
@@ -246,44 +235,7 @@ public:
     frame = 0;
   }
   void perform() {
-    if (period < 0) {  // behaviors
-      interruptedDuringBehavior = false;
-      int8_t repeat = loopCycle[2] >= 0 && loopCycle[2] < 2 ? 0 : loopCycle[2] - 1;
-      gyroBalanceQlag = gyroBalanceQ;
-      gyroBalanceQ = strcmp(skillName, "bf") && strcmp(skillName, "ff") && strcmp(skillName, "flipF") && strcmp(skillName, "flipD") && strcmp(skillName, "flipL") && strcmp(skillName, "flipR") && strcmp(skillName, "pd") && strcmp(skillName, "hds") && strcmp(skillName, "bx") && strstr(skillName, "rl") == NULL;  // won't read gyro for fast motion
-      for (byte c = 0; c < abs(period); c++) { // the last two in the row are transition speed and delay
-        Stream *serialPort = NULL;
-        String source;
-          // the BT_BLE is unhandled here
-          if (moduleActivatedQ[0] && Serial2.available()) {
-            serialPort = &Serial2;
-            source = "Serial2";
-          } else if (Serial.available()) {
-            serialPort = &Serial;
-            source = "Serial";
-          }
-        if (serialPort // user input
-            || (gyroBalanceQ // the IMU should be used for balancing
-                && ((imuException != IMU_EXCEPTION_FLIPPED && !strcmp(skillName, "rc"))    // recovered during recover
-                    || (imuException == IMU_EXCEPTION_FLIPPED && strcmp(skillName, "rc"))  // flipped during other skills
-                    ))) {
-          PTHL("imuException: ", imuException);
-          PTLF("Behavior interrupted");
-          interruptedDuringBehavior = true;
-          gyroBalanceQ = gyroBalanceQlag;  // Restore gyroBalanceQ before returning
-          return;
-        }
-        transform(dutyAngles + c * frameSize, angleDataRatio, dutyAngles[DOF + c * frameSize] / 8.0);
-        delay(abs(dutyAngles[DOF + 1 + c * frameSize] * 50));
-
-        if (repeat != 0 && c != 0 && c == loopCycle[1]) {
-          c = loopCycle[0] - 1;
-          if (repeat > 0)  // if repeat <0, infinite loop. only reset button will break the loop
-            repeat--;
-        }
-      }
-      gyroBalanceQ = gyroBalanceQlag;
-    } else {  // postures and gaits
+    if (period > 0) {  // postures and gaits
       for (int jointIndex = 0; jointIndex < DOF; jointIndex++) {
 #ifndef HEAD
         if (jointIndex == 0)
@@ -297,7 +249,6 @@ public:
         if (jointIndex == 4)
           jointIndex = 8;
 #endif
-        //          PT(jointIndex); PT('\t');
         float duty;
         if ((abs(period) > 1 && jointIndex < firstMotionJoint)      // gait and non-walking joints
             || (abs(period) == 1 && jointIndex < 4 && manualHeadQ)  // posture and head group and manually controlled head
@@ -338,7 +289,8 @@ public:
 
 Skill *skill;
 
-void loadBySkillName(const char *skillName) {  // get lookup information from on-board EEPROM and read the data array from storage
+void loadBySkillName(const char *skillName) {
+  // get lookup information from on-board EEPROM and read the data array from storage
   char lr = skillName[strlen(skillName) - 1];
   int skillIndex;
   skillIndex = skillList->lookUp(skillName);
@@ -346,28 +298,15 @@ void loadBySkillName(const char *skillName) {  // get lookup information from on
     skill->offsetLR = (lr == 'L' ? 30 : (lr == 'R' ? -30 : 0));
     skill->buildSkill(skillList->get(skillIndex)->index);
     strcpy(newCmd, skill->skillName);
-#ifdef GYRO_PIN
-    thresX = (skill->period > 1) ? 12000 : 5000;
-    thresY = (skill->period > 1) ? 10000 : 4000;
-    thresZ = (skill->period > 1) ? 15000 : 12000;
-#endif
 
-    // TODO(remove this): skipping this hardware protection for now for determinism
-    // if (strcmp(newCmd, "calib") && skill->period == 1) {      // for static postures
-    //   int8_t protectiveShift = esp_random() % 60 / 10.0 - 3;  // +- 3.0 degrees
-    //   for (byte i = 0; i < DOF; i++)
-    //       skill->dutyAngles[i] += protectiveShift;  // add protective shift to reduce wearing at the same spot
-    // }
-
-    // if (lr == 'R'  // 'R' must mirror
-    //     || ((lr == 'X' || lr != 'L')  // 'L' should not mirror
-    //         && ((random(10) > 7 && random(10) > 5) || coinFace))  // 1/5 chance to random otherwise flip everytime
-    // )
-    //   skill->mirror();  // mirror the direction of a behavior
+    if (lr == 'R'                                                 // 'R' must mirror
+        || ((lr == 'X' || lr != 'L')                              // 'L' should not mirror
+            && ((random(10) > 7 && random(10) > 5) || coinFace))  // 1/5 chance to random otherwise flip everytime
+    ) {
+      skill->mirror();  // mirror the direction of a behavior
+    }
 
     coinFace = !coinFace;
-    Serial.println("");
-    skill->info();
     skill->transformToSkill(skill->nearestFrame());
     for (byte i = 0; i < HEAD_GROUP_LEN; i++)
       targetHead[i] = currentAng[i] - currentAdjust[i];

@@ -139,8 +139,6 @@ impl ArticulatedController for BittleXEsp32Controller {
 
             self.servos[i].angle = q;
             self.servos[i].vel = v;
-            // Note: artificially scale down servo torque.
-            // TODO: fix servo torque constant?
             let torque = self.servos[i].torque();
             torques.push(torque);
         }
@@ -149,6 +147,7 @@ impl ArticulatedController for BittleXEsp32Controller {
     }
 
     fn reboot_esp32(&mut self, app_bin: Vec<u8>, new_symbols: &str) {
+        // TODO: add reboot function to ESP32
         let mut symbols = self.esp32.symbols.clone();
         symbols.add(new_symbols);
 

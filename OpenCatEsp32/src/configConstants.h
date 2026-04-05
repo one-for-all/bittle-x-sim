@@ -490,15 +490,7 @@ The five boxing wizards jump quickly. Pack my box with five dozen liquor jugs.";
 // char data[]={16,-3,5,7,9};
 
 void genBleID(int suffixDigits = 2) {
-  const char *prefix =
-#ifdef BITTLE
-      "Bittle"
-#elif defined NYBBLE
-      "Nybble"
-#else
-      "Cub"
-#endif
-      ;
+  const char *prefix = "Bittle";
   int prelen = strlen(prefix);
 
   char *id = new char[prelen + suffixDigits + 1];
@@ -508,21 +500,8 @@ void genBleID(int suffixDigits = 2) {
     sprintf(id + prelen + i, "%X", temp);
   }
   id[prelen + suffixDigits] = '\0';
-
-#ifdef I2C_EEPROM_ADDRESS
-      writeLong(EEPROM_DEVICE_NAME, id, prelen + suffixDigits);
-    char *temp = readLongByBytes(EEPROM_DEVICE_NAME);
-  if (temp != NULL) {
-    uniqueName = String(temp);
-    delete[] temp;
-  } else {
-    // EEPROM data is invalid (probably due to address change), use the generated ID
-    uniqueName = String(id);
-  }
-#else
   config.putString("ID", id);
   uniqueName = String(id);
-#endif
   PTL(uniqueName);
   delete[] id;
 }
@@ -577,6 +556,7 @@ void configSetup() {
   int bufferLen = dataLen(rest[0]);  // save a preset skill to the temp skill
   arrayNCPY(newCmd, rest, bufferLen);
   PTF("- Name the new robot as: ");
+  genBleID();
 
   PTL("Using constants from on-board Flash");
   config.putString("versionDate", tempStr);

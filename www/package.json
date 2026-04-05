@@ -15,12 +15,12 @@
   },
   "dependencies": {
     "ansi-to-html": "^0.7.2",
-    "bittle-x": "file:../pkg",
     "gorilla-physics-ui": "file:../../gorilla-physics/www",
     "jszip": "^3.10.1",
     "monaco-editor": "^0.55.1",
     "monaco-editor-webpack-plugin": "^7.1.1",
-    "three": "^0.152.0"
+    "three": "^0.152.0",
+    "bittle-x": "file:../pkg"
   },
   "devDependencies": {
     "@types/three": "^0.144.0",

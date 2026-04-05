@@ -8,7 +8,6 @@ node_modules
 
 onshape
 
-/pkg
 www/pkg/
 
 *.png
@@ -23,3 +22,5 @@ www/src/assets/OpenCatEsp32.ino
 www/src/assets/OpenCatEsp32.ino.bin
 www/src/assets/symbols.txt
 www/static/OpenCatEsp32/build/
+
+.zed
