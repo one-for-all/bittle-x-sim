@@ -58,7 +58,6 @@ const editor = monaco.editor.create(document.getElementById("editor")!, {
 
 editor.onDidChangeModelContent(() => {
   if (currentFile) {
-    editor.setScrollTop(0);
     files[currentFile].content = editor.getValue();
   }
 });
