@@ -13,6 +13,8 @@ const default_ino_bin = new Uint8Array(default_ino_bin_buffer);
 type FileEntry = {
   content: string;
   language: string;
+  scrollTop?: number; // Added for scroll position
+  scrollLeft?: number; // Added for scroll position
 };
 
 let files: Record<string, FileEntry> = {
@@ -57,7 +59,7 @@ const editor = monaco.editor.create(document.getElementById("editor")!, {
 });
 
 editor.onDidChangeModelContent(() => {
-  if (currentFile) {
+  if (currentFile && files[currentFile]) {
     files[currentFile].content = editor.getValue();
   }
 });
@@ -87,12 +89,21 @@ function renderFileBar() {
 function openFile(filename: string) {
   if (currentFile && files[currentFile]) {
     files[currentFile].content = editor.getValue();
+    // Save scroll position before switching
+    files[currentFile].scrollTop = editor.getScrollTop();
+    files[currentFile].scrollLeft = editor.getScrollLeft();
   }
 
   currentFile = filename;
   const file = files[filename];
   monaco.editor.setModelLanguage(editor.getModel(), file.language);
   editor.setValue(file.content);
+
+  // Restore scroll position for the new file
+  editor.setScrollPosition({
+    scrollTop: file.scrollTop || 0,
+    scrollLeft: file.scrollLeft || 0,
+  });
 
   renderFileBar();
 }

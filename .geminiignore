@@ -1,0 +1,6 @@
+OpenCatEsp32/
+pkg/
+target/
+docs/
+.git/
+www/static/mesh
