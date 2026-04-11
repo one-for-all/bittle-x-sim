@@ -354,3 +354,11 @@ function reset_simulator(ino_bin: Uint8Array, symbols: string) {
   }
   simulator.hybrid.reboot_esp32_controller(0, ino_bin, symbols);
 }
+
+setInterval(() => {
+  let simulator = getSimulator();
+  if (simulator) {
+    const realtimeRatio = document.getElementById("realtimeRatio");
+    realtimeRatio.innerHTML = simulator.realtimeRatio.toFixed(2);
+  }
+}, 500);

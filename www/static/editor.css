@@ -174,6 +174,16 @@
     z-index: 1;
 }
 
+#realtimeRatio {
+    position: absolute;
+    flex: 1;
+    z-index: 2;
+    top: 10px;
+    right: 10px;
+    color: green;
+    visibility: hidden;
+}
+
 /* ── Serial Monitor Input Bar ─────────────────────────── */
 .serial-input-bar {
     position: absolute;
