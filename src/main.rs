@@ -1,6 +1,9 @@
 use std::time::Instant;
 
-use bittle_x::{builder::build_bittle_x, control::BittleXEsp32Controller};
+use bittle_x::{
+    builder::build_bittle_x,
+    control::{BittleXEsp32Controller, servo_control::BittleXServoController},
+};
 use esp32rs::{plot::plot, util::read_file};
 use gorilla_physics::{
     hybrid::{control::NullArticulatedController, mesh::URDFMeshes},
@@ -17,31 +20,32 @@ async fn main() {
 
     // let controller = NullArticulatedController {};
     let controller = BittleXEsp32Controller::new().await;
+    // let controller = BittleXServoController::new();
     state.set_controller(0, controller);
 
     let mut data = vec![];
     let mut data2: Vec<Float> = vec![];
 
-    let dt = 1. / (50. * 60.);
-    let t_final = 3.0;
+    let dt = 1e-3;
+    let t_final = 2.0;
     let num_steps = (t_final / dt) as usize;
 
     let start = Instant::now();
 
     for s in 0..num_steps {
         state.step(dt, &vec![]);
-        data.push(state.articulated[0].q()[0]);
+        data.push(state.articulated[0].q()[1]);
         // data2.push(state.controllers[0].debug_data());
     }
 
     let duration = start.elapsed();
 
-    println!("{}", state.controllers[0].get_uart());
-    // plot(&data2, dt, "pin");
+    // println!("{}", state.controllers[0].get_uart());
+    // // plot(&data2, dt, "pin");
 
-    state.controllers[0].debug();
+    // state.controllers[0].debug();
     println!("Time taken: {:?}", duration);
 
-    println!("angle: {}", state.articulated[0].q()[0].to_degrees());
-    plot(&data, dt, "arm angle");
+    println!("angle: {}", state.articulated[0].q()[1].to_degrees());
+    plot(&data, dt, "BittleXServoController");
 }

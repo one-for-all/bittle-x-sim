@@ -13,6 +13,8 @@ use gorilla_physics::{
 };
 use nalgebra::{DVector, dvector};
 
+pub mod servo_control;
+
 pub struct BittleXEsp32Controller {
     pub esp32: ESP32,
 

@@ -21,6 +21,7 @@ use crate::control::BittleXEsp32Controller;
 
 pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     let mut state = Hybrid::empty();
+    state.set_friction_mu(0.5);
     state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.));
 
     #[rustfmt::skip]
