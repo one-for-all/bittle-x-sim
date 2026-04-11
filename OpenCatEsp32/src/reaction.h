@@ -308,23 +308,23 @@ void reaction() {  // Reminder:  reaction() is repeatedly called in the "forever
       delay(delayShort
             + max(0, int(runDelay)));
     }
-  //   if (skill->period < 0) {
-  //     if (!strcmp(skill->skillName, "fd")) {  // need to optimize logic to combine "rest" and "fold"
-  //       shutServos();
-  //       gyroBalanceQ = false;
-  //       printToAllPorts('g');
-  //       idleTimer = 0;
-  //       token = '\0';
-  //     } else {
-  //       if (interruptedDuringBehavior) {
-  //         loadBySkillName("up");
-  //       } else
-  //         skill->convertTargetToPosture(currentAng);
-  //     }
-  //     for (int i = 0; i < DOF; i++)
-  //       currentAdjust[i] = 0;
-  //     printToAllPorts(token);  // behavior can confirm completion by sending the token back
-  //   }
+    if (skill->period < 0) {
+      if (!strcmp(skill->skillName, "fd")) {  // need to optimize logic to combine "rest" and "fold"
+        shutServos();
+        gyroBalanceQ = false;
+        printToAllPorts('g');
+        idleTimer = 0;
+        token = '\0';
+      } else {
+        if (interruptedDuringBehavior) {
+          loadBySkillName("up");
+        } else
+          skill->convertTargetToPosture(currentAng);
+      }
+      for (int i = 0; i < DOF; i++)
+        currentAdjust[i] = 0;
+      printToAllPorts(token);  // behavior can confirm completion by sending the token back
+    }
   }
 
   {

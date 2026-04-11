@@ -235,7 +235,45 @@ public:
     frame = 0;
   }
   void perform() {
-    if (period > 0) {  // postures and gaits
+    if (period < 0) {  // behaviors
+      interruptedDuringBehavior = false;
+      int8_t repeat = loopCycle[2] >= 0 && loopCycle[2] < 2 ? 0 : loopCycle[2] - 1;
+      gyroBalanceQlag = gyroBalanceQ;
+      gyroBalanceQ = strcmp(skillName, "bf") && strcmp(skillName, "ff") && strcmp(skillName, "flipF") && strcmp(skillName, "flipD") && strcmp(skillName, "flipL") && strcmp(skillName, "flipR") && strcmp(skillName, "pd") && strcmp(skillName, "hds") && strcmp(skillName, "bx") && strstr(skillName, "rl") == NULL;  // won't read gyro for fast motion
+      for (byte c = 0; c < abs(period); c++) {
+        // the last two in the row are transition speed and delay
+        Stream *serialPort = NULL;
+        String source;
+          // the BT_BLE is unhandled here
+          if (moduleActivatedQ[0] && Serial2.available()) {
+            serialPort = &Serial2;
+            source = "Serial2";
+          } else if (Serial.available()) {
+            serialPort = &Serial;
+            source = "Serial";
+          }
+        if (serialPort // user input
+            || (gyroBalanceQ                                                               // the IMU should be used for balancing
+                && ((imuException != IMU_EXCEPTION_FLIPPED && !strcmp(skillName, "rc"))    // recovered during recover
+                    || (imuException == IMU_EXCEPTION_FLIPPED && strcmp(skillName, "rc"))  // flipped during other skills
+                    ))) {
+          PTHL("imuException: ", imuException);
+          PTLF("Behavior interrupted");
+          interruptedDuringBehavior = true;
+          gyroBalanceQ = gyroBalanceQlag;  // Restore gyroBalanceQ before returning
+          return;
+        }
+        transform(dutyAngles + c * frameSize, angleDataRatio, dutyAngles[DOF + c * frameSize] / 8.0);
+        delay(abs(dutyAngles[DOF + 1 + c * frameSize] * 50));
+
+        if (repeat != 0 && c != 0 && c == loopCycle[1]) {
+          c = loopCycle[0] - 1;
+          if (repeat > 0)  // if repeat <0, infinite loop. only reset button will break the loop
+            repeat--;
+        }
+      }
+      gyroBalanceQ = gyroBalanceQlag;
+    } else  {  // postures and gaits
       for (int jointIndex = 0; jointIndex < DOF; jointIndex++) {
 #ifndef HEAD
         if (jointIndex == 0)
