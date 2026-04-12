@@ -16,6 +16,8 @@ stl_files = [
     "tail",
     "battlid",
     "battcase",
+    "809_25_v1",
+    "springs_v2",
 ]
 
 for file in stl_files:

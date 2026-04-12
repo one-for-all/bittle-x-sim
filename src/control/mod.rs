@@ -141,7 +141,9 @@ impl ArticulatedController for BittleXEsp32Controller {
 
             self.servos[i].angle = q;
             self.servos[i].vel = v;
-            let torque = self.servos[i].torque();
+            let mut torque = self.servos[i].torque();
+            torque -= v * 1e-4; // model joint friction
+
             torques.push(torque);
         }
 

@@ -5,17 +5,17 @@
   <!-- Link chassis -->
   <link name="chassis">
     <inertial>
-      <origin xyz="-0.00627301 -0.000563762 -0.000509336" rpy="0 0 0"/>
-      <mass value="0.147477"/>
-      <inertia ixx="0.000230248" ixy="-3.15525e-08" ixz="3.26997e-08" iyy="9.40258e-05" iyz="-7.45156e-06" izz="0.000300231"/>
+      <origin xyz="-0.00627312 0.000372119 0.00126341" rpy="0 0 0"/>
+      <mass value="0.158971"/>
+      <inertia ixx="0.000240792" ixy="-2.70106e-08" ixz="2.9522e-08" iyy="0.000102224" iyz="-5.77714e-06" izz="0.000322753"/>
     </inertial>
-    <!-- Part tail -->
+    <!-- Part tail_2 -->
     <visual>
       <origin xyz="-0.00639673 0.00254125 -0.0007563" rpy="-7.64786e-13 -3.43475e-16 -5.96644e-17"/>
       <geometry>
         <mesh filename="package://assets/tail.stl"/>
       </geometry>
-      <material name="tail_material">
+      <material name="tail_2_material">
         <color rgba="0.443137 0.431373 0.431373 1"/>
       </material>
     </visual>
@@ -200,6 +200,81 @@
       </material>
     </visual>
   </link>
+  <!-- Frame left_front_shoulder (dummy link + fixed joint) -->
+  <link name="left_front_shoulder">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="left_front_shoulder_frame" type="fixed">
+    <origin xyz="0.0347033 -0.0501588 -0.000503935" rpy="-1.5708 0.523599 -1.5708"/>
+    <parent link="chassis"/>
+    <child link="left_front_shoulder"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+  <!-- Frame right_front_shoulder (dummy link + fixed joint) -->
+  <link name="right_front_shoulder">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="right_front_shoulder_frame" type="fixed">
+    <origin xyz="-0.0472292 -0.0501881 -0.000503935" rpy="1.5708 0.523599 -1.5708"/>
+    <parent link="chassis"/>
+    <child link="right_front_shoulder"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+  <!-- Frame right_back_shoulder (dummy link + fixed joint) -->
+  <link name="right_back_shoulder">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="right_back_shoulder_frame" type="fixed">
+    <origin xyz="-0.0472292 0.0548119 -0.000503935" rpy="-1.5708 0.523599 1.5708"/>
+    <parent link="chassis"/>
+    <child link="right_back_shoulder"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+  <!-- Frame left_back_shoulder (dummy link + fixed joint) -->
+  <link name="left_back_shoulder">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="left_back_shoulder_frame" type="fixed">
+    <origin xyz="0.0347033 0.0548412 -0.000503935" rpy="1.5708 0.523599 1.5708"/>
+    <parent link="chassis"/>
+    <child link="left_back_shoulder"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+  <!-- Frame tail (dummy link + fixed joint) -->
+  <link name="tail">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="tail_frame" type="fixed">
+    <origin xyz="-0.00639673 0.085276 0.0444891" rpy="-7.64786e-13 -3.43475e-16 -5.96644e-17"/>
+    <parent link="chassis"/>
+    <child link="tail"/>
+    <axis xyz="0 0 0"/>
+  </joint>
   <!-- Link bittle_x_leg -->
   <link name="bittle_x_leg">
     <inertial>
@@ -207,6 +282,16 @@
       <mass value="0.00320032"/>
       <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
+    <!-- Part springs_v2 -->
+    <visual>
+      <origin xyz="-0.0100472 0.000102873 -0.000991506" rpy="-1.51844 4.99211e-05 -1.57175"/>
+      <geometry>
+        <mesh filename="package://assets/springs_v2.stl"/>
+      </geometry>
+      <material name="springs_v2_material">
+        <color rgba="0.956863 0.898039 0.654902 1"/>
+      </material>
+    </visual>
     <!-- Part 809_25_v1_2 -->
     <visual>
       <origin xyz="-0.046 3.68636e-13 -0.00265" rpy="2.77413e-16 -1.38778e-17 3.14159"/>
@@ -225,6 +310,16 @@
       </geometry>
       <material name="809_25_v1_3_material">
         <color rgba="0.752941 0.752941 0.752941 1"/>
+      </material>
+    </visual>
+    <!-- Part springs_v2_2 -->
+    <visual>
+      <origin xyz="-0.0429436 9.56526e-05 -0.00327486" rpy="-1.51844 -5.39851e-05 -1.56977"/>
+      <geometry>
+        <mesh filename="package://assets/springs_v2.stl"/>
+      </geometry>
+      <material name="springs_v2_2_material">
+        <color rgba="0.956863 0.898039 0.654902 1"/>
       </material>
     </visual>
     <!-- Part thighsym_lower -->
@@ -339,6 +434,16 @@
       <mass value="0.00320032"/>
       <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
+    <!-- Part springs_v2_3 -->
+    <visual>
+      <origin xyz="-0.0100472 0.000102873 -0.000991506" rpy="-1.51844 4.99211e-05 -1.57175"/>
+      <geometry>
+        <mesh filename="package://assets/springs_v2.stl"/>
+      </geometry>
+      <material name="springs_v2_3_material">
+        <color rgba="0.956863 0.898039 0.654902 1"/>
+      </material>
+    </visual>
     <!-- Part 809_25_v1_4 -->
     <visual>
       <origin xyz="-0.046 3.68677e-13 -0.00265" rpy="2.80217e-16 -1.58697e-31 3.14159"/>
@@ -357,6 +462,16 @@
       </geometry>
       <material name="809_25_v1_5_material">
         <color rgba="0.752941 0.752941 0.752941 1"/>
+      </material>
+    </visual>
+    <!-- Part springs_v2_4 -->
+    <visual>
+      <origin xyz="-0.0429436 9.56526e-05 -0.00327486" rpy="-1.51844 -5.39851e-05 -1.56977"/>
+      <geometry>
+        <mesh filename="package://assets/springs_v2.stl"/>
+      </geometry>
+      <material name="springs_v2_4_material">
+        <color rgba="0.956863 0.898039 0.654902 1"/>
       </material>
     </visual>
     <!-- Part thighsym_lower_2 -->
@@ -471,6 +586,16 @@
       <mass value="0.00320032"/>
       <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
+    <!-- Part springs_v2_5 -->
+    <visual>
+      <origin xyz="-0.0100472 0.000102873 -0.000991506" rpy="-1.51844 4.99211e-05 -1.57175"/>
+      <geometry>
+        <mesh filename="package://assets/springs_v2.stl"/>
+      </geometry>
+      <material name="springs_v2_5_material">
+        <color rgba="0.956863 0.898039 0.654902 1"/>
+      </material>
+    </visual>
     <!-- Part 809_25_v1_6 -->
     <visual>
       <origin xyz="-0.046 3.68656e-13 -0.00265" rpy="2.74609e-16 8.01187e-32 3.14159"/>
@@ -489,6 +614,16 @@
       </geometry>
       <material name="809_25_v1_7_material">
         <color rgba="0.752941 0.752941 0.752941 1"/>
+      </material>
+    </visual>
+    <!-- Part springs_v2_6 -->
+    <visual>
+      <origin xyz="-0.0429436 9.56526e-05 -0.00327486" rpy="-1.51844 -5.39851e-05 -1.56977"/>
+      <geometry>
+        <mesh filename="package://assets/springs_v2.stl"/>
+      </geometry>
+      <material name="springs_v2_6_material">
+        <color rgba="0.956863 0.898039 0.654902 1"/>
       </material>
     </visual>
     <!-- Part thighsym_lower_3 -->
@@ -603,6 +738,16 @@
       <mass value="0.00320032"/>
       <inertia ixx="6.4702e-08" ixy="-4.32909e-14" ixz="-4.44657e-08" iyy="1.08313e-06" iyz="-1.92002e-15" izz="1.11945e-06"/>
     </inertial>
+    <!-- Part springs_v2_7 -->
+    <visual>
+      <origin xyz="-0.0100472 0.000102873 -0.000991506" rpy="-1.51844 4.99211e-05 -1.57175"/>
+      <geometry>
+        <mesh filename="package://assets/springs_v2.stl"/>
+      </geometry>
+      <material name="springs_v2_7_material">
+        <color rgba="0.956863 0.898039 0.654902 1"/>
+      </material>
+    </visual>
     <!-- Part 809_25_v1_8 -->
     <visual>
       <origin xyz="-0.046 3.68636e-13 -0.00265" rpy="2.24001e-16 -1.57156e-31 3.14159"/>
@@ -621,6 +766,16 @@
       </geometry>
       <material name="809_25_v1_9_material">
         <color rgba="0.752941 0.752941 0.752941 1"/>
+      </material>
+    </visual>
+    <!-- Part springs_v2_8 -->
+    <visual>
+      <origin xyz="-0.0429436 9.56526e-05 -0.00327486" rpy="-1.51844 -5.39851e-05 -1.56977"/>
+      <geometry>
+        <mesh filename="package://assets/springs_v2.stl"/>
+      </geometry>
+      <material name="springs_v2_8_material">
+        <color rgba="0.956863 0.898039 0.654902 1"/>
       </material>
     </visual>
     <!-- Part thighsym_lower_4 -->
@@ -786,6 +941,21 @@
       </material>
     </visual>
   </link>
+  <!-- Frame head (dummy link + fixed joint) -->
+  <link name="head">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="head_frame" type="fixed">
+    <origin xyz="-0.00456954 -0.00012664 -0.0434696" rpy="-2.74378 7.34748e-32 -1.5708"/>
+    <parent link="bittle_x_head"/>
+    <child link="head"/>
+    <axis xyz="0 0 0"/>
+  </joint>
   <!-- Joint from chassis to bittle_x_head -->
   <joint name="head" type="revolute">
     <origin xyz="-0.00626294 -0.0435043 0.01074" rpy="3.14159 -0.523599 1.5708"/>

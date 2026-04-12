@@ -32,11 +32,14 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     ];
 
     let body_frame = "body";
-    let body = build_rigid(body_frame, "chassis", urdf, meshes);
+    let mut body = build_rigid(body_frame, "chassis", urdf, meshes);
+    add_bittle_shoulder_collision_sphere(&mut body, urdf);
+    add_bittle_tail_collision_point(&mut body, urdf);
     let body_joint = Joint::new_floating(Transform3D::move_z(body_frame, WORLD_FRAME, 0.06));
 
     let head_frame = "head";
-    let head = build_rigid(head_frame, "bittle_x_head", urdf, meshes);
+    let mut head = build_rigid(head_frame, "bittle_x_head", urdf, meshes);
+    add_bittle_head_collision_sphere(&mut head, urdf);
     let head_joint = build_joint(
         head_frame,
         body_frame,
@@ -198,4 +201,24 @@ fn add_bittle_knee_collision_point(rigid: &mut Rigid, which_leg: &str, urdf: &Ro
     let joint_name = format!("{}_knee_frame", which_leg);
     let point_joint = urdf.joints.iter().find(|&j| j.name == joint_name).unwrap();
     rigid.add_point_at(&Vector3::from(point_joint.origin.xyz.0));
+}
+
+fn add_bittle_shoulder_collision_sphere(body: &mut Rigid, urdf: &Robot) {
+    for which_leg in ["left_front", "right_front", "right_back", "left_back"] {
+        let joint_name = format!("{}_shoulder_frame", which_leg);
+        let point_joint = urdf.joints.iter().find(|&j| j.name == joint_name).unwrap();
+        body.add_collision_sphere_at(&Vector3::from(point_joint.origin.xyz.0), 0.012);
+    }
+}
+
+fn add_bittle_tail_collision_point(body: &mut Rigid, urdf: &Robot) {
+    let joint_name = "tail_frame";
+    let point_joint = urdf.joints.iter().find(|&j| j.name == joint_name).unwrap();
+    body.add_point_at(&Vector3::from(point_joint.origin.xyz.0));
+}
+
+fn add_bittle_head_collision_sphere(head: &mut Rigid, urdf: &Robot) {
+    let joint_name = "head_frame";
+    let point_joint = urdf.joints.iter().find(|&j| j.name == joint_name).unwrap();
+    head.add_collision_sphere_at(&Vector3::from(point_joint.origin.xyz.0), 0.019);
 }
