@@ -376,18 +376,6 @@ async function sendBackflip() {
 }
 backflipButton.addEventListener("click", sendBackflip);
 
-// Handstand Button
-const handstandButton = document.getElementById("handstandButton");
-async function sendHandstand() {
-  const payload = "khds\n";
-  console.log("Sending handstand command: ", JSON.stringify(payload));
-  let simulator = getSimulator();
-  if (simulator && simulator.hybrid) {
-    simulator.hybrid.send_uart(payload);
-  }
-}
-handstandButton.addEventListener("click", sendHandstand);
-
 // Trot Button
 const trotButton = document.getElementById("trotButton");
 async function sendTrot() {

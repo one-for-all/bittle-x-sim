@@ -1,6 +1,13 @@
-.movement-button {
+.movement-button-container {
+    top: 60px;
+    display: flex;
+    flex-direction: column;
     position: absolute;
+    gap: 5px;
     right: 10px; /* Align it to the right */
+}
+
+.movement-button {
     padding: 6px 12px;
     cursor: pointer;
     border: none;
