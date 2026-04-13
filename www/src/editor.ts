@@ -359,7 +359,8 @@ setInterval(() => {
   let simulator = getSimulator();
   if (simulator) {
     const realtimeRatio = document.getElementById("realtimeRatio");
-    realtimeRatio.innerHTML = simulator.realtimeRatio.toFixed(2);
+    realtimeRatio.innerHTML =
+      "realtime rate: " + simulator.realtimeRatio.toFixed(2);
   }
 }, 500);
 
