@@ -178,7 +178,7 @@
     position: absolute;
     flex: 1;
     z-index: 2;
-    top: 10px;
+    top: 30px;
     right: 10px;
     color: green;
     visibility: visible;
@@ -244,4 +244,29 @@
 
 .serial-send:active {
     background: #0a4f7e;
+}
+
+/* ── APE Logo ─────────────────────────── */
+#ape-logo {
+    position: absolute;
+    top: 0px; /* Position it near the top */
+    right: 0px; /* Position it on the right */
+    z-index: 3; /* Ensure it's above #realtimeRatio which has z-index: 2 */
+    font-size: 16px;
+    font-weight: bold;
+    color: #007acc; /* A common blue from the project's theme */
+    text-decoration: none;
+    transition: color 0.2s;
+    background-color: white;
+    padding: 2px 5px;
+}
+
+#ape-logo a {
+    color: inherit; /* Inherit color from parent */
+    text-decoration: none; /* Remove underline from link */
+}
+
+#ape-logo a:hover {
+    color: #1177bb; /* Slightly lighter blue on hover */
+    text-decoration: underline; /* Add underline on hover for clarity */
 }
