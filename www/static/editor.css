@@ -246,19 +246,51 @@
     background: #0a4f7e;
 }
 
-/* ── APE Logo ─────────────────────────── */
-#ape-logo {
+/* ── Collaboration Logos ─────────────────────────── */
+.header-logos {
     position: absolute;
-    top: 0px; /* Position it near the top */
-    right: 0px; /* Position it on the right */
-    z-index: 3; /* Ensure it's above #realtimeRatio which has z-index: 2 */
-    font-size: 16px;
+    top: 0px; /* Adjust as needed for vertical alignment with other elements */
+    right: 0px;
+    display: flex;
+    align-items: center;
+    z-index: 3; /* Higher z-index to ensure it's on top */
+    height: 24px;
+    flex-direction: row;
+}
+
+#petoi-logo-container {
+    display: flex;
+    background-color: white;
+}
+
+#petoi-logo-img {
+    display: flex;
+    align-items: center;
+    height: 24px; /* Match the height of the APE logo text */
+    width: auto; /* Maintain aspect ratio */
+    cursor: pointer;
+}
+
+.collaboration-separator {
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ccc; /* A neutral color */
+    margin: 0 5px; /* Small horizontal space */
+}
+
+/* Modify existing APE logo style */
+#ape-logo {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    font-size: 16px; /* Slightly larger to match potential image height */
     font-weight: bold;
     color: #007acc; /* A common blue from the project's theme */
     text-decoration: none;
     transition: color 0.2s;
     background-color: white;
-    padding: 2px 5px;
+    padding: 0px 5px;
 }
 
 #ape-logo a {
