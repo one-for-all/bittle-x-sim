@@ -362,3 +362,20 @@ setInterval(() => {
     realtimeRatio.innerHTML = simulator.realtimeRatio.toFixed(2);
   }
 }, 500);
+
+// ===== Backflip Button Functionality ================= //
+const backflipButton = document.querySelector(".backflip-button");
+
+async function sendBackflip() {
+  const payload = "kbf\n";
+  console.log("Sending backflip command: ", JSON.stringify(payload));
+
+  let simulator = getSimulator();
+  if (simulator && simulator.hybrid) {
+    simulator.hybrid.send_uart(payload);
+  }
+}
+
+if (backflipButton) {
+  backflipButton.addEventListener("click", sendBackflip);
+}
