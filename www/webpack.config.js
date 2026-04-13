@@ -41,32 +41,12 @@ const webpackConfig = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.ino$/,
-        type: "asset/source",
-      },
-      {
-        test: /\.h/,
-        type: "asset/source",
-      },
-      {
-        test: /\.cpp/,
-        type: "asset/source",
-      },
-      {
-        test: /\.md$/,
-        type: "asset/source",
-      },
-      {
-        test: /\.hex$/,
+        test: /\.(ino|h|cpp|md|hex|txt)$/,
         type: "asset/source",
       },
       {
         test: /\.bin$/,
         loader: "arraybuffer-loader",
-      },
-      {
-        test: /\.txt$/,
-        type: "asset/source",
       },
     ],
   },
