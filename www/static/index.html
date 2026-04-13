@@ -66,11 +66,39 @@
             </div>
             <div id="editor"></div>
             <div id="realtimeRatio">1.0</div>
-            <button class="backflip-button">backflip</button>
-            <button class="movement-button" style="top: 90px;">handstand</button>
-            <button class="movement-button" style="top: 120px;">trot</button>
-            <button class="movement-button" style="top: 150px;">backward</button>
-            <button class="movement-button" style="top: 180px;">be table</button>
+            <div class="movement-button-container">
+            <button
+                class="movement-button"
+                id="backflipButton"
+                style="top: 60px"
+            >
+                backflip
+            </button>
+            <button
+                class="movement-button"
+                id="handstandButton"
+                style="top: 90px"
+            >
+                handstand
+            </button>
+            <button class="movement-button" id="trotButton" style="top: 120px">
+                trot
+            </button>
+            <button
+                class="movement-button"
+                id="backwardButton"
+                style="top: 150px"
+            >
+                backward
+            </button>
+            <button
+                class="movement-button"
+                id="beTableButton"
+                style="top: 180px"
+            >
+                be table
+            </button>
+            </div>
             <div class="build-output" id="buildOutput">
                 <button class="close-output" id="closeOutput">×</button>
                 <div id="outputContent"></div>

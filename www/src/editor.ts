@@ -364,8 +364,7 @@ setInterval(() => {
 }, 500);
 
 // ===== Backflip Button Functionality ================= //
-const backflipButton = document.querySelector(".backflip-button");
-
+const backflipButton = document.getElementById("backflipButton");
 async function sendBackflip() {
   const payload = "kbf\n";
   console.log("Sending backflip command: ", JSON.stringify(payload));
@@ -375,17 +374,10 @@ async function sendBackflip() {
     simulator.hybrid.send_uart(payload);
   }
 }
-
-if (backflipButton) {
-  backflipButton.addEventListener("click", sendBackflip);
-}
-
-// ===== New Movement Button Functionality ================= //
+backflipButton.addEventListener("click", sendBackflip);
 
 // Handstand Button
-const handstandButton = document.querySelector(
-  ".movement-button[style*='top: 90px;']",
-);
+const handstandButton = document.getElementById("handstandButton");
 async function sendHandstand() {
   const payload = "khds\n";
   console.log("Sending handstand command: ", JSON.stringify(payload));
@@ -394,14 +386,10 @@ async function sendHandstand() {
     simulator.hybrid.send_uart(payload);
   }
 }
-if (handstandButton) {
-  handstandButton.addEventListener("click", sendHandstand);
-}
+handstandButton.addEventListener("click", sendHandstand);
 
 // Trot Button
-const trotButton = document.querySelector(
-  ".movement-button[style*='top: 120px;']",
-);
+const trotButton = document.getElementById("trotButton");
 async function sendTrot() {
   const payload = "ktrF\n";
   console.log("Sending trot command: ", JSON.stringify(payload));
@@ -410,14 +398,10 @@ async function sendTrot() {
     simulator.hybrid.send_uart(payload);
   }
 }
-if (trotButton) {
-  trotButton.addEventListener("click", sendTrot);
-}
+trotButton.addEventListener("click", sendTrot);
 
 // Backward Button
-const backwardButton = document.querySelector(
-  ".movement-button[style*='top: 150px;']",
-);
+const backwardButton = document.getElementById("backwardButton");
 async function sendBackward() {
   const payload = "kbk\n";
   console.log("Sending backward command: ", JSON.stringify(payload));
@@ -426,14 +410,10 @@ async function sendBackward() {
     simulator.hybrid.send_uart(payload);
   }
 }
-if (backwardButton) {
-  backwardButton.addEventListener("click", sendBackward);
-}
+backwardButton.addEventListener("click", sendBackward);
 
 // Be Table Button
-const beTableButton = document.querySelector(
-  ".movement-button[style*='top: 180px;']",
-);
+const beTableButton = document.getElementById("beTableButton");
 async function sendBeTable() {
   const payload = "ktbl\n";
   console.log("Sending be table command: ", JSON.stringify(payload));
@@ -442,6 +422,4 @@ async function sendBeTable() {
     simulator.hybrid.send_uart(payload);
   }
 }
-if (beTableButton) {
-  beTableButton.addEventListener("click", sendBeTable);
-}
+beTableButton.addEventListener("click", sendBeTable);

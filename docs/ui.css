@@ -1,0 +1,17 @@
+.movement-button {
+    position: absolute;
+    right: 10px; /* Align it to the right */
+    padding: 6px 12px;
+    cursor: pointer;
+    border: none;
+    background: #0e639c; /* Same background as backflip */
+    color: white;
+    border-radius: 4px;
+    z-index: 3;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+.movement-button:hover {
+    background: #1177bb; /* Same hover background as backflip */
+}

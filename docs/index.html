@@ -26,13 +26,14 @@
             }
         </style>
         <link rel="stylesheet" href="editor.css" />
+        <link rel="stylesheet" href="ui.css" />
     </head>
     <body>
         <div class="header-logos">
             <div id="petoi-logo-container">
                 <a href="https://petoi.com/" target="_blank">
                     <img
-                        src="/petoi_logo.avif"
+                        src="petoi_logo.avif"
                         alt="Petoi Logo"
                         id="petoi-logo-img"
                     />
@@ -65,6 +66,37 @@
             </div>
             <div id="editor"></div>
             <div id="realtimeRatio">1.0</div>
+            <button
+                class="movement-button"
+                id="backflipButton"
+                style="top: 60px"
+            >
+                backflip
+            </button>
+            <button
+                class="movement-button"
+                id="handstandButton"
+                style="top: 90px"
+            >
+                handstand
+            </button>
+            <button class="movement-button" id="trotButton" style="top: 120px">
+                trot
+            </button>
+            <button
+                class="movement-button"
+                id="backwardButton"
+                style="top: 150px"
+            >
+                backward
+            </button>
+            <button
+                class="movement-button"
+                id="beTableButton"
+                style="top: 180px"
+            >
+                be table
+            </button>
             <div class="build-output" id="buildOutput">
                 <button class="close-output" id="closeOutput">×</button>
                 <div id="outputContent"></div>
