@@ -379,3 +379,69 @@ async function sendBackflip() {
 if (backflipButton) {
   backflipButton.addEventListener("click", sendBackflip);
 }
+
+// ===== New Movement Button Functionality ================= //
+
+// Handstand Button
+const handstandButton = document.querySelector(
+  ".movement-button[style*='top: 90px;']",
+);
+async function sendHandstand() {
+  const payload = "khds\n";
+  console.log("Sending handstand command: ", JSON.stringify(payload));
+  let simulator = getSimulator();
+  if (simulator && simulator.hybrid) {
+    simulator.hybrid.send_uart(payload);
+  }
+}
+if (handstandButton) {
+  handstandButton.addEventListener("click", sendHandstand);
+}
+
+// Trot Button
+const trotButton = document.querySelector(
+  ".movement-button[style*='top: 120px;']",
+);
+async function sendTrot() {
+  const payload = "ktrF\n";
+  console.log("Sending trot command: ", JSON.stringify(payload));
+  let simulator = getSimulator();
+  if (simulator && simulator.hybrid) {
+    simulator.hybrid.send_uart(payload);
+  }
+}
+if (trotButton) {
+  trotButton.addEventListener("click", sendTrot);
+}
+
+// Backward Button
+const backwardButton = document.querySelector(
+  ".movement-button[style*='top: 150px;']",
+);
+async function sendBackward() {
+  const payload = "kbk\n";
+  console.log("Sending backward command: ", JSON.stringify(payload));
+  let simulator = getSimulator();
+  if (simulator && simulator.hybrid) {
+    simulator.hybrid.send_uart(payload);
+  }
+}
+if (backwardButton) {
+  backwardButton.addEventListener("click", sendBackward);
+}
+
+// Be Table Button
+const beTableButton = document.querySelector(
+  ".movement-button[style*='top: 180px;']",
+);
+async function sendBeTable() {
+  const payload = "ktbl\n";
+  console.log("Sending be table command: ", JSON.stringify(payload));
+  let simulator = getSimulator();
+  if (simulator && simulator.hybrid) {
+    simulator.hybrid.send_uart(payload);
+  }
+}
+if (beTableButton) {
+  beTableButton.addEventListener("click", sendBeTable);
+}
