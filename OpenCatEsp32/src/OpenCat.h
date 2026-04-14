@@ -415,7 +415,7 @@ byte buzzerVolume;
 float amplifierFactor = 100.0;  // to fit the actual amplifier range of BiBoard
 
 int delayLong = 20;
-int delayMid = 4; // 8; changed to 0 for when imu not enabled
+int delayMid = 4; // 8; decreased for when imu not enabled
 int delayException = 5;
 int delayShort = 3;
 int delayStep = 1;

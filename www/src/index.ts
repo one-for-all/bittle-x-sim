@@ -5,6 +5,7 @@ import("bittle-x").then((furuta) => {
   createBittleX().then((state) => {
     let interfaceSimulator = null;
     let simulator = new Simulator(interfaceSimulator);
+    simulator.showCollisionVisual = false;
 
     simulator.addHybrid(state);
     simulator.updateHybrid();
