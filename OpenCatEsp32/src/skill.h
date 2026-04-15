@@ -252,11 +252,7 @@ public:
             serialPort = &Serial;
             source = "Serial";
           }
-        if (serialPort // user input
-            || (gyroBalanceQ                                                               // the IMU should be used for balancing
-                && ((imuException != IMU_EXCEPTION_FLIPPED && !strcmp(skillName, "rc"))    // recovered during recover
-                    || (imuException == IMU_EXCEPTION_FLIPPED && strcmp(skillName, "rc"))  // flipped during other skills
-                    ))) {
+        if (serialPort) {
           PTHL("imuException: ", imuException);
           PTLF("Behavior interrupted");
           interruptedDuringBehavior = true;
