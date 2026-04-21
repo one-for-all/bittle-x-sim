@@ -65,7 +65,10 @@ const webpackConfig = {
       ],
     }),
 
-    new MonacoWebpackPlugin(),
+    new MonacoWebpackPlugin({
+      languages: ["cpp", "markdown"],
+      themes: ["vs-dark"],
+    }),
   ],
   // To disable warning on screen
   stats: {
