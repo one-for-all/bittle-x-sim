@@ -16,7 +16,6 @@ www/pkg/
 /OpenCatEsp32/bootloader_symbols.txt
 
 rom/
-
 !docs/rom/
 
 www/src/assets/src/

@@ -22,7 +22,7 @@ cp OpenCatEsp32/build/OpenCatEsp32.ino.partitions.bin www/static/OpenCatEsp32/bu
 cp OpenCatEsp32/build/OpenCatEsp32.ino.bin www/static/OpenCatEsp32/build/
 cp OpenCatEsp32/build/symbols.txt www/static/OpenCatEsp32/build/
 cp OpenCatEsp32/bootloader_symbols.txt www/static/OpenCatEsp32
-cp -r rom www/static/rom
+cp -r rom www/static/
 
 # Display files
 cp OpenCatEsp32/OpenCatEsp32.ino www/src/assets/
