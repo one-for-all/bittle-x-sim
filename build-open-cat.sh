@@ -16,7 +16,11 @@ arduino-cli compile --fqbn esp32:esp32:esp32 --board-options "CPUFreq=80,DebugLe
 xtensa-esp32-elf-nm -n OpenCatEsp32/build/OpenCatEsp32.ino.elf > OpenCatEsp32/build/symbols.txt
 
 # Initial build files
-cp -r OpenCatEsp32/build www/static/OpenCatEsp32/
+mkdir -p www/static/OpenCatEsp32/build/
+cp OpenCatEsp32/build/OpenCatEsp32.ino.bootloader.bin www/static/OpenCatEsp32/build/
+cp OpenCatEsp32/build/OpenCatEsp32.ino.partitions.bin www/static/OpenCatEsp32/build/
+cp OpenCatEsp32/build/OpenCatEsp32.ino.bin www/static/OpenCatEsp32/build/
+cp OpenCatEsp32/build/symbols.txt www/static/OpenCatEsp32/build/
 cp OpenCatEsp32/bootloader_symbols.txt www/static/OpenCatEsp32
 cp -r rom www/static/rom
 
