@@ -25,4 +25,5 @@ for file in stl_files:
         "onshape/assets/" + file + ".stl",
         "www/static/mesh/" + file + ".obj",
         verbose=False,
+        precision=6,
     )
