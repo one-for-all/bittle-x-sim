@@ -154,6 +154,95 @@ void reaction() {  // Reminder:  reaction() is repeatedly called in the "forever
           resetAsNewBoard('R');
           break;
         }
+      case T_INDEXED_SEQUENTIAL_ASC:    // move multiple indexed joints to angles once at a time (ASCII format entered in
+                                        // the serial monitor)
+      case T_INDEXED_SIMULTANEOUS_ASC:  // move multiple indexed joints to angles simultaneously (ASCII format entered
+                                        // in the serial monitor)
+      case T_TILT:  // tilt the robot, format: t axis angle. 0:yaw, 1:pitch, 2:roll
+      case T_BALANCE_SLOPE:
+        {
+          if (token == T_INDEXED_SIMULTANEOUS_ASC && cmdLen == 0)
+            manualHeadQ = false;
+          else {
+            int targetFrame[DOF + 1];
+            // arrayNCPY(targetFrame, currentAng, DOF);
+            for (int i = 0; i < DOF; i++) {
+              targetFrame[i] = currentAng[i] - (gyroBalanceQ ? currentAdjust[i] : 0);
+            }
+            targetFrame[DOF] = '~';
+
+            char *cmdForParsing = new char[cmdLen + 1];
+            // Use strncpy with bounds checking to prevent buffer overflow
+            strncpy(cmdForParsing, newCmd, cmdLen);
+            cmdForParsing[cmdLen] = '\0';  // Ensure null termination
+            if (token == T_SERVO_CALIBRATE && lastToken != T_SERVO_CALIBRATE) {
+              #ifdef T_SERVO_MICROSECOND
+                                setServoP(P_HARD);
+                                workingStiffness = false;
+              #endif
+              #ifdef VOICE
+                                if (newCmdIdx == 2) {  // only deactivate the voice module via serial port
+
+                                  char setCmd[] = "Ad~";  // turn off voice
+                                  set_voice(setCmd);
+                                }
+              #endif
+                                strcpy(newCmd, "calib");//it will override the newCmd, so we need to backup it with originalCmd
+                                loadBySkillName(newCmd);
+                              }
+            char *pch;
+            pch = strtok(cmdForParsing, " ,");
+            nonHeadJointQ = false;
+            do {  // it supports combining multiple commands at one time
+              // for example: "m8 40 m8 -35 m 0 50" can be written as "m8 40 8 -35 0 50"
+              // the combined commands should be less than four. string len <=30 to be exact.
+              int target[2] = {};
+              int inLen = 0;
+              for (byte b = 0; b < 2 && pch != NULL; b++) {
+                target[b] = atoi(pch);  //@@@ cast
+                pch = strtok(NULL, " ,\t");
+                inLen++;
+              }
+              // PTHL( target[0],target[1]);
+              if ((token == T_INDEXED_SEQUENTIAL_ASC || token == T_INDEXED_SIMULTANEOUS_ASC) && target[0] >= 0
+                  && target[0] < DOF) {
+                targetFrame[target[0]] = target[1];
+                if (target[0] < 4) {
+                  targetHead[target[0]] = target[1];
+                  manualHeadQ = true;
+                } else
+                  nonHeadJointQ = true;
+              }
+              if (token == T_INDEXED_SEQUENTIAL_ASC) {
+                transform(targetFrame, 1, 1);
+                delay(10);
+              } else if (token == T_BALANCE_SLOPE) {
+                if (inLen == 2) {
+                  balanceSlope[0] = max(-2, min(2, target[0]));
+                  balanceSlope[1] = max(-2, min(2, target[1]));
+                }
+              }
+              // delay(5);
+            } while (pch != NULL);
+
+            // Release dynamically allocated memory
+            delete[] cmdForParsing;
+
+            // For calibration commands, print calibration values after the loop
+            if (token == T_SERVO_CALIBRATE) {
+              printToAllPorts(range2String(DOF));
+              printToAllPorts(list2String(servoCalib));
+            }
+            if ((token == T_INDEXED_SEQUENTIAL_ASC || token == T_INDEXED_SIMULTANEOUS_ASC)
+                && (nonHeadJointQ || lastToken != T_SKILL)) {
+              // printToAllPorts(token);
+              transform(targetFrame, 1, transformSpeed);  // if (token == T_INDEXED_SEQUENTIAL_ASC) it will be useless
+              skill->convertTargetToPosture(targetFrame);
+            }
+            delete[] pch;
+          }
+          break;
+        }
       // this block handles array like arguments
       case T_INDEXED_SEQUENTIAL_BIN:
       case T_INDEXED_SIMULTANEOUS_BIN:
