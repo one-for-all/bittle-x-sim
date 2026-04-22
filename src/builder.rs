@@ -1,5 +1,5 @@
 use gorilla_physics::{
-    WORLD_FRAME,
+    PI, WORLD_FRAME,
     collision::halfspace::HalfSpace,
     hybrid::{
         Hybrid, Rigid,
@@ -35,7 +35,12 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     let mut body = build_rigid(body_frame, "chassis", urdf, meshes);
     add_bittle_shoulder_collision_sphere(&mut body, urdf);
     add_bittle_tail_collision_point(&mut body, urdf);
-    let body_joint = Joint::new_floating(Transform3D::move_z(body_frame, WORLD_FRAME, 0.06));
+    let body_joint = Joint::new_floating(Transform3D::new_xyz_rpy(
+        body_frame,
+        WORLD_FRAME,
+        &vec![0., -0.1, 0.06],
+        &vec![0., 0., PI / 2.],
+    ));
 
     let head_frame = "head";
     let mut head = build_rigid(head_frame, "bittle_x_head", urdf, meshes);
