@@ -6,23 +6,26 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rimraf ../docs pkg && webpack",
-    "start": "webpack serve --open --node-env development",
-    "prod": "webpack serve --open --node-env production",
+    "build": "rimraf ../docs pkg && rspack",
+    "start": "rspack serve --open --node-env development",
+    "prod": "rspack serve --open --node-env production",
     "build:gpu": "FEATURE_GPU=1 npm run build",
     "start:gpu": "FEATURE_GPU=1 npm run start",
     "prod:gpu": "FEATURE_GPU=1 npm run prod"
   },
   "dependencies": {
     "ansi-to-html": "^0.7.2",
+    "bittle-x": "file:../pkg",
     "gorilla-physics-ui": "file:../../gorilla-physics/www",
     "jszip": "^3.10.1",
     "monaco-editor": "^0.55.1",
     "monaco-editor-webpack-plugin": "^7.1.1",
-    "three": "^0.152.0",
-    "bittle-x": "file:../pkg"
+    "three": "^0.152.0"
   },
   "devDependencies": {
+    "@rspack/cli": "^2.0.0",
+    "@rspack/core": "^2.0.0",
+    "@rspack/dev-server": "^2.0.0",
     "@types/three": "^0.144.0",
     "@types/webpack-env": "^1.18.8",
     "@wasm-tool/wasm-pack-plugin": "^1.1.0",
@@ -34,9 +37,6 @@
     "rimraf": "^3.0.2",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.4.1",
-    "typescript": "^4.8.4",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.11.1"
+    "typescript": "^4.8.4"
   }
 }
