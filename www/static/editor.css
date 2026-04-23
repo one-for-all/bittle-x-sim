@@ -154,10 +154,33 @@
     opacity: 0.6;
 }
 
+#threejs {
+    height: 100vh;
+    flex: 1;
+    position: relative;
+}
+
+#editor {
+    flex: 1;
+    width: 100%;
+    z-index: 1;
+}
+
+#realtimeRatio {
+    position: absolute;
+    flex: 1;
+    z-index: 2;
+    top: 30px;
+    right: 10px;
+    color: green;
+    visibility: visible;
+    font-size: 13px;
+}
+
 /* build and serial output */
 .build-output {
     position: absolute;
-    bottom: 0;
+    bottom: 40px; /* Leave space for serial input bar */
     left: 0;
     right: 0;
     background: #1e1e1e;
@@ -203,23 +226,6 @@
 
 .close-output:hover {
     color: #fff;
-}
-
-#editor {
-    flex: 1;
-    width: 100%;
-    z-index: 1;
-}
-
-#realtimeRatio {
-    position: absolute;
-    flex: 1;
-    z-index: 2;
-    top: 30px;
-    right: 10px;
-    color: green;
-    visibility: visible;
-    font-size: 13px;
 }
 
 /* ── Serial Monitor Input Bar ─────────────────────────── */
