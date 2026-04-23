@@ -44,61 +44,59 @@
                 <a href="mailto:jn.sapiens@gmail.com">APE</a>
             </div>
         </div>
-        <div class="container">
-            <div class="file-bar" id="fileBar">
-                <div class="file-tab-scroll" id="fileTabScroll">
-                    <!-- file tabs go here -->
+        <div class="main-wrapper">
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-header">Files</div>
+                <div class="sidebar-files" id="sidebarFiles"></div>
+            </div>
+            <div class="container">
+                <div class="file-bar" id="fileBar">
+                    <div class="file-tab-scroll" id="fileTabScroll">
+                        <!-- file tabs go here -->
+                    </div>
+                    <div class="file-bar-actions" id="fileBarActions">
+                        <button class="run-button" id="runButton">
+                            <span>🔨</span>
+                            <span>Compile</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="file-bar-actions" id="fileBarActions">
-                    <button class="run-button" id="runButton">
-                        <span>🔨</span>
-                        <span>Compile</span>
+                <div id="editor"></div>
+                <div id="realtimeRatio">realtime rate: 1.0</div>
+                <div class="movement-button-container">
+                    <button class="movement-button" id="backflipButton">
+                        backflip
                     </button>
-                    <!--<button
-                        class="stop-button"
-                        id="stopButton"
-                        disabled="true"
-                    >
-                        <span>⏹</span>
-                        <span>Reset</span>
-                    </button>-->
+                    <button class="movement-button" id="trotButton">trot</button>
+                    <button class="movement-button" id="backwardButton">
+                        backward
+                    </button>
+                    <button class="movement-button" id="beTableButton">
+                        be table
+                    </button>
                 </div>
-            </div>
-            <div id="editor"></div>
-            <div id="realtimeRatio">realtime rate: 1.0</div>
-            <div class="movement-button-container">
-                <button class="movement-button" id="backflipButton">
-                    backflip
-                </button>
-                <button class="movement-button" id="trotButton">trot</button>
-                <button class="movement-button" id="backwardButton">
-                    backward
-                </button>
-                <button class="movement-button" id="beTableButton">
-                    be table
-                </button>
-            </div>
-            <div class="build-output" id="buildOutput">
-                <button class="close-output" id="closeOutput">×</button>
-                <div id="outputContent"></div>
-                <div id="serialMonitor"></div>
-            </div>
-            <div class="serial-input-bar" id="serialInputBar">
-                <input
-                    class="serial-input"
-                    id="serialInput"
-                    type="text"
-                    placeholder="serial monitor input..."
-                    autocomplete="off"
-                    spellcheck="false"
-                />
-                <button
-                    class="serial-send"
-                    id="serialSend"
-                    title="Send (Enter)"
-                >
-                    Send
-                </button>
+                <div class="build-output" id="buildOutput">
+                    <button class="close-output" id="closeOutput">×</button>
+                    <div id="outputContent"></div>
+                    <div id="serialMonitor"></div>
+                </div>
+                <div class="serial-input-bar" id="serialInputBar">
+                    <input
+                        class="serial-input"
+                        id="serialInput"
+                        type="text"
+                        placeholder="serial monitor input..."
+                        autocomplete="off"
+                        spellcheck="false"
+                    />
+                    <button
+                        class="serial-send"
+                        id="serialSend"
+                        title="Send (Enter)"
+                    >
+                        Send
+                    </button>
+                </div>
             </div>
         </div>
         <div id="threejs"></div>

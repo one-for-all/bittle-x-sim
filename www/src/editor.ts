@@ -65,7 +65,24 @@ editor.onDidChangeModelContent(() => {
 });
 
 renderFileBar();
+renderSidebar();
 openFile(Object.keys(files)[0]);
+
+function renderSidebar() {
+  const sidebarFiles = document.getElementById("sidebarFiles");
+  sidebarFiles.innerHTML = "";
+
+  Object.keys(files).forEach((filename) => {
+    const fileDiv = document.createElement("div");
+    fileDiv.className = "sidebar-file";
+    if (filename === currentFile) {
+      fileDiv.classList.add("active");
+    }
+    fileDiv.textContent = filename;
+    fileDiv.onclick = () => openFile(filename);
+    sidebarFiles.appendChild(fileDiv);
+  });
+}
 
 function renderFileBar() {
   const fileTabScroll = document.getElementById("fileTabScroll");
@@ -106,6 +123,7 @@ function openFile(filename: string) {
   });
 
   renderFileBar();
+  renderSidebar();
 }
 
 function getFileIcon(filename: string) {
