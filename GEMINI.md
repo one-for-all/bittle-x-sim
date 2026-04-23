@@ -4,16 +4,16 @@ This is an end-to-end simulation environment for Petoi's Bittle X Robot Dog, ena
 
 ## Project Overview
 
-The Bittle X Robot Simulation project is a hybrid system designed to provide a comprehensive development and testing platform for the Bittle X Robot Dog. It integrates a Rust backend, capable of targeting native, WebAssembly (for the web UI), and ESP32 firmware, with a rich web frontend built using TypeScript, Webpack, and Three.js for 3D visualization. The robot's kinematic and visual properties are defined using the URDF format.
+The Bittle X Robot Simulation project is a hybrid system designed to provide a comprehensive development and testing platform for the Bittle X Robot Dog. It integrates a Rust backend, capable of targeting native, WebAssembly (for the web UI), and ESP32 firmware, with a rich web frontend built using TypeScript, rspack, and Three.js for 3D visualization. The robot's kinematic and visual properties are defined using the URDF format.
 
 ## Technologies Used
 
 *   **Backend/Simulation Engine:** Rust (with `wasm-bindgen` for Wasm compilation)
-*   **Web Frontend:** TypeScript, Webpack, Three.js, Monaco Editor
+*   **Web Frontend:** TypeScript, rspack, Three.js, Monaco Editor
 *   **Robot Description:** URDF (Unified Robot Description Format)
 *   **Physics Engine:** `gorilla-physics`
 *   **Embedded Target:** ESP32 microcontroller (via Arduino framework and `esp32rs` crate)
-*   **Build Tools:** `cargo` (Rust), `npm`/`webpack` (Frontend), `arduino-cli` (ESP32 Firmware)
+*   **Build Tools:** `cargo` (Rust), `npm`/`rspack` (Frontend), `arduino-cli` (ESP32 Firmware)
 
 ## Building and Running
 
@@ -78,7 +78,7 @@ The `build-open-cat.sh` script automates the compilation and packaging of Arduin
 ## Development Conventions
 
 *   **Rust:** Follows standard Rust practices. Asynchronous operations are managed using `tokio`. The `bittle-x` library is structured into `builder` and `control` modules for organizing robot construction and control logic.
-*   **TypeScript/Frontend:** Employs standard ECMAScript and TypeScript module patterns. `webpack` is configured for bundling. `monaco-editor` is integrated for an enhanced code editing experience. `three.js` is utilized for 3D graphics rendering. Assets are managed and imported via the `webpack` build process.
+*   **TypeScript/Frontend:** Employs standard ECMAScript and TypeScript module patterns. `rspack` is configured for bundling. `monaco-editor` is integrated for an enhanced code editing experience. `three.js` is utilized for 3D graphics rendering. Assets are managed and imported via the `rspack` build process.
 *   **ESP32 Interaction:** The `esp32rs` crate and custom controller implementations (e.g., `BittleXEsp32Controller`) facilitate interaction with simulated ESP32 hardware and communication protocols.
 *   **File Structure:** Source code is organized into `src/` for Rust and `www/src/` for the web frontend. Assets, including the URDF definition, STL meshes, compiled firmware, and source files, are placed within `www/static/` and `www/src/assets/`.
 

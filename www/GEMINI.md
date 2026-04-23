@@ -12,7 +12,7 @@ The Bittle X UI is a TypeScript-based web application that integrates:
 
 ## Development
 
-The project uses [Rspack](https://rspack.dev/) for high-performance bundling, replacing the previous Webpack setup.
+The project uses [Rspack](https://rspack.dev/) for high-performance bundling.
 
 ### Build and Run
 
