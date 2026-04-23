@@ -27,7 +27,7 @@ The Bittle X Robot Simulation project is a hybrid system designed to provide a c
     ```bash
     npm run start
     ```
-    This command will bundle the Rust WebAssembly code and serve the web application. Open the provided URL in your browser to access the simulation.
+    This command will bundle the Rust WebAssembly code and serve the web application using Rspack. Open the provided URL in your browser to access the simulation.
 3.  **GPU-Accelerated Features:**
     To enable optional GPU acceleration:
     ```bash
