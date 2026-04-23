@@ -14,6 +14,7 @@
     "prod:gpu": "FEATURE_GPU=1 npm run prod"
   },
   "dependencies": {
+    "@types/webpack-env": "^1.18.8",
     "ansi-to-html": "^0.7.2",
     "bittle-x": "file:../pkg",
     "gorilla-physics-ui": "file:../../gorilla-physics/www",
@@ -27,10 +28,8 @@
     "@rspack/core": "^2.0.0",
     "@rspack/dev-server": "^2.0.0",
     "@types/three": "^0.144.0",
-    "@types/webpack-env": "^1.18.8",
     "@wasm-tool/wasm-pack-plugin": "^1.1.0",
     "arraybuffer-loader": "^1.0.8",
-    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^7.1.4",
     "postcss": "^8.5.8",
     "postcss-loader": "^8.2.1",
