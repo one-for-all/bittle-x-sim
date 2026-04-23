@@ -70,10 +70,11 @@ openFile(Object.keys(files)[0]);
 
 document.getElementById("toggleSidebar")!.addEventListener("click", () => {
   document.getElementById("sidebar")!.classList.toggle("hidden");
+
+  window.dispatchEvent(new Event("resize"));
 });
 
 const sidebar = document.getElementById("sidebar")!;
-const resizeHandle = document.getElementById("resizeHandle")!;
 const mainResizeHandle = document.getElementById("mainResizeHandle")!;
 const container = document.querySelector(".container") as HTMLElement;
 const threejs = document.getElementById("threejs")!;
@@ -96,24 +97,6 @@ function resizeMain(e: MouseEvent) {
 function stopResizeMain() {
   document.removeEventListener("mousemove", resizeMain);
   document.removeEventListener("mouseup", stopResizeMain);
-}
-
-resizeHandle.addEventListener("mousedown", (e) => {
-  e.preventDefault();
-  document.addEventListener("mousemove", resize);
-  document.addEventListener("mouseup", stopResize);
-});
-
-function resize(e: MouseEvent) {
-  const newWidth = e.clientX - sidebar.getBoundingClientRect().left;
-  if (newWidth > 50 && newWidth < 500) {
-    sidebar.style.width = newWidth + "px";
-  }
-}
-// ... rest of file
-function stopResize() {
-  document.removeEventListener("mousemove", resize);
-  document.removeEventListener("mouseup", stopResize);
 }
 
 function renderSidebar() {

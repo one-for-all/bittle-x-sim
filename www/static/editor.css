@@ -25,15 +25,12 @@
     flex-shrink: 0;
     transition: width 0.2s;
 }
-.resize-handle {
-    width: 4px;
-    background: #3e3e42;
-    cursor: col-resize;
-    flex-shrink: 0;
+
+.sidebar.hidden {
+    display: none;
 }
-.resize-handle:hover {
-    background: #0e639c;
-}
+
+.toggle-sidebar-button {
     background: #2d2d30;
     color: #ccc;
     border: none;
@@ -67,7 +64,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    flex: 0 0 50%;
+    flex: 0 0 35%;
     height: 100vh;
     min-width: 200px;
 }
@@ -210,7 +207,7 @@
 /* build and serial output */
 .build-output {
     position: absolute;
-    bottom: 40px; /* Leave space for serial input bar */
+    bottom: 0px; /* Leave space for serial input bar */
     left: 0;
     right: 0;
     background: #1e1e1e;
