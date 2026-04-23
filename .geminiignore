@@ -4,3 +4,5 @@ target/
 docs/
 .git/
 www/static/mesh
+
+*.glb
