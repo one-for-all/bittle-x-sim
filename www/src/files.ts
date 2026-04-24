@@ -1,4 +1,4 @@
-import demo_ino from "./assets/OpenCatEsp32.ino";
+import main_ino from "./assets/OpenCatEsp32.ino";
 import readme from "./assets/README.md";
 
 type FileEntry = {
@@ -9,8 +9,8 @@ type FileEntry = {
 };
 
 export let files: Record<string, FileEntry> = {
-  "demo.ino": {
-    content: demo_ino,
+  "main.ino": {
+    content: main_ino,
     language: "cpp",
   },
   "README.md": {
