@@ -10,14 +10,12 @@ const featureGPU = process.env.FEATURE_GPU === "1";
 
 const rspackConfig = {
   mode: isDev ? "development" : "production",
-  entry: {
-    index: "./src/index.ts",
-    editor: "./src/editor.ts",
-  },
+  entry: "./src/index.ts",
   devtool: isDev ? "inline-source-map" : false,
   output: {
     path: dist,
-    filename: "[name].js",
+    filename: "bundle.js",
+    clean: true,
   },
   resolve: {
     extensions: [".ts", ".js"],

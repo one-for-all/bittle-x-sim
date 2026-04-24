@@ -4,7 +4,7 @@ import demo_ino from "./assets/OpenCatEsp32.ino";
 import default_ino_bin_buffer from "./assets/OpenCatEsp32.ino.bin";
 import default_symbols from "./assets/symbols.txt";
 import readme from "./assets/README.md";
-import { getSimulator } from ".";
+import { getSimulator } from "./sim";
 import AnsiToHtml from "ansi-to-html";
 import JSZip from "jszip";
 
