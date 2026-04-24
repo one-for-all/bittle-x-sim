@@ -9,30 +9,6 @@
     font-size: 13px;
 }
 
-.movement-button-container {
-    top: 60px;
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    gap: 5px;
-    right: 10px; /* Align it to the right */
-}
-.movement-button {
-    padding: 6px 12px;
-    cursor: pointer;
-    border: none;
-    background: #0e639c; /* Same background as backflip */
-    color: white;
-    border-radius: 4px;
-    z-index: 3;
-    font-size: 13px;
-    font-weight: 500;
-    transition: background 0.2s;
-}
-.movement-button:hover {
-    background: #1177bb; /* Same hover background as backflip */
-}
-
 /* ── Collaboration Logos ─────────────────────────── */
 .header-logos {
     position: absolute;
@@ -49,7 +25,6 @@
     display: flex;
     background-color: white;
 }
-
 #petoi-logo-img {
     display: flex;
     align-items: center;
@@ -79,7 +54,6 @@
     background-color: white;
     padding: 0px 5px;
 }
-
 #ape-logo a {
     color: inherit; /* Inherit color from parent */
     text-decoration: none; /* Remove underline from link */
@@ -88,4 +62,29 @@
 #ape-logo a:hover {
     color: #1177bb; /* Slightly lighter blue on hover */
     text-decoration: underline; /* Add underline on hover for clarity */
+}
+
+/* ── Movement Buttons ─────────────────────────── */
+.movement-button-container {
+    top: 60px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    gap: 5px;
+    right: 10px; /* Align it to the right */
+}
+.movement-button {
+    padding: 6px 12px;
+    cursor: pointer;
+    border: none;
+    background: #0e639c; /* Same background as backflip */
+    color: white;
+    border-radius: 4px;
+    z-index: 3;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+.movement-button:hover {
+    background: #1177bb; /* Same hover background as backflip */
 }
