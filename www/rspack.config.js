@@ -28,7 +28,7 @@ const rspackConfig = {
     rules: [
       {
         test: /\.ts$/,
-        use: "ts-loader",
+        loader: "builtin:swc-loader",
       },
       {
         test: /\.css$/,
