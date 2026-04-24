@@ -1,54 +1,13 @@
 import * as monaco from "monaco-editor";
-import demo_ino from "./assets/OpenCatEsp32.ino";
 // import movement_sequences from "./assets/movement-sequences.h";
 import default_ino_bin_buffer from "./assets/OpenCatEsp32.ino.bin";
 import default_symbols from "./assets/symbols.txt";
-import readme from "./assets/README.md";
 import { getSimulator } from "./sim";
 import AnsiToHtml from "ansi-to-html";
 import JSZip from "jszip";
+import { files, currentFile, setCurrentFile } from "./files";
 
 const default_ino_bin = new Uint8Array(default_ino_bin_buffer);
-
-type FileEntry = {
-  content: string;
-  language: string;
-  scrollTop?: number; // Added for scroll position
-  scrollLeft?: number; // Added for scroll position
-};
-
-let files: Record<string, FileEntry> = {
-  "demo.ino": {
-    content: demo_ino,
-    language: "cpp",
-  },
-  "README.md": {
-    content: readme,
-    language: "markdown",
-  },
-};
-let currentFile: string = null;
-
-// 1. Create the Webpack context
-// Arguments: (Directory, Search Subdirectories?, Regex to match files)
-const filesContext = require.context(
-  "./assets/src",
-  true,
-  /\.(cpp|c|h|hpp|ino)$/i,
-);
-
-// 2. Iterate through all the matched files
-filesContext.keys().forEach((key) => {
-  // 'key' looks like: "./main.cpp" or "./utils/config.h"
-  // filesContext(key) returns the raw string content (thanks to your asset/source rule)
-  const fileContent = filesContext(key);
-
-  // add to files record
-  files[key.replace(/^\.\//, "")] = {
-    content: fileContent,
-    language: "cpp",
-  };
-});
 
 const editor = monaco.editor.create(document.getElementById("editor")!, {
   language: "cpp",
@@ -146,7 +105,8 @@ function openFile(filename: string) {
     files[currentFile].scrollLeft = editor.getScrollLeft();
   }
 
-  currentFile = filename;
+  setCurrentFile(filename);
+
   const file = files[filename];
   monaco.editor.setModelLanguage(editor.getModel(), file.language);
   editor.setValue(file.content);
