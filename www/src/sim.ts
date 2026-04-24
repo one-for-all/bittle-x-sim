@@ -57,3 +57,15 @@ function setSimulator(sim: Simulator) {
 export function getSimulator(): Simulator | null {
   return _simulator;
 }
+
+/// Reset the simulator and controller
+export function reset_simulator(ino_bin: Uint8Array, symbols: string) {
+  let simulator = getSimulator();
+  simulator.hybrid.reset();
+  let targets = [135, 190, 190, 80, 80, 190, 80, 80, 190];
+
+  for (let i = 0; i < targets.length; i++) {
+    simulator.hybrid.set_joint_q(i + 1, targets[i] * (Math.PI / 180)); // skip first floating joint
+  }
+  simulator.hybrid.reboot_esp32_controller(0, ino_bin, symbols);
+}

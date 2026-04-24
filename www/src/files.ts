@@ -18,13 +18,14 @@ export let files: Record<string, FileEntry> = {
     language: "markdown",
   },
 };
-
 export let currentFile: string = null;
+export function setCurrentFile(filename: string) {
+  currentFile = filename;
+}
+
+initFiles();
 
 function initFiles() {
-  if (initialized) return;
-  initialized = true;
-
   // 1. Create the Webpack context
   // Arguments: (Directory, Search Subdirectories?, Regex to match files)
   const filesContext = require.context(
@@ -46,10 +47,3 @@ function initFiles() {
     };
   });
 }
-
-export function setCurrentFile(file: string) {
-  currentFile = file;
-}
-
-let initialized = false;
-initFiles();
