@@ -1,0 +1,91 @@
+#realtimeRatio {
+    position: absolute;
+    flex: 1;
+    z-index: 2;
+    top: 30px;
+    right: 10px;
+    color: green;
+    visibility: visible;
+    font-size: 13px;
+}
+
+.movement-button-container {
+    top: 60px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    gap: 5px;
+    right: 10px; /* Align it to the right */
+}
+.movement-button {
+    padding: 6px 12px;
+    cursor: pointer;
+    border: none;
+    background: #0e639c; /* Same background as backflip */
+    color: white;
+    border-radius: 4px;
+    z-index: 3;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+.movement-button:hover {
+    background: #1177bb; /* Same hover background as backflip */
+}
+
+/* ── Collaboration Logos ─────────────────────────── */
+.header-logos {
+    position: absolute;
+    top: 0px; /* Adjust as needed for vertical alignment with other elements */
+    right: 0px;
+    display: flex;
+    align-items: center;
+    z-index: 3; /* Higher z-index to ensure it's on top */
+    height: 24px;
+    flex-direction: row;
+}
+
+#petoi-logo-container {
+    display: flex;
+    background-color: white;
+}
+
+#petoi-logo-img {
+    display: flex;
+    align-items: center;
+    height: 24px; /* Match the height of the APE logo text */
+    width: auto; /* Maintain aspect ratio */
+    cursor: pointer;
+}
+
+.collaboration-separator {
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ccc; /* A neutral color */
+    margin: 0 5px; /* Small horizontal space */
+}
+
+/* Modify existing APE logo style */
+#ape-logo {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    font-size: 16px; /* Slightly larger to match potential image height */
+    font-weight: bold;
+    color: #007acc; /* A common blue from the project's theme */
+    text-decoration: none;
+    transition: color 0.2s;
+    background-color: white;
+    padding: 0px 5px;
+}
+
+#ape-logo a {
+    color: inherit; /* Inherit color from parent */
+    text-decoration: none; /* Remove underline from link */
+}
+
+#ape-logo a:hover {
+    color: #1177bb; /* Slightly lighter blue on hover */
+    text-decoration: underline; /* Add underline on hover for clarity */
+}

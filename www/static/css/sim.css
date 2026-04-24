@@ -1,0 +1,6 @@
+#threejs {
+    height: 100vh;
+    flex: 1;
+    position: relative;
+    min-width: 0;
+}

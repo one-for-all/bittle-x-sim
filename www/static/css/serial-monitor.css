@@ -1,0 +1,112 @@
+/* build and serial output */
+.build-output {
+    position: absolute;
+    bottom: 0px; /* Leave space for serial input bar */
+    left: 0;
+    right: 0;
+    background: #1e1e1e;
+    border-top: 1px solid #007acc;
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 12px;
+    color: #ccc;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    white-space: pre-wrap;
+    display: none;
+    z-index: 10;
+}
+
+.build-output.show {
+    display: block;
+}
+
+.build-output .stdout {
+    color: #4ec9b0;
+}
+
+.build-output .stderr {
+    color: #f48771;
+}
+
+.build-output .success {
+    color: #89d185;
+}
+
+.close-output {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+}
+
+.close-output:hover {
+    color: #fff;
+}
+
+/* ── Serial Monitor Input Bar ─────────────────────────── */
+.serial-input-bar {
+    position: absolute;
+    display: flex;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-top: 1px solid #2d2d30;
+    background: #1e1e1e;
+    z-index: 11;
+}
+
+.serial-input {
+    flex: 1;
+    background: #2d2d30;
+    color: #d4d4d4;
+    border: 1px solid #3e3e42;
+    border-radius: 3px;
+    padding: 4px 8px;
+    font-size: 13px;
+    font-family: "Courier New", monospace;
+    height: 28px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.15s;
+    caret-color: #007acc;
+}
+
+.serial-input::placeholder {
+    color: #555;
+}
+
+.serial-input:focus {
+    border-color: #007acc;
+}
+
+.serial-send {
+    background: #0e639c;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 0 14px;
+    height: 28px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+    transition: background 0.15s;
+}
+
+.serial-send:hover {
+    background: #1177bb;
+}
+
+.serial-send:active {
+    background: #0a4f7e;
+}
