@@ -25,8 +25,12 @@
                 flex: 1;
             }
         </style>
-        <link rel="stylesheet" href="editor.css" />
-        <link rel="stylesheet" href="ui.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/sidebar.css" />
+        <link rel="stylesheet" href="css/editor.css" />
+        <link rel="stylesheet" href="css/sim.css" />
+        <link rel="stylesheet" href="css/serial-monitor.css" />
+        <link rel="stylesheet" href="css/overlay.css" />
     </head>
     <body>
         <div class="header-logos">
@@ -49,8 +53,7 @@
                 <div class="sidebar-header">Files</div>
                 <div class="sidebar-files" id="sidebarFiles"></div>
             </div>
-            <div class="resize-handle" id="resizeHandle"></div>
-            <div class="container">
+            <div class="editor-container">
                 <div class="file-bar" id="fileBar">
                     <button class="toggle-sidebar-button" id="toggleSidebar">
                         ☰
@@ -66,21 +69,6 @@
                     </div>
                 </div>
                 <div id="editor"></div>
-                <div id="realtimeRatio">realtime rate: 1.0</div>
-                <div class="movement-button-container">
-                    <button class="movement-button" id="backflipButton">
-                        backflip
-                    </button>
-                    <button class="movement-button" id="trotButton">
-                        trot
-                    </button>
-                    <button class="movement-button" id="backwardButton">
-                        backward
-                    </button>
-                    <button class="movement-button" id="beTableButton">
-                        be table
-                    </button>
-                </div>
             </div>
             <div class="main-resize-handle" id="mainResizeHandle"></div>
             <div id="threejs">
@@ -106,6 +94,19 @@
                         Send
                     </button>
                 </div>
+            </div>
+            <div id="realtimeRatio">realtime rate: 1.0</div>
+            <div class="movement-button-container">
+                <button class="movement-button" id="backflipButton">
+                    backflip
+                </button>
+                <button class="movement-button" id="trotButton">trot</button>
+                <button class="movement-button" id="backwardButton">
+                    backward
+                </button>
+                <button class="movement-button" id="beTableButton">
+                    be table
+                </button>
             </div>
         </div>
         <!--<script src="index.js"></script>-->
