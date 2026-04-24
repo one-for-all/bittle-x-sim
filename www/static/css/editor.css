@@ -14,54 +14,6 @@
 .main-resize-handle:hover {
     background: #0e639c;
 }
-.sidebar {
-    width: 200px;
-    background: #252526;
-    color: #ccc;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid #3e3e42;
-    overflow-y: auto;
-    flex-shrink: 0;
-    transition: width 0.2s;
-}
-
-.sidebar.hidden {
-    display: none;
-}
-
-.toggle-sidebar-button {
-    background: #2d2d30;
-    color: #ccc;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 16px;
-}
-.toggle-sidebar-button:hover {
-    background: #37373d;
-    color: #fff;
-}
-.sidebar-header {
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #fff;
-    font-size: 14px;
-}
-.sidebar-file {
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 3px;
-    font-size: 13px;
-}
-.sidebar-file:hover {
-    background: #37373d;
-}
-.sidebar-file.active {
-    background: #094771;
-    color: #fff;
-}
 .container {
     display: flex;
     flex-direction: column;
