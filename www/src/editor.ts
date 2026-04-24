@@ -299,10 +299,6 @@ async function runCode() {
   }
 }
 
-document.getElementById("closeOutput").addEventListener("click", async () => {
-  document.getElementById("buildOutput").classList.remove("show");
-});
-
 // document.getElementById("stopButton").addEventListener("click", async () => {
 //   reset_simulator(default_ino_bin, default_symbols);
 // });
@@ -360,42 +356,6 @@ async function compileArduinoFromStrings(
   return { inoBinBytes, symbolsText };
 }
 
-// Show the output div at the beginning
-const outputDiv = document.getElementById("buildOutput");
-outputDiv.classList.add("show");
-
-// Update serial monitor message periodically
-const serialMonitor = document.getElementById("serialMonitor");
-setInterval(() => {
-  let simulator = getSimulator();
-  if (simulator && simulator.hybrid) {
-    serialMonitor.textContent = simulator.hybrid.get_uart();
-  }
-}, 100); // update every 100 ms
-
-// ===== Serial Monitor Input ================= //
-const serialInput = document.getElementById("serialInput") as HTMLInputElement;
-const serialSend = document.getElementById("serialSend");
-
-async function sendSerialData() {
-  const text = serialInput.value;
-  if (!text) return;
-
-  const payload = text + "\n";
-  console.log("serial tx: ", JSON.stringify(payload));
-  serialInput.value = "";
-
-  let simulator = getSimulator();
-  if (simulator && simulator.hybrid) {
-    simulator.hybrid.send_uart(payload);
-  }
-}
-
-serialSend.addEventListener("click", sendSerialData);
-serialInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") sendSerialData();
-});
-
 /// Reset the simulator and controller
 function reset_simulator(ino_bin: Uint8Array, symbols: string) {
   let simulator = getSimulator();
@@ -407,61 +367,3 @@ function reset_simulator(ino_bin: Uint8Array, symbols: string) {
   }
   simulator.hybrid.reboot_esp32_controller(0, ino_bin, symbols);
 }
-
-setInterval(() => {
-  let simulator = getSimulator();
-  if (simulator) {
-    const realtimeRatio = document.getElementById("realtimeRatio");
-    realtimeRatio.innerHTML =
-      "realtime rate: " + simulator.realtimeRatio.toFixed(2);
-  }
-}, 500);
-
-// ===== Backflip Button Functionality ================= //
-const backflipButton = document.getElementById("backflipButton");
-async function sendBackflip() {
-  const payload = "kbf\n";
-  console.log("Sending backflip command: ", JSON.stringify(payload));
-
-  let simulator = getSimulator();
-  if (simulator && simulator.hybrid) {
-    simulator.hybrid.send_uart(payload);
-  }
-}
-backflipButton.addEventListener("click", sendBackflip);
-
-// Trot Button
-const trotButton = document.getElementById("trotButton");
-async function sendTrot() {
-  const payload = "ktrF\n";
-  console.log("Sending trot command: ", JSON.stringify(payload));
-  let simulator = getSimulator();
-  if (simulator && simulator.hybrid) {
-    simulator.hybrid.send_uart(payload);
-  }
-}
-trotButton.addEventListener("click", sendTrot);
-
-// Backward Button
-const backwardButton = document.getElementById("backwardButton");
-async function sendBackward() {
-  const payload = "kbk\n";
-  console.log("Sending backward command: ", JSON.stringify(payload));
-  let simulator = getSimulator();
-  if (simulator && simulator.hybrid) {
-    simulator.hybrid.send_uart(payload);
-  }
-}
-backwardButton.addEventListener("click", sendBackward);
-
-// Be Table Button
-const beTableButton = document.getElementById("beTableButton");
-async function sendBeTable() {
-  const payload = "ktbl\n";
-  console.log("Sending be table command: ", JSON.stringify(payload));
-  let simulator = getSimulator();
-  if (simulator && simulator.hybrid) {
-    simulator.hybrid.send_uart(payload);
-  }
-}
-beTableButton.addEventListener("click", sendBeTable);
