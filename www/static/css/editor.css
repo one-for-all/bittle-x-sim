@@ -14,7 +14,7 @@
 .main-resize-handle:hover {
     background: #0e639c;
 }
-.container {
+.editor-container {
     display: flex;
     flex-direction: column;
     flex: 0 0 35%;
