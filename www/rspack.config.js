@@ -19,6 +19,9 @@ const rspackConfig = {
   },
   resolve: {
     extensions: [".ts", ".js"],
+    alias: {
+      three: path.resolve(__dirname, "node_modules/three"),
+    },
   },
   experiments: {
     asyncWebAssembly: true,
