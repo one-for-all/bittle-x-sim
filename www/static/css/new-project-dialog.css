@@ -1,0 +1,32 @@
+.new-project-dialog {
+    position: absolute;
+    left: 40px;
+    top: 35px;
+    width: 150px;
+    background: #252526;
+    border: 1px solid #3e3e42;
+    padding: 10px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.new-project-dialog.hidden {
+    display: none;
+}
+.dialog-header {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+.create-project-btn {
+    padding: 6px 12px;
+    background: #0e639c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.create-project-btn:hover {
+    background: #1177bb;
+}
