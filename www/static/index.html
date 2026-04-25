@@ -34,17 +34,23 @@
         <div class="main-wrapper">
             <!-- Project sidebar (very left) -->
             <div class="project-sidebar">
+                <button
+                    class="new-project-button"
+                    id="newProject"
+                    title="New Project"
+                >
+                    +
+                </button>
                 <button class="toggle-explorer-button" id="toggleExplorer">
                     ☰
-                </button>
-                <button class="new-project-button" id="newProject" title="New Project">
-                    +
                 </button>
             </div>
             <!-- New project dialog -->
             <div class="new-project-dialog hidden" id="newProjectDialog">
                 <div class="dialog-header">Create Project</div>
-                <button class="create-project-btn" id="createProjectBtn">New Project</button>
+                <button class="create-project-btn" id="createProjectBtn">
+                    New Project
+                </button>
             </div>
             <!-- File explorer -->
             <div class="explorer" id="explorer">
