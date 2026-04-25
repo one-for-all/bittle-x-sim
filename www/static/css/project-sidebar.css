@@ -8,3 +8,17 @@
     padding-top: 5px;
     flex-shrink: 0;
 }
+
+.new-project-button {
+    background: transparent;
+    color: #ccc;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+}
+.new-project-button:hover {
+    background: #37373d;
+    color: #fff;
+}

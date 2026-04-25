@@ -8,6 +8,16 @@ type FileEntry = {
   scrollLeft?: number; // Added for scroll position
 };
 
+export function resetFiles() {
+  files = {
+    "main.ino": {
+      content: `void setup() {\n  // put your setup code here, to run once:\n}\n\nvoid loop() {\n  // put your main code here, to run repeatedly:\n}\n`,
+      language: "cpp",
+    },
+  };
+  currentFile = ""; // set to empty current file so editor will reset on open
+}
+
 export let files: Record<string, FileEntry> = {
   "main.ino": {
     content: main_ino,
