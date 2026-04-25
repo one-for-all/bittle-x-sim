@@ -22,7 +22,9 @@
             }
         </style>
         <link rel="stylesheet" href="css/main.css" />
-        <link rel="stylesheet" href="css/sidebar.css" />
+        <link rel="stylesheet" href="css/project-sidebar.css" />
+        <link rel="stylesheet" href="css/project-dialog.css" />
+        <link rel="stylesheet" href="css/explorer.css" />
         <link rel="stylesheet" href="css/editor.css" />
         <link rel="stylesheet" href="css/sim.css" />
         <link rel="stylesheet" href="css/serial-monitor.css" />
@@ -30,16 +32,37 @@
     </head>
     <body>
         <div class="main-wrapper">
-            <!--File explorer sidebar -->
-            <div class="sidebar" id="sidebar">
-                <div class="sidebar-header">Files</div>
-                <div class="sidebar-files" id="sidebarFiles"></div>
+            <!-- Project sidebar (very left) -->
+            <div class="project-sidebar">
+                <button
+                    class="project-dialog-button"
+                    id="projectDialogButton"
+                    title="Project Dialog"
+                >
+                    +
+                </button>
+                <button
+                    class="toggle-explorer-button"
+                    id="toggleExplorerButton"
+                    title="Toggle Explorer"
+                >
+                    ☰
+                </button>
+            </div>
+            <!-- Project dialog -->
+            <div class="project-dialog hidden" id="projectDialog">
+                <div class="dialog-header">Create Project</div>
+                <button class="create-project-btn" id="createProjectBtn">
+                    New Project
+                </button>
+            </div>
+            <!-- File explorer -->
+            <div class="explorer" id="explorer">
+                <div class="explorer-header">Files</div>
+                <div class="explorer-files" id="explorerFiles"></div>
             </div>
             <div class="editor-container">
                 <div class="file-bar" id="fileBar">
-                    <button class="toggle-sidebar-button" id="toggleSidebar">
-                        ☰
-                    </button>
                     <div class="file-tab-scroll" id="fileTabScroll">
                         <!-- file tabs go here -->
                     </div>
