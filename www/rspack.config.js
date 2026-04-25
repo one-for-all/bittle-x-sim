@@ -49,7 +49,15 @@ const rspackConfig = {
   },
   plugins: [
     new rspack.CopyRspackPlugin({
-      patterns: [{ from: "static", to: dist }],
+      patterns: [
+        {
+          from: "static",
+          to: dist,
+          globOptions: {
+            ignore: ["**/GEMINI.md"],
+          },
+        },
+      ],
     }),
 
     new WasmPackPlugin({
