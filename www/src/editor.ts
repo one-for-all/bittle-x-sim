@@ -1,7 +1,7 @@
 import * as monaco from "monaco-editor";
 import { currentFile, files, setCurrentFile } from "./files";
 import { renderFileBar } from "./filebar";
-import { renderSidebar } from "./sidebar";
+import { renderExplorer } from "./explorer";
 
 export const editor = monaco.editor.create(document.getElementById("editor")!, {
   language: "cpp",
@@ -38,5 +38,5 @@ export function openFile(filename: string) {
   });
 
   renderFileBar();
-  renderSidebar();
+  renderExplorer();
 }

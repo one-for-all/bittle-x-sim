@@ -9,7 +9,7 @@
     flex-shrink: 0;
 }
 
-.sidebar {
+.explorer {
     width: 200px;
     background: #252526;
     color: #ccc;
@@ -21,31 +21,31 @@
     flex-shrink: 0;
     transition: width 0.2s;
 }
-.sidebar.hidden {
+.explorer.hidden {
     display: none;
 }
 
-.sidebar-header {
+.explorer-header {
     font-weight: bold;
     margin-bottom: 10px;
     color: #fff;
     font-size: 14px;
 }
-.sidebar-file {
+.explorer-file {
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 3px;
     font-size: 13px;
 }
-.sidebar-file:hover {
+.explorer-file:hover {
     background: #37373d;
 }
-.sidebar-file.active {
+.explorer-file.active {
     background: #094771;
     color: #fff;
 }
 
-.toggle-sidebar-button {
+.toggle-explorer-button {
     background: transparent;
     color: #ccc;
     border: none;
@@ -54,7 +54,7 @@
     font-size: 16px;
     width: 100%;
 }
-.toggle-sidebar-button:hover {
+.toggle-explorer-button:hover {
     background: #37373d;
     color: #fff;
 }

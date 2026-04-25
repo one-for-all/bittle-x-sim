@@ -9,7 +9,7 @@ The Bittle X Robot Simulation utilizes a modular, component-based layout strateg
 - **Resizing**: A `.main-resize-handle` separates the editor area from the simulation area, allowing for manual width adjustment.
 
 ### 2. Functional Areas
-- **Sidebar (`sidebar.css`)**: A left-aligned flex container that toggles visibility. It occupies a fixed width and manages file navigation.
+- **Explorer (`explorer.css`)**: A left-aligned flex container that toggles visibility. It occupies a fixed width and manages file navigation.
 - **Editor Area (`editor.css`)**: Uses a vertical flex column (`flex-direction: column`) to stack the `file-bar` and the `editor` (Monaco) area. The editor expands (`flex: 1`) to fill available space.
 - **Simulation/Serial Area (`sim.css`, `serial-monitor.css`)**: 
     - The container (`#threejs`) fills the remaining horizontal space (`flex: 1`).
