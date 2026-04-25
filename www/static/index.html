@@ -35,18 +35,22 @@
             <!-- Project sidebar (very left) -->
             <div class="project-sidebar">
                 <button
-                    class="new-project-button"
-                    id="newProject"
-                    title="New Project"
+                    class="project-dialog-button"
+                    id="projectDialogButton"
+                    title="Project Dialog"
                 >
                     +
                 </button>
-                <button class="toggle-explorer-button" id="toggleExplorer">
+                <button
+                    class="toggle-explorer-button"
+                    id="toggleExplorerButton"
+                    title="Toggle Explorer"
+                >
                     ☰
                 </button>
             </div>
-            <!-- New project dialog -->
-            <div class="new-project-dialog hidden" id="newProjectDialog">
+            <!-- Project dialog -->
+            <div class="project-dialog hidden" id="projectDialog">
                 <div class="dialog-header">Create Project</div>
                 <button class="create-project-btn" id="createProjectBtn">
                     New Project

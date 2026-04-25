@@ -9,7 +9,7 @@
     flex-shrink: 0;
 }
 
-.new-project-button {
+.project-dialog-button {
     background: transparent;
     color: #ccc;
     border: none;
@@ -18,7 +18,7 @@
     font-size: 18px;
     width: 100%;
 }
-.new-project-button:hover {
+.project-dialog-button:hover {
     background: #37373d;
     color: #fff;
 }

@@ -20,7 +20,9 @@ export function renderExplorer() {
 
 renderExplorer();
 
-document.getElementById("toggleExplorer")!.addEventListener("click", () => {
-  document.getElementById("explorer")!.classList.toggle("hidden");
-  window.dispatchEvent(new Event("resize"));
-});
+document
+  .getElementById("toggleExplorerButton")!
+  .addEventListener("click", () => {
+    document.getElementById("explorer")!.classList.toggle("hidden");
+    window.dispatchEvent(new Event("resize"));
+  });

@@ -1,4 +1,4 @@
-.new-project-dialog {
+.project-dialog {
     position: absolute;
     left: 40px;
     top: 0px;
@@ -11,7 +11,7 @@
     flex-direction: column;
     gap: 10px;
 }
-.new-project-dialog.hidden {
+.project-dialog.hidden {
     display: none;
 }
 .dialog-header {
