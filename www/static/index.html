@@ -30,16 +30,19 @@
     </head>
     <body>
         <div class="main-wrapper">
-            <!--File explorer sidebar -->
+            <!-- Project sidebar (very left) -->
+            <div class="project-sidebar">
+                <button class="toggle-sidebar-button" id="toggleSidebar">
+                    ☰
+                </button>
+            </div>
+            <!-- File explorer sidebar -->
             <div class="sidebar" id="sidebar">
                 <div class="sidebar-header">Files</div>
                 <div class="sidebar-files" id="sidebarFiles"></div>
             </div>
             <div class="editor-container">
                 <div class="file-bar" id="fileBar">
-                    <button class="toggle-sidebar-button" id="toggleSidebar">
-                        ☰
-                    </button>
                     <div class="file-tab-scroll" id="fileTabScroll">
                         <!-- file tabs go here -->
                     </div>

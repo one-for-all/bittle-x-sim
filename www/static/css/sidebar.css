@@ -1,3 +1,14 @@
+.project-sidebar {
+    width: 40px;
+    background: #252526;
+    border-right: 1px solid #3e3e42;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5px;
+    flex-shrink: 0;
+}
+
 .sidebar {
     width: 200px;
     background: #252526;
@@ -35,12 +46,13 @@
 }
 
 .toggle-sidebar-button {
-    background: #2d2d30;
+    background: transparent;
     color: #ccc;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
     font-size: 16px;
+    width: 100%;
 }
 .toggle-sidebar-button:hover {
     background: #37373d;
