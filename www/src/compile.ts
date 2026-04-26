@@ -1,7 +1,7 @@
 import { reset_simulator } from "./sim";
 import AnsiToHtml from "ansi-to-html";
 import JSZip from "jszip";
-import { currentFile, files } from "./files";
+import { currentFile, files, inoFileName } from "./files";
 import { editor } from "./editor";
 
 // Build and Run the code
@@ -18,15 +18,12 @@ async function buildZipBuffer(): Promise<ArrayBuffer> {
 
   // Do not zip the following files inside src directory
   let zip_file_names = Object.keys(files).filter(
-    (key) => key != "OpenCatEsp32.ino" && key != "README.md",
+    (key) => key != "README.md" && !key.endsWith(".ino"),
   );
 
   zip_file_names.forEach((zip_file_name) => {
     zip.file(zip_file_name, files[zip_file_name].content);
   });
-
-  // Zip the main ino file
-  zip.file("OpenCatEsp32.ino", files["OpenCatEsp32.ino"].content);
 
   // Generate the zip as an ArrayBuffer
   return await zip.generateAsync({ type: "arraybuffer" });
@@ -44,7 +41,7 @@ async function compileCode() {
     files[currentFile].content = editor.getValue();
   }
 
-  const ino_source = files["OpenCatEsp32.ino"].content; // get demo.ino file content
+  const ino_source = files[inoFileName()].content;
 
   // Disable button and show loading
   runButton.disabled = true;
@@ -150,7 +147,7 @@ async function compileArduinoFromStrings(
   form.set(
     "ino_file",
     new Blob([inoSource], { type: "text/plain" }),
-    "OpenCatEsp32.ino",
+    "main.ino",
   );
   form.set(
     "zip_bundle",

@@ -10,7 +10,7 @@ type FileEntry = {
 
 export function resetFiles() {
   files = {
-    "OpenCatEsp32.ino": {
+    "main.ino": {
       content: default_ino,
       language: "cpp",
     },
@@ -52,4 +52,12 @@ function initFiles() {
       language: "cpp",
     };
   });
+}
+
+export function inoFileName() {
+  let ino_file_names = Object.keys(files).filter((key) => key.endsWith(".ino"));
+  if (ino_file_names.length != 1) {
+    alert("Need to have one and only one .ino file");
+  }
+  return ino_file_names[0];
 }

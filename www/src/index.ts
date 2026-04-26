@@ -3,14 +3,14 @@ import "./editor";
 import "./motion_button";
 import "./serial_monitor";
 import "./resize";
-import { files, resetFiles } from "./files";
+import { files, inoFileName, resetFiles } from "./files";
 import { openFile } from "./editor";
 import "./compile";
 import { renderExplorer } from "./explorer";
 import { renderFileBar } from "./filebar";
 
 initSimulator();
-openFile("OpenCatEsp32.ino");
+openFile(inoFileName());
 
 document
   .getElementById("projectDialogButton")!
@@ -23,6 +23,6 @@ document.getElementById("createProjectBtn")!.addEventListener("click", () => {
   resetFiles();
   renderExplorer();
   renderFileBar();
-  openFile("OpenCatEsp32.ino");
+  openFile("main.ino");
   document.getElementById("projectDialog")!.classList.add("hidden");
 });
