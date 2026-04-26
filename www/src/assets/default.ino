@@ -31,7 +31,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  // Use servoSetAngle() to set servo angles
+  // Note: Use servoSetAngle() to set servo angles
 }
 
 // Note: need to call writeMicroseconds(), rather than write(),
