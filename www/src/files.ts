@@ -1,4 +1,4 @@
-import main_ino from "./assets/OpenCatEsp32.ino";
+import main_ino from "./assets/OpenCatEsp32/OpenCatEsp32.ino";
 import readme from "./assets/README.md";
 import default_ino from "./assets/default.ino";
 
@@ -40,7 +40,7 @@ function initFiles() {
   // 1. Create the Webpack context
   // Arguments: (Directory, Search Subdirectories?, Regex to match files)
   const filesContext = require.context(
-    "./assets/src",
+    "./assets/OpenCatEsp32/src",
     true,
     /\.(cpp|c|h|hpp|ino)$/i,
   );

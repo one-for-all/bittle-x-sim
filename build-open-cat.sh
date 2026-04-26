@@ -25,8 +25,8 @@ cp OpenCatEsp32/bootloader_symbols.txt www/static/OpenCatEsp32
 cp -r rom www/static/
 
 # Display files
-cp OpenCatEsp32/OpenCatEsp32.ino www/src/assets/
-cp -r OpenCatEsp32/src www/src/assets/
+cp OpenCatEsp32/OpenCatEsp32.ino www/src/assets/OpenCatEsp32/
+cp -r OpenCatEsp32/src www/src/assets/OpenCatEsp32/
 
 # default compiled binary and symbol for when user hits reset
 cp OpenCatEsp32/build/OpenCatEsp32.ino.bin www/src/assets/

@@ -19,6 +19,7 @@ rom/
 !docs/rom/
 
 www/src/assets/src/
+www/src/assets/OpenCatEsp32/
 www/src/assets/OpenCatEsp32.ino
 www/src/assets/OpenCatEsp32.ino.bin
 www/src/assets/symbols.txt
