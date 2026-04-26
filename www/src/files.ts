@@ -1,4 +1,3 @@
-import main_ino from "./assets/OpenCatEsp32/OpenCatEsp32.ino";
 import readme from "./assets/README.md";
 import default_ino from "./assets/default.ino";
 
@@ -11,7 +10,7 @@ type FileEntry = {
 
 export function resetFiles() {
   files = {
-    "main.ino": {
+    "OpenCatEsp32.ino": {
       content: default_ino,
       language: "cpp",
     },
@@ -20,10 +19,6 @@ export function resetFiles() {
 }
 
 export let files: Record<string, FileEntry> = {
-  "main.ino": {
-    content: main_ino,
-    language: "cpp",
-  },
   "README.md": {
     content: readme,
     language: "markdown",
@@ -40,7 +35,7 @@ function initFiles() {
   // 1. Create the Webpack context
   // Arguments: (Directory, Search Subdirectories?, Regex to match files)
   const filesContext = require.context(
-    "./assets/OpenCatEsp32/src",
+    "./assets/OpenCatEsp32",
     true,
     /\.(cpp|c|h|hpp|ino)$/i,
   );

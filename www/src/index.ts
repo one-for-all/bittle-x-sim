@@ -10,7 +10,7 @@ import { renderExplorer } from "./explorer";
 import { renderFileBar } from "./filebar";
 
 initSimulator();
-openFile(Object.keys(files)[0]);
+openFile("OpenCatEsp32.ino");
 
 document
   .getElementById("projectDialogButton")!
@@ -23,6 +23,6 @@ document.getElementById("createProjectBtn")!.addEventListener("click", () => {
   resetFiles();
   renderExplorer();
   renderFileBar();
-  openFile("main.ino");
+  openFile("OpenCatEsp32.ino");
   document.getElementById("projectDialog")!.classList.add("hidden");
 });

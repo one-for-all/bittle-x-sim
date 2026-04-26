@@ -18,15 +18,15 @@ async function buildZipBuffer(): Promise<ArrayBuffer> {
 
   // Do not zip the following files inside src directory
   let zip_file_names = Object.keys(files).filter(
-    (key) => key != "main.ino" && key != "README.md",
+    (key) => key != "OpenCatEsp32.ino" && key != "README.md",
   );
 
   zip_file_names.forEach((zip_file_name) => {
-    zip.file("src/" + zip_file_name, files[zip_file_name].content);
+    zip.file(zip_file_name, files[zip_file_name].content);
   });
 
   // Zip the main ino file
-  zip.file("main.ino", files["main.ino"].content);
+  zip.file("OpenCatEsp32.ino", files["OpenCatEsp32.ino"].content);
 
   // Generate the zip as an ArrayBuffer
   return await zip.generateAsync({ type: "arraybuffer" });
@@ -44,7 +44,7 @@ async function compileCode() {
     files[currentFile].content = editor.getValue();
   }
 
-  const ino_source = files["main.ino"].content; // get demo.ino file content
+  const ino_source = files["OpenCatEsp32.ino"].content; // get demo.ino file content
 
   // Disable button and show loading
   runButton.disabled = true;
@@ -150,7 +150,7 @@ async function compileArduinoFromStrings(
   form.set(
     "ino_file",
     new Blob([inoSource], { type: "text/plain" }),
-    "main.ino",
+    "OpenCatEsp32.ino",
   );
   form.set(
     "zip_bundle",
