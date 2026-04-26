@@ -19,14 +19,15 @@
     font-size: 14px;
     font-weight: bold;
 }
-.create-project-btn {
+.create-project-btn, .new-file-btn {
     padding: 6px 12px;
     background: #0e639c;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 3px;
+    text-align: center;
 }
-.create-project-btn:hover {
+.create-project-btn:hover, .new-file-btn:hover {
     background: #1177bb;
 }

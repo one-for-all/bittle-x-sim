@@ -26,3 +26,15 @@ document.getElementById("createProjectBtn")!.addEventListener("click", () => {
   openFile("main.ino");
   document.getElementById("projectDialog")!.classList.add("hidden");
 });
+
+document.getElementById("newFileBtn")!.addEventListener("click", () => {
+  const filename = "untitled";
+  files[filename] = {
+    content: "",
+    language: "cpp",
+  };
+  renderExplorer();
+  renderFileBar();
+  openFile(filename);
+  document.getElementById("projectDialog")!.classList.add("hidden");
+});
