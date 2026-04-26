@@ -1,5 +1,6 @@
 import main_ino from "./assets/OpenCatEsp32.ino";
 import readme from "./assets/README.md";
+import default_ino from "./assets/default.ino";
 
 type FileEntry = {
   content: string;
@@ -11,7 +12,7 @@ type FileEntry = {
 export function resetFiles() {
   files = {
     "main.ino": {
-      content: `void setup() {\n  // put your setup code here, to run once:\n}\n\nvoid loop() {\n  // put your main code here, to run repeatedly:\n}\n`,
+      content: default_ino,
       language: "cpp",
     },
   };
