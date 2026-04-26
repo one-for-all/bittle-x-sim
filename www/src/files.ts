@@ -18,6 +18,19 @@ export function resetFiles() {
   currentFile = ""; // set to empty current file so editor will reset on open
 }
 
+export function renameFile(oldName: string, newName: string) {
+  if (files[newName]) {
+    alert("A file with that name already exists.");
+    return false;
+  }
+  files[newName] = files[oldName];
+  delete files[oldName];
+  if (currentFile === oldName) {
+    currentFile = newName;
+  }
+  return true;
+}
+
 export let files: Record<string, FileEntry> = {
   "README.md": {
     content: readme,

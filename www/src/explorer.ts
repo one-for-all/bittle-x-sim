@@ -1,5 +1,6 @@
 import { openFile } from "./editor";
-import { currentFile, files } from "./files";
+import { currentFile, files, renameFile } from "./files";
+import { renderFileBar } from "./filebar";
 
 export function renderExplorer() {
   const explorerFiles = document.getElementById("explorerFiles");
@@ -14,6 +15,22 @@ export function renderExplorer() {
     }
     fileDiv.textContent = filename;
     fileDiv.onclick = () => openFile(filename);
+
+    fileDiv.oncontextmenu = (e) => {
+      e.preventDefault();
+      const newName = prompt("Rename file:", filename);
+      if (newName && newName !== filename) {
+        if (renameFile(filename, newName)) {
+          renderExplorer();
+          renderFileBar();
+          if (currentFile === newName) {
+            // Re-open/refresh editor if needed
+            openFile(newName);
+          }
+        }
+      }
+    };
+
     explorerFiles.appendChild(fileDiv);
   });
 }
