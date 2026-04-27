@@ -56,7 +56,10 @@ export function renderExplorer() {
           if (node.fullPath === currentFile) div.classList.add("active");
           div.onclick = (e) => {
             e.stopPropagation();
-            if (node.fullPath) openFile(node.fullPath);
+            if (node.fullPath) {
+              openFile(node.fullPath);
+              scrollToTab(node.fullPath);
+            }
           };
         } else {
           const folderContent = document.createElement("div");
@@ -119,6 +122,22 @@ export function renderExplorer() {
   }
 
   createTreeNodes(fileTree, explorerFiles);
+}
+
+function scrollToTab(filename: string) {
+  const fileTabScroll = document.getElementById("fileTabScroll");
+  if (!fileTabScroll) return;
+
+  const tabs = Array.from(fileTabScroll.querySelectorAll(".file-tab"));
+  const targetTab = tabs.find((tab) => tab.textContent?.includes(filename));
+
+  if (targetTab instanceof HTMLElement) {
+    targetTab.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
+  }
 }
 
 renderExplorer();

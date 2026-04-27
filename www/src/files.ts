@@ -54,17 +54,22 @@ function initFiles() {
   );
 
   // 2. Iterate through all the matched files
-  filesContext.keys().forEach((key) => {
-    // 'key' looks like: "./main.cpp" or "./utils/config.h"
-    // filesContext(key) returns the raw string content (thanks to your asset/source rule)
-    const fileContent = filesContext(key);
+  filesContext
+    .keys()
+    .sort((a, b) => {
+      return a.localeCompare(b);
+    })
+    .forEach((key) => {
+      // 'key' looks like: "./main.cpp" or "./utils/config.h"
+      // filesContext(key) returns the raw string content (thanks to your asset/source rule)
+      const fileContent = filesContext(key);
 
-    // add to files record
-    files[key.replace(/^\.\//, "")] = {
-      content: fileContent,
-      language: "cpp",
-    };
-  });
+      // add to files record
+      files[key.replace(/^\.\//, "")] = {
+        content: fileContent,
+        language: "cpp",
+      };
+    });
 }
 
 export function inoFileName() {
