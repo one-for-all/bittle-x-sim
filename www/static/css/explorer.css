@@ -20,16 +20,21 @@
     color: #fff;
     font-size: 14px;
 }
-.explorer-file {
+.explorer-file, .explorer-folder {
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 3px;
     font-size: 13px;
+    white-space: nowrap;
 }
-.explorer-file:hover {
+.explorer-file:hover, .explorer-folder:hover {
     background: #37373d;
 }
 .explorer-file.active {
     background: #094771;
     color: #fff;
+}
+.explorer-folder {
+    font-weight: bold;
+    color: #aaa;
 }
