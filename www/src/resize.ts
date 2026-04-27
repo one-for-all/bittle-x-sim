@@ -14,7 +14,7 @@ function resizeMain(e: MouseEvent) {
   const newWidth = e.clientX - containerRect.left;
   const maxWidth = window.innerWidth * 0.8; // Prevent container from taking more than 80%
 
-  if (newWidth > 200 && newWidth < maxWidth) {
+  if (newWidth > 10 && newWidth < maxWidth) {
     editorContainer.style.flex = `0 0 ${newWidth}px`;
   }
 
