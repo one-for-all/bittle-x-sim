@@ -8,6 +8,8 @@ interface FileNode {
   [key: string]: any;
 }
 
+export const expandedFolders = new Set<string>();
+
 export function renderExplorer() {
   const explorerFiles = document.getElementById("explorerFiles");
   if (!explorerFiles) return;
@@ -58,11 +60,18 @@ export function renderExplorer() {
           };
         } else {
           const folderContent = document.createElement("div");
-          folderContent.style.display = "none";
+          folderContent.style.display = expandedFolders.has(path)
+            ? "block"
+            : "none";
           div.onclick = (e) => {
             e.stopPropagation();
-            folderContent.style.display =
-              folderContent.style.display === "none" ? "block" : "none";
+            if (expandedFolders.has(path)) {
+              expandedFolders.delete(path);
+              folderContent.style.display = "none";
+            } else {
+              expandedFolders.add(path);
+              folderContent.style.display = "block";
+            }
           };
           createTreeNodes(node, folderContent, depth + 1, path);
           container.appendChild(div);
