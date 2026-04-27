@@ -95,13 +95,17 @@ export function renderExplorer() {
               }
             } else {
               const oldPathPrefix = path + "/";
-              const newPathPrefix =
-                path.replace(new RegExp(key + "$"), newName) + "/";
+              const newPath = path.replace(new RegExp(key + "$"), newName);
+              const newPathPrefix = newPath + "/";
               Object.keys(files).forEach((f) => {
                 if (f.startsWith(oldPathPrefix)) {
                   const newFilePath = f.replace(oldPathPrefix, newPathPrefix);
                   files[newFilePath] = files[f];
                   delete files[f];
+                  if (expandedFolders.has(path)) {
+                    expandedFolders.delete(path);
+                    expandedFolders.add(newPath);
+                  }
                 }
               });
               renderExplorer();
