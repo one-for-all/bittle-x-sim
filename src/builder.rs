@@ -154,7 +154,7 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
         (zero_position_angles[11] as Float).to_radians(),
     );
 
-    let articulated = Articulated::new(
+    let mut articulated = Articulated::new(
         vec![
             body, head, lf_leg, lf_shank, rf_leg, rf_shank, rb_leg, rb_shank, lb_leg, lb_shank,
         ],
@@ -172,7 +172,22 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
         ],
     );
 
+    articulated.show_visual = false;
     state.add_articulated(articulated);
+
+    // Add a sphere to interact with
+    let w = 0.05;
+    let sphere_frame = "sphere";
+    let sphere_body = Rigid::new_sphere(0.1, w, sphere_frame);
+    let sphere_joint = Joint::new_floating(Transform3D::move_xyz(
+        sphere_frame,
+        WORLD_FRAME,
+        0.2,
+        -0.1,
+        5. * w,
+    ));
+    let sphere = Articulated::new(vec![sphere_body], vec![sphere_joint]);
+    state.add_articulated(sphere);
 
     state
 }

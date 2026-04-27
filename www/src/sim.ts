@@ -9,7 +9,6 @@ export function initSimulator() {
     let interfaceSimulator = null;
     let showGrid = false;
     let simulator = new Simulator(interfaceSimulator, showGrid);
-    simulator.showCollisionVisual = false;
     simulator.showHalfspaces = false;
 
     let scenePath = "gamer_setup_pack.glb";
