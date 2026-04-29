@@ -177,7 +177,7 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     state.add_articulated(articulated);
 
     // Add a sphere to interact with
-    let m = 0.05;
+    let m = 0.02;
     let w = 0.1;
     let cube = Articulated::new_cube_at("cube", m, w, &vector![2. * w, -0.1, 2. * w]);
     state.add_articulated(cube);
