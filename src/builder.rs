@@ -14,6 +14,7 @@ use gorilla_physics::{
     spatial::transform::Transform3D,
     types::Float,
 };
+use nalgebra::vector;
 use urdf_rs::Robot;
 use wasm_bindgen::prelude::wasm_bindgen;
 
@@ -176,18 +177,10 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     state.add_articulated(articulated);
 
     // Add a sphere to interact with
-    let w = 0.05;
-    let sphere_frame = "sphere";
-    let sphere_body = Rigid::new_sphere(0.1, w, sphere_frame);
-    let sphere_joint = Joint::new_floating(Transform3D::move_xyz(
-        sphere_frame,
-        WORLD_FRAME,
-        0.2,
-        -0.1,
-        5. * w,
-    ));
-    let sphere = Articulated::new(vec![sphere_body], vec![sphere_joint]);
-    state.add_articulated(sphere);
+    let m = 0.05;
+    let w = 0.1;
+    let cube = Articulated::new_cube_at("cube", m, w, &vector![2. * w, -0.1, 2. * w]);
+    state.add_articulated(cube);
 
     state
 }
