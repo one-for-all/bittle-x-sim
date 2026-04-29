@@ -54,9 +54,7 @@
                 <button class="create-project-btn" id="createProjectBtn">
                     New Project
                 </button>
-                <button class="new-file-btn" id="newFileBtn">
-                    New File
-                </button>
+                <button class="new-file-btn" id="newFileBtn">New File</button>
             </div>
             <!-- File explorer -->
             <div class="explorer" id="explorer">
@@ -81,6 +79,14 @@
             <div class="main-resize-handle" id="mainResizeHandle"></div>
             <!--robot simulation view with serial monitor -->
             <div id="threejs">
+                <div class="wasd-container" id="wasdContainer">
+                    <button class="wasd-button" id="btnW">W</button>
+                    <div class="wasd-row">
+                        <button class="wasd-button" id="btnA">A</button>
+                        <button class="wasd-button" id="btnS">S</button>
+                        <button class="wasd-button" id="btnD">D</button>
+                    </div>
+                </div>
                 <div class="build-output" id="buildOutput">
                     <button class="close-output" id="closeOutput">×</button>
                     <div id="outputContent"></div>
@@ -134,6 +140,9 @@
                     </button>
                     <button class="movement-button" id="beTableButton">
                         be table
+                    </button>
+                    <button class="movement-button" id="kickButton">
+                        kick
                     </button>
                 </div>
             </div>

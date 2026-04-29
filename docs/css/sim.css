@@ -1,1 +1,1 @@
-#threejs{flex:1;min-width:0;height:100vh;position:relative}
+#threejs{flex:1;min-width:0;height:100vh;position:relative}.wasd-container{z-index:5;flex-direction:column;align-items:center;gap:5px;transition:bottom .2s;display:flex;position:absolute;bottom:50px;left:10px}.wasd-container.expanded{bottom:280px}.wasd-row{gap:5px;display:flex}.wasd-button{color:#fff;cursor:pointer;background:#0e639c;border:none;border-radius:4px;padding:10px 15px;font-size:14px;font-weight:700}.wasd-button:hover{background:#17b}
