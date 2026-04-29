@@ -48,3 +48,15 @@ async function sendBeTable() {
   }
 }
 beTableButton.addEventListener("click", sendBeTable);
+
+// Kick button
+const kickButton = document.getElementById("kickButton");
+async function kick() {
+  const payload = "kkc\n";
+  console.log("Sending be table command: ", JSON.stringify(payload));
+  let simulator = getSimulator();
+  if (simulator && simulator.hybrid) {
+    simulator.hybrid.send_uart(payload);
+  }
+}
+kickButton.addEventListener("click", kick);
