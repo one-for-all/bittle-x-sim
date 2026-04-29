@@ -3,6 +3,7 @@ import "./editor";
 import "./motion_button";
 import "./serial_monitor";
 import "./resize";
+import "./wasd";
 import { files, inoFileName, resetFiles } from "./files";
 import { openFile } from "./editor";
 import "./compile";
