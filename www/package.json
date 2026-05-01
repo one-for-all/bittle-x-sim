@@ -9,6 +9,7 @@
     "build": "npm ci && rimraf ../docs pkg && rspack",
     "start": "rspack serve --open --node-env development",
     "prod": "rspack serve --open --node-env production",
+    "preview": "rspack preview",
     "build:gpu": "FEATURE_GPU=1 npm run build",
     "start:gpu": "FEATURE_GPU=1 npm run start",
     "prod:gpu": "FEATURE_GPU=1 npm run prod"
