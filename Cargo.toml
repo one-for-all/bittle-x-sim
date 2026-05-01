@@ -35,3 +35,7 @@ crate-type = ["cdylib", "rlib"]
 [[bin]]
 name = "main"
 path = "src/main.rs"
+
+
+[lints.rust]
+unexpected_cfgs = { level = "allow", check-cfg = ['cfg(rust_analyzer)'] }

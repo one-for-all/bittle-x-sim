@@ -4,11 +4,9 @@ use gorilla_physics::{
     hybrid::{
         Hybrid, Rigid,
         articulated::Articulated,
-        control::NullArticulatedController,
         mesh::URDFMeshes,
         rigid::helper::{build_joint, build_rigid},
     },
-    interface::{hybrid::InterfaceHybrid, util::read_web_file},
     joint::Joint,
     na::Vector3,
     spatial::transform::Transform3D,
@@ -16,9 +14,14 @@ use gorilla_physics::{
 };
 use nalgebra::vector;
 use urdf_rs::Robot;
-use wasm_bindgen::prelude::wasm_bindgen;
 
-use crate::control::BittleXEsp32Controller;
+#[cfg(any(target_arch = "wasm32", rust_analyzer))]
+use {
+    crate::control::BittleXEsp32Controller,
+    gorilla_physics::hybrid::control::NullArticulatedController,
+    gorilla_physics::interface::hybrid::InterfaceHybrid,
+    gorilla_physics::interface::util::read_web_file, wasm_bindgen::prelude::wasm_bindgen,
+};
 
 pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     let mut state = Hybrid::empty();
@@ -185,7 +188,7 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     state
 }
 
-// #[cfg(target_arch = "wasm32")]
+#[cfg(target_arch = "wasm32")]
 #[allow(non_snake_case)]
 #[wasm_bindgen]
 pub async fn createBittleX() -> InterfaceHybrid {
