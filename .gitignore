@@ -26,3 +26,6 @@ www/src/assets/symbols.txt
 www/static/OpenCatEsp32/build/
 
 .zed
+
+# samply record output file
+profile.json.gz

@@ -26,7 +26,7 @@ async fn main() {
     let mut data = vec![];
     let mut data2: Vec<Float> = vec![];
 
-    let dt = 1e-3;
+    let dt = 1. / 60. / 100.;
     let t_final = 2.0;
     let num_steps = (t_final / dt) as usize;
 
