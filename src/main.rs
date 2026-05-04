@@ -18,8 +18,8 @@ async fn main() {
     let urdf_robot = urdf_rs::read_from_string(&urdf_file).unwrap();
     let mut state = build_bittle_x(&mut meshes, &urdf_robot);
 
-    // let controller = NullArticulatedController {};
-    let controller = BittleXEsp32Controller::new().await;
+    let controller = NullArticulatedController {};
+    // let controller = BittleXEsp32Controller::new().await;
     // let controller = BittleXServoController::new();
     state.set_controller(0, controller);
 
