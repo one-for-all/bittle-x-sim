@@ -16,7 +16,6 @@ function setupMotionButton(buttonId: string, payload: string, label: string) {
 setupMotionButton("backflipButton", "kbf\n", "backflip");
 setupMotionButton("trotButton", "ktrF\n", "trot");
 setupMotionButton("backwardButton", "kbk\n", "backward");
-setupMotionButton("standButton", "kup\n", "stand");
 setupMotionButton("beTableButton", "ktbl\n", "be table");
 setupMotionButton("kickButton", "kkc\n", "kick");
 setupMotionButton("recoverButton", "krc\n", "recover");
