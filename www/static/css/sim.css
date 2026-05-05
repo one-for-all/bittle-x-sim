@@ -25,7 +25,6 @@
 .wasd-button {
     width: 50px;
     height: 50px;
-    background: #0e639c;
     color: white;
     border: none;
     cursor: pointer;
@@ -34,11 +33,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 8px;
+    background-color: rgba(14, 99, 156, 0.2);
+}
+
+.wasd-button:hover {
+    background-color: rgba(14, 99, 156, 1);
 }
 
 .wasd-stand {
     grid-area: stand;
     width: 80px;
+    border-radius: 12px;
 }
 
 #btnW {
