@@ -1,3 +1,4 @@
+import { editorIsFocused } from "./editor";
 import { getSimulator } from "./sim";
 
 const wasdContainer = document.getElementById("wasdContainer");
@@ -60,7 +61,8 @@ Object.keys(commands).forEach((id) => {
 // Keyboard event listener
 document.addEventListener("keydown", (e) => {
   // Ignore keydown if user is typing in the serial monitor input
-  if (document.activeElement?.id === "serialInput") return;
+  if (document.activeElement?.id === "serialInput" || editorIsFocused == true)
+    return;
 
   const key = e.key === " " ? " " : e.key.toLowerCase();
   if (keyMap[key]) {

@@ -40,3 +40,11 @@ export function openFile(filename: string) {
   renderFileBar();
   renderExplorer();
 }
+
+export let editorIsFocused = false;
+editor.onDidFocusEditorWidget(() => {
+  editorIsFocused = true;
+});
+editor.onDidBlurEditorWidget(() => {
+  editorIsFocused = false;
+});
