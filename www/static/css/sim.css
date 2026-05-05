@@ -22,6 +22,14 @@
     bottom: 280px;
 }
 
+.space-key-container {
+    left: 160px;
+}
+
+.space-key-container.expanded {
+    bottom: 280px;
+}
+
 .wasd-row {
     display: flex;
     gap: 5px;
@@ -38,6 +46,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 8px;
+    transition: background 0.2s;
     background-color: rgba(14, 99, 156, 0.2);
     border: 2px solid rgba(14, 99, 156, 0.5);
 }
@@ -47,7 +56,5 @@
 }
 
 .wasd-stand {
-    grid-area: stand;
-    width: 80px;
-    border-radius: 12px;
+    width: 100px;
 }

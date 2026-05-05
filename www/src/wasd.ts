@@ -1,14 +1,17 @@
 import { getSimulator } from "./sim";
 
 const wasdContainer = document.getElementById("wasdContainer");
+const spaceKeyContainer = document.getElementById("spaceKeyContainer");
 const buildOutput = document.getElementById("buildOutput");
 
 // Function to update WASD position based on build output visibility
 function updateWasdPosition() {
   if (buildOutput.classList.contains("show")) {
     wasdContainer.classList.add("expanded");
+    spaceKeyContainer.classList.add("expanded");
   } else {
     wasdContainer.classList.remove("expanded");
+    spaceKeyContainer.classList.remove("expanded");
   }
 }
 
