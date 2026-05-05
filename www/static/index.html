@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="css/explorer.css" />
         <link rel="stylesheet" href="css/editor.css" />
         <link rel="stylesheet" href="css/sim.css" />
+        <link rel="stylesheet" href="css/reset-button.css" />
         <link rel="stylesheet" href="css/serial-monitor.css" />
         <link rel="stylesheet" href="css/overlay.css" />
     </head>
@@ -79,6 +80,10 @@
             <div class="main-resize-handle" id="mainResizeHandle"></div>
             <!--robot simulation view with serial monitor -->
             <div id="threejs">
+                <button class="reset-button" id="resetButton">
+                    <span>🔄</span>
+                    <span>Reset</span>
+                </button>
                 <div class="wasd-container" id="wasdContainer">
                     <button class="wasd-button" id="btnW">W</button>
                     <div class="wasd-row">
