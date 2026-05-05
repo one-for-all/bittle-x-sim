@@ -1,0 +1,1 @@
+.reset-button{color:#fff;cursor:pointer;z-index:5;background:rgba(55,55,61,.2);border:2px solid rgba(55,55,61,.5);border-radius:4px;align-items:center;gap:6px;padding:6px 12px;font-size:13px;font-weight:500;transition:background .2s;display:flex;position:absolute;top:10px;left:10px}.reset-button:hover{background:#37373d}
