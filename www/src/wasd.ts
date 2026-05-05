@@ -24,7 +24,7 @@ updateWasdPosition();
 
 // WASD Command Mapping
 const commands: Record<string, string> = {
-  btnW: "kphF",
+  btnW: "ktrF",
   btnA: "kvtL",
   btnS: "kbk",
   btnD: "kvtR",
