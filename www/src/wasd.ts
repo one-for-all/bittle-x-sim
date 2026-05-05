@@ -25,6 +25,7 @@ const commands: Record<string, string> = {
   btnA: "kvtL",
   btnS: "kbk",
   btnD: "kvtR",
+  btnStand: "kup",
 };
 
 // Map keyboard keys to command IDs
@@ -33,6 +34,7 @@ const keyMap: Record<string, string> = {
   a: "btnA",
   s: "btnS",
   d: "btnD",
+  " ": "btnStand",
 };
 
 function sendCommand(id: string) {
@@ -46,7 +48,10 @@ function sendCommand(id: string) {
 }
 
 Object.keys(commands).forEach((id) => {
-  document.getElementById(id).addEventListener("click", () => sendCommand(id));
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener("click", () => sendCommand(id));
+  }
 });
 
 // Keyboard event listener
@@ -54,7 +59,7 @@ document.addEventListener("keydown", (e) => {
   // Ignore keydown if user is typing in the serial monitor input
   if (document.activeElement?.id === "serialInput") return;
 
-  const key = e.key.toLowerCase();
+  const key = e.key === " " ? " " : e.key.toLowerCase();
   if (keyMap[key]) {
     sendCommand(keyMap[key]);
   }
