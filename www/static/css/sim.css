@@ -10,9 +10,9 @@
     bottom: 50px;
     left: 10px;
     display: grid;
-    grid-template-areas:
-        ". w . ."
-        "a s d stand";
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 5px;
     z-index: 5;
     transition: bottom 0.2s;
@@ -22,19 +22,24 @@
     bottom: 280px;
 }
 
+.wasd-row {
+    display: flex;
+    gap: 5px;
+}
+
 .wasd-button {
-    width: 50px;
-    height: 50px;
+    padding: 10px 15px;
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
     background-color: rgba(14, 99, 156, 0.2);
+    border: 2px solid rgba(14, 99, 156, 0.5);
 }
 
 .wasd-button:hover {
@@ -45,25 +50,4 @@
     grid-area: stand;
     width: 80px;
     border-radius: 12px;
-}
-
-#btnW {
-    grid-area: w;
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    padding-top: 15px;
-}
-#btnA {
-    grid-area: a;
-    clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
-    padding-right: 0px;
-}
-#btnS {
-    grid-area: s;
-    clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
-    padding-bottom: 15px;
-}
-#btnD {
-    grid-area: d;
-    clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
-    padding-left: 0px;
 }
