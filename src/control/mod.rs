@@ -176,6 +176,13 @@ impl ArticulatedController for BittleXEsp32Controller {
         }
     }
 
+    fn reboot(&mut self, _code: &str) {
+        self.esp32.reboot();
+        for servo in self.servos.iter_mut() {
+            servo.reset();
+        }
+    }
+
     fn debug(&mut self) {
         self.esp32.print_uart();
         for servo in self.servos.iter() {

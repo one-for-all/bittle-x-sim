@@ -7,6 +7,7 @@ import "./wasd";
 import { files, inoFileName, resetFiles } from "./files";
 import { openFile } from "./editor";
 import "./compile";
+import "./reset";
 import { renderExplorer } from "./explorer";
 import { renderFileBar } from "./filebar";
 
