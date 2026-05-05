@@ -19,6 +19,12 @@ const int zeroPositionAngles[NUM_JOINTS] = {
   190, 80, 80, 190
 };
 
+int currentAngles[NUM_JOINTS] = {
+  135,
+  190, 80, 190, 80,
+  190, 80, 80, 190
+};
+
 Servo servos[NUM_JOINTS];
 
 void setup() {
@@ -26,12 +32,16 @@ void setup() {
   for (int i = 0; i < NUM_JOINTS; i++) {
     servos[i].setPeriodHertz(50);
     servos[i].attach(servoPins[i], MIN_MICROSECONDS, MAX_MICROSECONDS);
+    servoSetAngle(i, zeroPositionAngles[i]);
   }
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  // Note: Use servoSetAngle() to set servo angles
+  // Note: Use servoSetAngle() to set servo angles, or call a predefined motion function
+
+  // e.g.
+  // stand();
 }
 
 // Note: need to call writeMicroseconds(), rather than write(),
@@ -39,4 +49,34 @@ void loop() {
 void servoSetAngle(int servo_index, int angle) {
   int microseconds = map(angle, MIN_ANGLE, MAX_ANGLE, MIN_MICROSECONDS, MAX_MICROSECONDS); // map angle to microseconds
   servos[servo_index].writeMicroseconds(microseconds);
+  currentAngles[servo_index] = angle;
+}
+
+void zero() {
+  for (int i = 0; i < NUM_JOINTS; i++) {
+    servoSetAngle(i, zeroPositionAngles[i]);
+  }
+}
+
+/// Angles relative from zero that make robot stand
+const int standAngles[NUM_JOINTS] = {
+  0,
+  45, -45, -45, 45,
+  0, 0, 0, 0
+};
+
+void stand() {
+  bool achieved = true;
+  do {
+    for (int i = 0; i < NUM_JOINTS; i++) {
+      if (currentAngles[i] == zeroPositionAngles[i] + standAngles[i])
+        continue;
+      else if (currentAngles[i] < zeroPositionAngles[i] + standAngles[i])
+        servoSetAngle(i, currentAngles[i] + 1);
+      else
+        servoSetAngle(i, currentAngles[i] - 1);
+      achieved = false;
+    }
+    delay(1);
+  } while (!achieved);
 }
