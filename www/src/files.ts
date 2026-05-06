@@ -1,5 +1,8 @@
 import readme from "./assets/README.md";
 import default_ino from "./assets/default.ino";
+import motion_h from "./assets/motion.h";
+import walk_h from "./assets/walk.h";
+import turn_h from "./assets/turn.h";
 
 type FileEntry = {
   content: string;
@@ -12,6 +15,18 @@ export function resetFiles() {
   files = {
     "main.ino": {
       content: default_ino,
+      language: "cpp",
+    },
+    "motion.h": {
+      content: motion_h,
+      language: "cpp",
+    },
+    "walk.h": {
+      content: walk_h,
+      language: "cpp",
+    },
+    "turn.h": {
+      content: turn_h,
       language: "cpp",
     },
   };
