@@ -200,8 +200,14 @@ pub async fn createBittleX() -> InterfaceHybrid {
     // let controller = NullArticulatedController {};
     state.set_controller(0, controller);
 
-    // Add table
-    // state.add_static_body(import_static_body("mesh/table/table.obj").await);
+    // // Add table
+    // let mut table = import_static_body("mesh/table/table.obj").await;
+    // table.update_pose(Isometry3::from_parts(
+    //     Translation3::new(0.6, 0., 0.),
+    //     UnitQuaternion::identity(),
+    // ));
+    // table.show_visual = false;
+    // state.add_static_body(table);
 
     // Add ramp
     // let mut ramp = import_static_body("mesh/ramp.obj").await;
@@ -212,7 +218,7 @@ pub async fn createBittleX() -> InterfaceHybrid {
     // ));
     // state.add_static_body(ramp);
 
-    // Add a sphere to interact with
+    // Add a cube to interact with
     let m = 0.02;
     let w = 0.1;
     let cube = Articulated::new_cube_at("cube", m, w, &vector![2. * w, -0.1, 2. * w + 0.82]);
