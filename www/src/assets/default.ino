@@ -33,4 +33,5 @@ void loop() {
   // turnLeft();
   // stand();
   // walk();
+  // stand();
 }

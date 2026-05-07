@@ -53,7 +53,7 @@ void stand() {
       else
         servoSetAngle(i, currentAngles[i] - 1);
     }
-    delay(5);
+    delay(1);
   }
   Serial.println("stand");
 }

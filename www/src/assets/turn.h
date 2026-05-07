@@ -78,7 +78,7 @@ void turnLeft() {
     for (int j = 1; j < NUM_JOINTS; j++) {
       servoSetAngle(j, zeroPositionAngles[j] + turnLeftGait[i + j - 1] * rotationDirection[j]);
     }
-    delay(5);
+    delay(1);
   }
   Serial.println("turn left");
 }
@@ -92,7 +92,7 @@ void turnRight() {
         servoSetAngle(j, zeroPositionAngles[j] + turnLeftGait[i + j - 2] * rotationDirection[j]);
       }
     }
-    delay(5);
+    delay(1);
   }
   Serial.println("turn right");
 }

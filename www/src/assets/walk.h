@@ -122,7 +122,7 @@ void walk() {
     for (int j = 1; j < NUM_JOINTS; j++) {
       servoSetAngle(j, zeroPositionAngles[j] + walkGait[i + j - 1] * rotationDirection[j]);
     }
-    delay(5);
+    delay(1);
   }
   Serial.println("walk");
 }
