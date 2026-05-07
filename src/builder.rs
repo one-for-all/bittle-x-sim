@@ -1,3 +1,5 @@
+#[cfg(any(target_arch = "wasm32", rust_analyzer))]
+use gorilla_physics::hybrid::builders::import_static_body;
 use gorilla_physics::{
     PI, WORLD_FRAME,
     collision::halfspace::HalfSpace,
@@ -13,6 +15,8 @@ use gorilla_physics::{
     types::Float,
 };
 use nalgebra::vector;
+#[cfg(any(target_arch = "wasm32", rust_analyzer))]
+use nalgebra::{Isometry3, Rotation3, Translation3, UnitQuaternion};
 use urdf_rs::Robot;
 
 #[cfg(any(target_arch = "wasm32", rust_analyzer))]
@@ -26,7 +30,6 @@ use {
 pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     let mut state = Hybrid::empty();
     state.set_friction_mu(0.5);
-    state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.));
 
     #[rustfmt::skip]
     let zero_position_angles = [
@@ -188,7 +191,7 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     state
 }
 
-#[cfg(target_arch = "wasm32")]
+#[cfg(any(target_arch = "wasm32", rust_analyzer))]
 #[allow(non_snake_case)]
 #[wasm_bindgen]
 pub async fn createBittleX() -> InterfaceHybrid {
@@ -203,6 +206,20 @@ pub async fn createBittleX() -> InterfaceHybrid {
     let controller = BittleXEsp32Controller::new().await;
     // let controller = NullArticulatedController {};
     state.set_controller(0, controller);
+
+    // Add table
+    // state.add_static_body(import_static_body("mesh/table/table.obj").await);
+
+    // Add ramp
+    // let mut ramp = import_static_body("mesh/ramp.obj").await;
+    // ramp.scale(vector![0.2, 0.1, 0.1]);
+    // ramp.update_pose(Isometry3::from_parts(
+    //     Translation3::new(0., 0.8, 0.1),
+    //     UnitQuaternion::from_euler_angles(0., 0., -PI / 2.),
+    // ));
+    // state.add_static_body(ramp);
+
+    state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.));
 
     InterfaceHybrid::new(state)
 }
