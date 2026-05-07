@@ -8,7 +8,7 @@ let _simulator: Simulator | null = null;
 export function initSimulator() {
   createBittleX().then((state) => {
     let interfaceSimulator = null;
-    let showGrid = false;
+    let showGrid = true;
     let simulator = new Simulator(interfaceSimulator, showGrid);
     simulator.showHalfspaces = false;
 
@@ -16,7 +16,7 @@ export function initSimulator() {
       {
         scenePath: "gamer_setup_pack.glb",
         rotation: new Euler(Math.PI / 2),
-        position: new Vector3(0.6, 0, -0.82),
+        position: new Vector3(0.6, 0, 0),
       },
       // {
       //   scenePath: "cozy_living_room_baked.glb",
@@ -49,8 +49,8 @@ export function initSimulator() {
     simulator.updateHybrid();
 
     let cameraPosition = {
-      eye: { x: 0.0, y: -1.2, z: 0.4 },
-      target: { x: 0.0, y: 0, z: 0 },
+      eye: { x: 0.0, y: -1.2, z: 0.4 + 0.82 },
+      target: { x: 0.0, y: 0, z: 0.82 },
     };
     simulator.graphics.lookAt(cameraPosition);
 

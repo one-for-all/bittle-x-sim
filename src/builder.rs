@@ -1,8 +1,5 @@
-#[cfg(any(target_arch = "wasm32", rust_analyzer))]
-use gorilla_physics::hybrid::builders::import_static_body;
 use gorilla_physics::{
     PI, WORLD_FRAME,
-    collision::halfspace::HalfSpace,
     hybrid::{
         Hybrid, Rigid,
         articulated::Articulated,
@@ -14,6 +11,8 @@ use gorilla_physics::{
     spatial::transform::Transform3D,
     types::Float,
 };
+#[cfg(any(target_arch = "wasm32", rust_analyzer))]
+use gorilla_physics::{collision::halfspace::HalfSpace, hybrid::builders::import_static_body};
 use nalgebra::vector;
 #[cfg(any(target_arch = "wasm32", rust_analyzer))]
 use nalgebra::{Isometry3, Rotation3, Translation3, UnitQuaternion};
@@ -45,7 +44,7 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     let body_joint = Joint::new_floating(Transform3D::new_xyz_rpy(
         body_frame,
         WORLD_FRAME,
-        &vec![0., -0.1, 0.06],
+        &vec![0., -0.1, 0.06 + 0.82],
         &vec![0., 0., PI / 2.],
     ));
 
@@ -182,12 +181,6 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     articulated.show_visual = false;
     state.add_articulated(articulated);
 
-    // Add a sphere to interact with
-    let m = 0.02;
-    let w = 0.1;
-    let cube = Articulated::new_cube_at("cube", m, w, &vector![2. * w, -0.1, 2. * w]);
-    state.add_articulated(cube);
-
     state
 }
 
@@ -219,7 +212,13 @@ pub async fn createBittleX() -> InterfaceHybrid {
     // ));
     // state.add_static_body(ramp);
 
-    state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.));
+    // Add a sphere to interact with
+    let m = 0.02;
+    let w = 0.1;
+    let cube = Articulated::new_cube_at("cube", m, w, &vector![2. * w, -0.1, 2. * w + 0.82]);
+    state.add_articulated(cube);
+
+    state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.82));
 
     InterfaceHybrid::new(state)
 }
