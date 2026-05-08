@@ -221,7 +221,7 @@ pub async fn createBittleX() -> InterfaceHybrid {
     // Add a cube to interact with
     let m = 0.02;
     let w = 0.1;
-    let cube = Articulated::new_cube_at("cube", m, w, &vector![2. * w, -0.1, 2. * w + 0.82]);
+    let cube = Articulated::new_cube_at("cube", m, w, &vector![-0.3, 0.2, 2. * w + 0.82]);
     state.add_articulated(cube);
 
     state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.82));
