@@ -12,7 +12,8 @@
             html {
                 margin: 0;
                 padding: 0;
-                height: 100vh;
+                min-height: 100vh; /* Fallback for older browsers */
+                min-height: 100dvh; /* The "magic" unit that adjusts to mobile UI */
                 overflow: hidden;
                 width: 100%;
                 display: flex;
