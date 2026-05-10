@@ -74,7 +74,25 @@
     right: 10px; /* Align it to the right */
     max-height: calc(30px * 8);
     overflow-y: auto;
+    padding-right: 2px;
 }
+
+/* Custom Scrollbar for Movement Buttons */
+.movement-button-container::-webkit-scrollbar {
+    width: 5px;
+}
+.movement-button-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2);
+}
+.movement-button-container::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.movement-button-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
 .movement-button {
     padding: 6px 12px;
     cursor: pointer;
