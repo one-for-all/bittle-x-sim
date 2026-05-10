@@ -8,14 +8,14 @@ function setupMotionButton(buttonId: string, payload: string, label: string) {
     console.log(`Sending ${label} command:`, JSON.stringify(payload));
     const simulator = getSimulator();
     if (simulator?.hybrid) {
-      simulator.hybrid.send_uart(payload);
+      simulator.hybrid.send_uart(payload + "\n");
     }
   });
 }
 
-setupMotionButton("backflipButton", "kbf\n", "backflip");
-setupMotionButton("trotButton", "ktrF\n", "trot");
-setupMotionButton("backwardButton", "kbk\n", "backward");
-setupMotionButton("beTableButton", "ktbl\n", "be table");
-setupMotionButton("kickButton", "kkc\n", "kick");
-setupMotionButton("recoverButton", "krc\n", "recover");
+setupMotionButton("backflipButton", "kbf", "backflip");
+setupMotionButton("trotButton", "ktrF", "trot");
+setupMotionButton("backwardButton", "kbk", "backward");
+setupMotionButton("beTableButton", "ktbl", "be table");
+setupMotionButton("kickButton", "kkc", "kick");
+setupMotionButton("recoverButton", "krc", "recover");
