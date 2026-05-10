@@ -1,8 +1,13 @@
 import { getSimulator } from "./sim";
 
-function setupMotionButton(buttonId: string, payload: string, label: string) {
-  const button = document.getElementById(buttonId);
-  if (!button) return;
+const container = document.getElementById("movementButtonContainer");
+
+function createMotionButton(payload: string, label: string) {
+  if (!container) return;
+
+  const button = document.createElement("button");
+  button.className = "movement-button";
+  button.textContent = label;
 
   button.addEventListener("click", () => {
     console.log(`Sending ${label} command:`, JSON.stringify(payload));
@@ -11,17 +16,19 @@ function setupMotionButton(buttonId: string, payload: string, label: string) {
       simulator.hybrid.send_uart(payload + "\n");
     }
   });
+
+  container.appendChild(button);
 }
 
 const motions = [
-  { id: "backflipButton", payload: "kbf", label: "backflip" },
-  { id: "trotButton", payload: "ktrF", label: "trot" },
-  { id: "backwardButton", payload: "kbk", label: "backward" },
-  { id: "beTableButton", payload: "ktbl", label: "be table" },
-  { id: "kickButton", payload: "kkc", label: "kick" },
-  { id: "recoverButton", payload: "krc", label: "recover" },
+  { payload: "kbf", label: "backflip" },
+  { payload: "ktrF", label: "trot" },
+  { payload: "kbk", label: "backward" },
+  { payload: "ktbl", label: "be table" },
+  { payload: "kkc", label: "kick" },
+  { payload: "krc", label: "recover" },
 ];
 
-for (const { id, payload, label } of motions) {
-  setupMotionButton(id, payload, label);
+for (const { payload, label } of motions) {
+  createMotionButton(payload, label);
 }
