@@ -6,8 +6,6 @@ import { Euler, Vector3 } from "three";
 let _simulator: Simulator | null = null;
 
 export function initSimulator() {
-  const loadingUI = createLoadingUI();
-
   let interfaceSimulator = null;
   let showGrid = true;
   let simulator = new Simulator(interfaceSimulator, showGrid);
@@ -66,7 +64,10 @@ export function initSimulator() {
         "realtime rate: " + simulator.realtimeRatio.toFixed(2);
     }, 500);
 
-    loadingUI.remove();
+    const loadingUI = document.getElementById("loading");
+    if (loadingUI) {
+      loadingUI.remove();
+    }
   });
 }
 
@@ -91,24 +92,3 @@ export function reset_simulator(ino_bin: Uint8Array, symbols: string) {
   simulator.hybrid.reboot_esp32_controller(0, ino_bin, symbols);
 }
 
-function createLoadingUI(): HTMLDivElement {
-  const overlay = document.createElement("div");
-  overlay.id = "loading";
-  overlay.innerHTML = `
-    <div class="spinner"></div>
-    <p>Loading simulation assets...</p>
-  `;
-  Object.assign(overlay.style, {
-    position: "absolute",
-    inset: "0",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    background: "#000",
-    color: "#fff",
-    zIndex: "999",
-  });
-  document.getElementById("threejs").appendChild(overlay);
-  return overlay;
-}
