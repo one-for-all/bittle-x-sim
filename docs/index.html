@@ -37,6 +37,7 @@
         <link rel="stylesheet" href="css/reset-button.css" />
         <link rel="stylesheet" href="css/serial-monitor.css" />
         <link rel="stylesheet" href="css/overlay.css" />
+        <link rel="stylesheet" href="css/spinner.css" />
     </head>
     <body>
         <div class="main-wrapper">
@@ -87,6 +88,10 @@
             <div class="main-resize-handle" id="mainResizeHandle"></div>
             <!--robot simulation view with serial monitor -->
             <div id="threejs">
+                <div id="compile-spinner">
+                    <div class="spinner-small"></div>
+                    <div class="spinner-text">Compiling...</div>
+                </div>
                 <div id="loading" class="loading-overlay">
                     <div class="spinner"></div>
                     <p>Loading simulation assets...</p>
