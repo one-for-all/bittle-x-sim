@@ -29,3 +29,5 @@ www/static/OpenCatEsp32/build/
 
 # samply record output file
 profile.json.gz
+
+www/motion.md
