@@ -31,7 +31,6 @@ async function buildZipBuffer(): Promise<ArrayBuffer> {
 
 async function compileCode() {
   const runButton = document.getElementById("runButton") as HTMLButtonElement;
-  // const stopButton = document.getElementById("stopButton") as HTMLButtonElement;
   const outputDiv = document.getElementById("buildOutput");
   outputDiv.scrollTop = 0; // scroll to top
   const outputContent = document.getElementById("outputContent");
@@ -46,7 +45,6 @@ async function compileCode() {
   // Disable button and show loading
   runButton.disabled = true;
   runButton.innerHTML = "<span>⏳</span><span>Compiling...</span>";
-  // stopButton.disabled = true;
 
   outputDiv.classList.add("show");
   outputContent.innerHTML =
@@ -58,17 +56,6 @@ async function compileCode() {
     const result = await compileArduinoFromStrings(url, ino_source, zipBuffer);
 
     let output = "";
-    // if (result.stdout) {
-    //   const ansi = new AnsiToHtml();
-    //   const html = ansi.toHtml(result.stdout);
-    //   output += `<div class="stdout">STDOUT:<br>${html}</div>`;
-    // }
-
-    // if (result.error) {
-    //   const ansi = new AnsiToHtml();
-    //   const html = ansi.toHtml(result.details);
-    //   output += `<div class="stderr">STDERR:<br>${html}</div>`;
-    // }
 
     if (result.inoBinBytes) {
       outputDiv.scrollTop = 0; // scroll to top
@@ -83,12 +70,6 @@ async function compileCode() {
       output ||
       '<div class="success">Compilation completed successfully!</div>';
 
-    // if (!result.error) {
-    //   let simulator = getSimulator();
-    //   simulator.hybrid.reset();
-    //   simulator.hybrid.reboot_code_controller(0, result.hex);
-    //   // simulator.pendulum_raised = false;
-    // }
     reset_simulator(result.inoBinBytes, result.symbolsText);
   } catch (error) {
     const ansi = new AnsiToHtml();
@@ -113,25 +94,13 @@ async function compileCode() {
     // 3. Convert ANSI to HTML
     const html = ansi.toHtml(cleanLog);
 
-    // // 4. Use a <pre> tag to preserve terminal formatting
-    // outputContent.innerHTML = `
-    //   <div class="error-container">
-    //     <div class="error-header">Compile Error</div>
-    //     <pre class="stderr">${html}</pre>
-    //   </div>
-    // `;
     outputContent.innerHTML = `<div class="stderr">Compile error:\n${html}</div>`;
     console.error("Compile error:", error);
   } finally {
     runButton.disabled = false;
     runButton.innerHTML = "<span>🔨</span><span>Compile</span>";
-    // stopButton.disabled = false;
   }
 }
-
-// document.getElementById("stopButton").addEventListener("click", async () => {
-//   reset_simulator(default_ino_bin, default_symbols);
-// });
 
 type CompileStringsResult = {
   inoBinBytes: Uint8Array;
