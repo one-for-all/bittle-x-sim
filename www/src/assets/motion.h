@@ -1,10 +1,3 @@
-extern Servo servos[];
-extern const int MIN_ANGLE;
-extern const int MAX_ANGLE;
-extern const int MIN_MICROSECONDS;
-extern const int MAX_MICROSECONDS;
-
-const int NUM_JOINTS = 9;
 int currentAngles[NUM_JOINTS] = {
   135,
   190, 80, 190, 80,

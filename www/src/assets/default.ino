@@ -1,21 +1,8 @@
 #include <ESP32Servo.h>
+#include "config.h"
 #include "motion.h"
 #include "walk.h"
 #include "turn.h"
-
-// Petoi servo parameters
-const int MIN_ANGLE = 0;
-const int MAX_ANGLE = 270;
-const int MIN_MICROSECONDS = 500;
-const int MAX_MICROSECONDS = 2500;
-
-const int servoPins[NUM_JOINTS] = {
-  18,             // head
-  23, 4, 12, 33,  // shoulders; left-front, right-front, right-back, left-back
-  19, 15, 13, 32  // knee;
-};
-
-Servo servos[NUM_JOINTS];
 
 void setup() {
   // put your setup code here, to run once:

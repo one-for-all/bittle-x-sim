@@ -1,5 +1,6 @@
 import readme from "./assets/README.md";
 import default_ino from "./assets/default.ino";
+import config_h from "./assets/config.h";
 import motion_h from "./assets/motion.h";
 import walk_h from "./assets/walk.h";
 import turn_h from "./assets/turn.h";
@@ -15,6 +16,10 @@ export function resetFiles() {
   files = {
     "main.ino": {
       content: default_ino,
+      language: "cpp",
+    },
+    "config.h": {
+      content: config_h,
       language: "cpp",
     },
     "motion.h": {
