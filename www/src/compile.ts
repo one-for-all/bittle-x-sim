@@ -31,6 +31,7 @@ async function buildZipBuffer(): Promise<ArrayBuffer> {
 
 async function compileCode() {
   const runButton = document.getElementById("runButton") as HTMLButtonElement;
+  const compileSpinner = document.getElementById("compile-spinner");
   const outputDiv = document.getElementById("buildOutput");
   outputDiv.scrollTop = 0; // scroll to top
   const outputContent = document.getElementById("outputContent");
@@ -45,6 +46,7 @@ async function compileCode() {
   // Disable button and show loading
   runButton.disabled = true;
   runButton.innerHTML = "<span>⏳</span><span>Compiling...</span>";
+  compileSpinner?.classList.add("visible");
 
   outputDiv.classList.add("show");
   outputContent.innerHTML =
@@ -99,6 +101,7 @@ async function compileCode() {
   } finally {
     runButton.disabled = false;
     runButton.innerHTML = "<span>🔨</span><span>Compile</span>";
+    compileSpinner?.classList.remove("visible");
   }
 }
 
