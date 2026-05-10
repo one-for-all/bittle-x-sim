@@ -3,13 +3,13 @@ const editorContainer = document.querySelector(
   ".editor-container",
 ) as HTMLElement;
 
-mainResizeHandle.addEventListener("mousedown", (e) => {
+mainResizeHandle.addEventListener("pointerdown", (e) => {
   e.preventDefault();
-  document.addEventListener("mousemove", resizeMain);
-  document.addEventListener("mouseup", stopResizeMain);
+  document.addEventListener("pointermove", resizeMain);
+  document.addEventListener("pointerup", stopResizeMain);
 });
 
-function resizeMain(e: MouseEvent) {
+function resizeMain(e: PointerEvent) {
   const containerRect = editorContainer.getBoundingClientRect();
   const newWidth = e.clientX - containerRect.left;
   const maxWidth = window.innerWidth * 0.8; // Prevent container from taking more than 80%
@@ -22,6 +22,6 @@ function resizeMain(e: MouseEvent) {
 }
 
 function stopResizeMain() {
-  document.removeEventListener("mousemove", resizeMain);
-  document.removeEventListener("mouseup", stopResizeMain);
+  document.removeEventListener("pointermove", resizeMain);
+  document.removeEventListener("pointerup", stopResizeMain);
 }
