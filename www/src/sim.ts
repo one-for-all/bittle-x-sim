@@ -6,45 +6,47 @@ import { Euler, Vector3 } from "three";
 let _simulator: Simulator | null = null;
 
 export function initSimulator() {
-  createBittleX().then((state) => {
-    let interfaceSimulator = null;
-    let showGrid = true;
-    let simulator = new Simulator(interfaceSimulator, showGrid);
-    simulator.showHalfspaces = false;
+  const loadingUI = createLoadingUI();
 
-    let scenes = [
-      {
-        scenePath: "gamer_setup_pack.glb",
-        rotation: new Euler(Math.PI / 2),
-        position: new Vector3(0.6, 0, 0),
+  let interfaceSimulator = null;
+  let showGrid = true;
+  let simulator = new Simulator(interfaceSimulator, showGrid);
+  simulator.showHalfspaces = false;
+
+  let scenes = [
+    {
+      scenePath: "gamer_setup_pack.glb",
+      rotation: new Euler(Math.PI / 2),
+      position: new Vector3(0.6, 0, 0),
+    },
+    // {
+    //   scenePath: "cozy_living_room_baked.glb",
+    //   rotation: new Euler(Math.PI / 2, -Math.PI / 2, 0),
+    //   position: new Vector3(0, 0, -0.88),
+    // },
+  ];
+  let gltfLoader = new GLTFLoader();
+  for (const scene of scenes) {
+    gltfLoader.load(
+      scene.scenePath,
+      (gltf) => {
+        const gltfScene = gltf.scene;
+        gltfScene.setRotationFromEuler(scene.rotation);
+        (gltfScene.position.set(
+          scene.position.x,
+          scene.position.y,
+          scene.position.z,
+        ),
+          simulator.graphics.scene.add(gltfScene));
       },
-      // {
-      //   scenePath: "cozy_living_room_baked.glb",
-      //   rotation: new Euler(Math.PI / 2, -Math.PI / 2, 0),
-      //   position: new Vector3(0, 0, -0.88),
-      // },
-    ];
-    let gltfLoader = new GLTFLoader();
-    for (const scene of scenes) {
-      gltfLoader.load(
-        scene.scenePath,
-        (gltf) => {
-          const gltfScene = gltf.scene;
-          gltfScene.setRotationFromEuler(scene.rotation);
-          (gltfScene.position.set(
-            scene.position.x,
-            scene.position.y,
-            scene.position.z,
-          ),
-            simulator.graphics.scene.add(gltfScene));
-        },
-        undefined,
-        (error) => {
-          console.error(error);
-        },
-      );
-    }
+      undefined,
+      (error) => {
+        console.error(error);
+      },
+    );
+  }
 
+  createBittleX().then((state) => {
     simulator.addHybrid(state);
     simulator.updateHybrid();
 
@@ -63,6 +65,8 @@ export function initSimulator() {
       realtimeRatio.innerHTML =
         "realtime rate: " + simulator.realtimeRatio.toFixed(2);
     }, 500);
+
+    loadingUI.remove();
   });
 }
 
@@ -85,4 +89,26 @@ export function reset_simulator(ino_bin: Uint8Array, symbols: string) {
     simulator.hybrid.set_joint_q(i + 1, targets[i] * (Math.PI / 180)); // skip first floating joint
   }
   simulator.hybrid.reboot_esp32_controller(0, ino_bin, symbols);
+}
+
+function createLoadingUI(): HTMLDivElement {
+  const overlay = document.createElement("div");
+  overlay.id = "loading";
+  overlay.innerHTML = `
+    <div class="spinner"></div>
+    <p>Loading simulation assets...</p>
+  `;
+  Object.assign(overlay.style, {
+    position: "absolute",
+    inset: "0",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "#000",
+    color: "#fff",
+    zIndex: "999",
+  });
+  document.getElementById("threejs").appendChild(overlay);
+  return overlay;
 }
