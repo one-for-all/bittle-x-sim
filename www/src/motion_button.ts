@@ -13,9 +13,15 @@ function setupMotionButton(buttonId: string, payload: string, label: string) {
   });
 }
 
-setupMotionButton("backflipButton", "kbf", "backflip");
-setupMotionButton("trotButton", "ktrF", "trot");
-setupMotionButton("backwardButton", "kbk", "backward");
-setupMotionButton("beTableButton", "ktbl", "be table");
-setupMotionButton("kickButton", "kkc", "kick");
-setupMotionButton("recoverButton", "krc", "recover");
+const motions = [
+  { id: "backflipButton", payload: "kbf", label: "backflip" },
+  { id: "trotButton", payload: "ktrF", label: "trot" },
+  { id: "backwardButton", payload: "kbk", label: "backward" },
+  { id: "beTableButton", payload: "ktbl", label: "be table" },
+  { id: "kickButton", payload: "kkc", label: "kick" },
+  { id: "recoverButton", payload: "krc", label: "recover" },
+];
+
+for (const { id, payload, label } of motions) {
+  setupMotionButton(id, payload, label);
+}
