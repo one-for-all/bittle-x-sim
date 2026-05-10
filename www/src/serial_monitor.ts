@@ -1,8 +1,13 @@
+import { isPhoneUA } from "./mobile";
 import { getSimulator } from "./sim";
 
 // Show the output div at the beginning
 const outputDiv = document.getElementById("buildOutput");
-outputDiv.classList.add("show");
+if (isPhoneUA()) {
+  outputDiv.classList.remove("show");
+} else {
+  outputDiv.classList.add("show");
+}
 
 document.getElementById("closeOutput").addEventListener("click", async () => {
   document.getElementById("buildOutput").classList.remove("show");

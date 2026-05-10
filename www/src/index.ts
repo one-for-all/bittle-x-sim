@@ -10,6 +10,7 @@ import "./compile";
 import "./reset";
 import { renderExplorer } from "./explorer";
 import { renderFileBar } from "./filebar";
+import "./mobile";
 
 initSimulator();
 openFile(inoFileName());
