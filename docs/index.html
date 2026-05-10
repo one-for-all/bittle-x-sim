@@ -87,6 +87,10 @@
             <div class="main-resize-handle" id="mainResizeHandle"></div>
             <!--robot simulation view with serial monitor -->
             <div id="threejs">
+                <div id="loading" class="loading-overlay">
+                    <div class="spinner"></div>
+                    <p>Loading simulation assets...</p>
+                </div>
                 <button class="reset-button" id="resetButton">
                     <span>🔄</span>
                     <span>Reset</span>
@@ -148,8 +152,10 @@
                     </div>
                 </div>
                 <div id="realtimeRatio">realtime rate: 1.0</div>
-                <div class="movement-button-container" id="movementButtonContainer">
-                </div>
+                <div
+                    class="movement-button-container"
+                    id="movementButtonContainer"
+                ></div>
             </div>
         </div>
         <script src="bundle.js"></script>
