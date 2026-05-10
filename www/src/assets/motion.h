@@ -48,6 +48,7 @@ void stand() {
     }
     delay(1);
   }
+  delay(500);
   Serial.println("stand");
 }
 
