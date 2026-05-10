@@ -72,6 +72,8 @@
     position: absolute;
     gap: 5px;
     right: 10px; /* Align it to the right */
+    max-height: calc(100dvh - 200px);
+    overflow-y: auto;
 }
 .movement-button {
     padding: 6px 12px;
