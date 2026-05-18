@@ -1,9 +1,10 @@
 import { isPhoneUA } from "./mobile";
+import { isControlMode } from "./query";
 import { getSimulator } from "./sim";
 
 // Show the output div at the beginning
 const outputDiv = document.getElementById("buildOutput");
-if (isPhoneUA()) {
+if (isPhoneUA() || isControlMode()) {
   outputDiv.classList.remove("show");
 } else {
   outputDiv.classList.add("show");

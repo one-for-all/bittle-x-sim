@@ -11,6 +11,7 @@ import "./reset";
 import { renderExplorer } from "./explorer";
 import { renderFileBar } from "./filebar";
 import "./mobile";
+import "./query";
 
 initSimulator();
 openFile(inoFileName());
