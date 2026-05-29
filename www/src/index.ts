@@ -12,9 +12,12 @@ import { renderExplorer } from "./explorer";
 import { renderFileBar } from "./filebar";
 import "./mobile";
 import "./query";
+import { setupDownload } from "./download";
 
 initSimulator();
 openFile(inoFileName());
+
+setupDownload();
 
 document
   .getElementById("projectDialogButton")!
