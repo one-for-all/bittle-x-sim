@@ -23,11 +23,11 @@
     bottom: 280px;
 }
 
-.space-key-container {
+.action-key-container {
     left: 160px;
 }
 
-.space-key-container.expanded {
+.action-key-container.expanded {
     bottom: 280px;
 }
 
@@ -56,6 +56,6 @@
     background-color: rgba(14, 99, 156, 1);
 }
 
-.wasd-stand {
+.wasd-action {
     width: 100px;
 }

@@ -2,17 +2,17 @@ import { editorIsFocused } from "./editor";
 import { getSimulator } from "./sim";
 
 const wasdContainer = document.getElementById("wasdContainer");
-const spaceKeyContainer = document.getElementById("spaceKeyContainer");
+const actionKeyContainer = document.getElementById("actionKeyContainer");
 const buildOutput = document.getElementById("buildOutput");
 
 // Function to update WASD position based on build output visibility
 function updateWasdPosition() {
   if (buildOutput.classList.contains("show")) {
     wasdContainer.classList.add("expanded");
-    spaceKeyContainer.classList.add("expanded");
+    actionKeyContainer.classList.add("expanded");
   } else {
     wasdContainer.classList.remove("expanded");
-    spaceKeyContainer.classList.remove("expanded");
+    actionKeyContainer.classList.remove("expanded");
   }
 }
 
@@ -30,6 +30,7 @@ const commands: Record<string, string> = {
   btnS: "kbk",
   btnD: "kvtR",
   btnStand: "kup",
+  btnRecover: "krc",
 };
 
 // Map keyboard keys to command IDs
@@ -39,6 +40,7 @@ const keyMap: Record<string, string> = {
   s: "btnS",
   d: "btnD",
   " ": "btnStand",
+  c: "btnRecover",
 };
 
 function sendCommand(id: string) {
