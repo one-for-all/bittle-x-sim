@@ -1,9 +1,6 @@
 /* build and serial output */
 .build-output {
-    position: absolute;
-    bottom: 0px; /* Leave space for serial input bar */
-    left: 0;
-    right: 0;
+    position: relative;
     background: #1e1e1e;
     border-top: 1px solid #007acc;
     max-height: 250px;
@@ -14,7 +11,6 @@
     font-size: 14px;
     white-space: pre-wrap;
     display: none;
-    z-index: 10;
 }
 
 .build-output.show {
@@ -51,17 +47,13 @@
 
 /* ── Serial Monitor Input Bar ─────────────────────────── */
 .serial-input-bar {
-    position: absolute;
+    position: relative;
     display: flex;
-    bottom: 0;
-    left: 0;
-    right: 0;
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
     border-top: 1px solid #2d2d30;
     background: #1e1e1e;
-    z-index: 11;
 }
 
 .serial-input {
