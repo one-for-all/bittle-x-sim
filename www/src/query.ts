@@ -11,6 +11,7 @@ const controlModeHideElements: string[] = [
   "explorer",
   "editorContainer",
   "buildOutput",
+  "serialInputBar",
 ];
 if (isControlMode()) {
   for (const element of controlModeHideElements) {
