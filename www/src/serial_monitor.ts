@@ -1,5 +1,5 @@
 import { isPhoneUA } from "./mobile";
-import { isControlMode } from "./query";
+import { isControlMode } from "./mode";
 import { getSimulator } from "./sim";
 
 // Show the output div at the beginning

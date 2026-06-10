@@ -11,7 +11,7 @@ import "./reset";
 import { renderExplorer } from "./explorer";
 import { renderFileBar } from "./filebar";
 import "./mobile";
-import "./query";
+import "./mode";
 import { setupDownload } from "./download";
 
 initSimulator();
