@@ -26,3 +26,7 @@
     left: 0; /* flush left */
     right: -10px; /* extends right */
 }
+
+.control-mode {
+    display: none !important;
+}

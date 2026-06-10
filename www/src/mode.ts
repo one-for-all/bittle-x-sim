@@ -1,10 +1,19 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const mode = urlParams.get("mode");
+let mode = urlParams.get("mode");
 
 export const isControlMode = (): boolean => {
   return mode === "control";
 };
+
+function toggleMode() {
+  if (isControlMode()) {
+    mode = "code";
+  } else {
+    mode = "control";
+  }
+  updateUIforMode();
+}
 
 const controlModeHideElements: string[] = [
   "projectSidebar",
@@ -13,8 +22,15 @@ const controlModeHideElements: string[] = [
   "buildOutput",
   "serialInputBar",
 ];
-if (isControlMode()) {
+
+function updateUIforMode() {
   for (const element of controlModeHideElements) {
-    document.getElementById(element).style.display = "none";
+    if (isControlMode()) {
+      document.getElementById(element).classList.add("control-mode");
+    } else {
+      document.getElementById(element).classList.remove("control-mode");
+    }
   }
 }
+
+updateUIforMode();
