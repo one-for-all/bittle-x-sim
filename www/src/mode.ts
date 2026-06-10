@@ -6,7 +6,7 @@ export const isControlMode = (): boolean => {
   return mode === "control";
 };
 
-function toggleMode() {
+export function toggleMode() {
   if (isControlMode()) {
     mode = "code";
   } else {
@@ -31,6 +31,8 @@ function updateUIforMode() {
       document.getElementById(element).classList.remove("control-mode");
     }
   }
+
+  window.dispatchEvent(new Event("resize"));
 }
 
 updateUIforMode();

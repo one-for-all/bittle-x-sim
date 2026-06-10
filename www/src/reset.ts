@@ -1,4 +1,5 @@
 import { getSimulator } from "./sim";
+import { toggleMode } from "./mode";
 
 document.getElementById("resetButton").addEventListener("click", () => {
   const simulator = getSimulator();
@@ -14,3 +15,5 @@ document.getElementById("resetButton").addEventListener("click", () => {
     simulator.hybrid.reboot_code_controller(0, "");
   }
 });
+
+document.getElementById("toggleModeButton").addEventListener("click", toggleMode);
