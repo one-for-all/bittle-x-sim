@@ -85,3 +85,6 @@ The `build-open-cat.sh` script automates the compilation and packaging of Arduin
 ## Project Status
 
 The project provides an end-to-end simulation environment for Petoi's Bittle X Robot Dog. It includes features for code editing, compilation for both Wasm and ESP32 targets, 3D visualization, and serial communication.
+
+## Notes
+Do not do `npm run build` after implementing. It will be handled by the user.
