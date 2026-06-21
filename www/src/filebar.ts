@@ -12,6 +12,7 @@ function getFileIcon(filename: string) {
   return icons[ext] || "📄";
 }
 
+// Refresh content in file bar
 export function renderFileBar() {
   const fileTabScroll = document.getElementById("fileTabScroll");
   fileTabScroll.innerHTML = "";

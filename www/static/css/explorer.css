@@ -38,3 +38,8 @@
     font-weight: bold;
     color: #aaa;
 }
+.explorer-folder.drag-over {
+    background: #094771;
+    color: #fff;
+    outline: 2px dashed #007acc;
+}

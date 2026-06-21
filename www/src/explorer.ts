@@ -10,10 +10,36 @@ interface FileNode {
 
 export const expandedFolders = new Set<string>();
 
+// Refresh the content in file explorer div
 export function renderExplorer() {
   const explorerFiles = document.getElementById("explorerFiles");
   if (!explorerFiles) return;
   explorerFiles.innerHTML = "";
+
+  // On dragging into root directory
+  explorerFiles.ondragover = (e) => {
+    e.preventDefault();
+    if (e.dataTransfer) {
+      e.dataTransfer.dropEffect = "move";
+    }
+  };
+  explorerFiles.ondrop = (e) => {
+    e.preventDefault();
+    const dataStr = e.dataTransfer?.getData("text/plain");
+    if (!dataStr) return;
+    try {
+      const { path: draggedPath, key: draggedKey } = JSON.parse(dataStr);
+      const newPath = draggedKey;
+      if (draggedPath !== newPath) {
+        if (renameFile(draggedPath, newPath)) {
+          renderExplorer();
+          renderFileBar();
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const fileTree: FileNode = {};
   Object.keys(files).forEach((filename) => {
@@ -53,6 +79,16 @@ export function renderExplorer() {
         const path = currentPath ? `${currentPath}/${key}` : key;
 
         if (node.__isFile) {
+          div.draggable = true;
+          div.ondragstart = (e) => {
+            if (e.dataTransfer) {
+              e.dataTransfer.setData(
+                "text/plain",
+                JSON.stringify({ path, key }),
+              );
+              e.dataTransfer.effectAllowed = "move";
+            }
+          };
           if (node.fullPath === currentFile) div.classList.add("active");
           div.onclick = (e) => {
             e.stopPropagation();
@@ -66,6 +102,43 @@ export function renderExplorer() {
           folderContent.style.display = expandedFolders.has(path)
             ? "block"
             : "none";
+
+          // On dragging into a folder div
+          div.ondragover = (e) => {
+            e.preventDefault();
+            if (e.dataTransfer) {
+              e.dataTransfer.dropEffect = "move";
+            }
+          };
+          div.ondragenter = (e) => {
+            e.preventDefault();
+            div.classList.add("drag-over");
+          };
+          div.ondragleave = () => {
+            div.classList.remove("drag-over");
+          };
+          div.ondrop = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            div.classList.remove("drag-over");
+            const dataStr = e.dataTransfer?.getData("text/plain");
+            if (!dataStr) return;
+            try {
+              const { path: draggedPath, key: draggedKey } =
+                JSON.parse(dataStr);
+              const newPath = `${path}/${draggedKey}`;
+              if (draggedPath !== newPath) {
+                if (renameFile(draggedPath, newPath)) {
+                  expandedFolders.add(path);
+                  renderExplorer();
+                  renderFileBar();
+                }
+              }
+            } catch (err) {
+              console.error(err);
+            }
+          };
+
           div.onclick = (e) => {
             e.stopPropagation();
             if (expandedFolders.has(path)) {
@@ -81,6 +154,7 @@ export function renderExplorer() {
           container.appendChild(folderContent);
         }
 
+        // Rename a file or folder
         div.oncontextmenu = (e) => {
           e.preventDefault();
           e.stopPropagation();
