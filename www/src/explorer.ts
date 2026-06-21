@@ -98,28 +98,23 @@ export function renderExplorer() {
             }
           };
         } else {
-          const folderContent = document.createElement("div");
-          folderContent.style.display = expandedFolders.has(path)
-            ? "block"
-            : "none";
-
-          // On dragging into a folder div
-          div.ondragover = (e) => {
+          let dragCounter = 0;
+          const handleDragEnter = (e: DragEvent) => {
             e.preventDefault();
-            if (e.dataTransfer) {
-              e.dataTransfer.dropEffect = "move";
-            }
-          };
-          div.ondragenter = (e) => {
-            e.preventDefault();
+            dragCounter++;
             div.classList.add("drag-over");
           };
-          div.ondragleave = () => {
-            div.classList.remove("drag-over");
+          const handleDragLeave = () => {
+            dragCounter--;
+            if (dragCounter <= 0) {
+              dragCounter = 0;
+              div.classList.remove("drag-over");
+            }
           };
-          div.ondrop = (e) => {
+          const handleDrop = (e: DragEvent) => {
             e.preventDefault();
             e.stopPropagation();
+            dragCounter = 0;
             div.classList.remove("drag-over");
             const dataStr = e.dataTransfer?.getData("text/plain");
             if (!dataStr) return;
@@ -138,6 +133,33 @@ export function renderExplorer() {
               console.error(err);
             }
           };
+
+          // On dragging into a folder div
+          div.ondragover = (e) => {
+            e.preventDefault();
+            if (e.dataTransfer) {
+              e.dataTransfer.dropEffect = "move";
+            }
+          };
+          div.ondragenter = handleDragEnter;
+          div.ondragleave = handleDragLeave;
+          div.ondrop = handleDrop;
+
+          const folderContent = document.createElement("div");
+          folderContent.style.display = expandedFolders.has(path)
+            ? "block"
+            : "none";
+
+          // Also allow dragging into the folder contents div
+          folderContent.ondragover = (e) => {
+            e.preventDefault();
+            if (e.dataTransfer) {
+              e.dataTransfer.dropEffect = "move";
+            }
+          };
+          folderContent.ondragenter = handleDragEnter;
+          folderContent.ondragleave = handleDragLeave;
+          folderContent.ondrop = handleDrop;
 
           div.onclick = (e) => {
             e.stopPropagation();
