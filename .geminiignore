@@ -5,3 +5,4 @@ docs/
 .git/
 www/static/mesh
 **/*.glb
+.DS_Store
