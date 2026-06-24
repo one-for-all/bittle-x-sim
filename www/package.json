@@ -22,7 +22,8 @@
     "jszip": "^3.10.1",
     "monaco-editor": "^0.55.1",
     "monaco-editor-webpack-plugin": "^7.1.1",
-    "three": "^0.152.0"
+    "three": "^0.152.0",
+    "chimpanzee-ui": "file:../../chimpanzee-ui"
   },
   "devDependencies": {
     "@rspack/cli": "^2.0.0",

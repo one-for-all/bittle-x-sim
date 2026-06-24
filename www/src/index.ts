@@ -14,6 +14,9 @@ import "./mobile";
 import "./mode";
 import { setupDownload } from "./download";
 
+// Import CSS
+import "chimpanzee-ui/overlay.css";
+
 initSimulator();
 openFile(inoFileName());
 
