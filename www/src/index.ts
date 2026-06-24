@@ -15,7 +15,7 @@ import "./mode";
 import { setupDownload } from "./download";
 
 // Import CSS
-import "chimpanzee-ui/overlay.css";
+import "chimpanzee-ui/index.css";
 
 initSimulator();
 openFile(inoFileName());
