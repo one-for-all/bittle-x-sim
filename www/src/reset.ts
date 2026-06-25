@@ -16,6 +16,7 @@ document.getElementById("resetButton").addEventListener("click", () => {
   }
 });
 
-document
-  .getElementById("toggleModeButton")
-  .addEventListener("click", toggleMode);
+document.getElementById("toggleModeButton").addEventListener("click", () => {
+  toggleMode();
+  document.getElementById("projectDialog")?.classList.add("hidden");
+});
