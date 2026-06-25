@@ -60,6 +60,10 @@ const rspackConfig = {
       ],
     }),
 
+    new rspack.HtmlRspackPlugin({
+      template: "./static/index.html",
+    }),
+
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, "../"),
       extraArgs: featureGPU ? "--features gpu" : "",
@@ -73,10 +77,6 @@ const rspackConfig = {
     new MonacoWebpackPlugin({
       languages: ["cpp", "markdown"],
       themes: ["vs-dark"],
-    }),
-
-    new rspack.HtmlRspackPlugin({
-      template: "./static/index.html",
     }),
 
     new rspack.CssExtractRspackPlugin({ filename: "css/main.css" }),
