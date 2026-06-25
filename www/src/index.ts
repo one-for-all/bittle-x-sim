@@ -1,3 +1,6 @@
+// Import CSS
+import "chimpanzee-ui/css";
+
 import { initSimulator } from "./sim";
 import "./editor";
 import "./motion_button";
@@ -13,20 +16,18 @@ import { getSimulator } from "./sim";
 import { createSerialMonitorPanel, setupResize } from "chimpanzee-ui";
 import { updateUIforMode, isPhoneUA } from "chimpanzee-ui";
 
-// Import CSS
-import "chimpanzee-ui/css";
+if (isPhoneUA()) {
+  document.getElementById("explorer").classList.add("hidden");
+  document.getElementById("editorContainer").style.flex = `0 0 10px`;
+}
+
+updateUIforMode();
+setupResize();
 
 initSimulator();
 const panel = createSerialMonitorPanel({ getSimulator });
 openFile(inoFileName());
 setupDownload();
-updateUIforMode();
-setupResize();
-
-if (isPhoneUA()) {
-  document.getElementById("explorer").classList.add("hidden");
-  document.getElementById("editorContainer").style.flex = `0 0 10px`;
-}
 
 document
   .getElementById("projectDialogButton")!

@@ -35,7 +35,7 @@ const rspackConfig = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: [rspack.CssExtractRspackPlugin.loader, "css-loader"],
       },
       {
         test: /\.(ino|h|cpp|md|hex|txt)$/,
@@ -74,6 +74,8 @@ const rspackConfig = {
       languages: ["cpp", "markdown"],
       themes: ["vs-dark"],
     }),
+
+    new rspack.CssExtractRspackPlugin({ filename: "css/main.css" }),
   ],
   // To disable warning on screen
   stats: {

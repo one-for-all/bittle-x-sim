@@ -91,4 +91,3 @@ export function reset_simulator(ino_bin: Uint8Array, symbols: string) {
   }
   simulator.hybrid.reboot_esp32_controller(0, ino_bin, symbols);
 }
-
