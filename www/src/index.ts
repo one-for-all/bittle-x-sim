@@ -1,7 +1,6 @@
 import { initSimulator } from "./sim";
 import "./editor";
 import "./motion_button";
-import "./serial_monitor";
 import "./resize";
 import "./wasd";
 import { files, inoFileName, resetFiles } from "./files";
@@ -13,6 +12,10 @@ import { renderFileBar } from "./filebar";
 import "./mobile";
 import "./mode";
 import { setupDownload } from "./download";
+import { getSimulator } from "./sim";
+import { createSerialMonitorPanel } from "chimpanzee-ui";
+
+const panel = createSerialMonitorPanel({ getSimulator });
 
 // Import CSS
 import "chimpanzee-ui/index.css";
