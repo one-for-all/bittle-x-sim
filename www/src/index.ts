@@ -1,7 +1,6 @@
 import { initSimulator } from "./sim";
 import "./editor";
 import "./motion_button";
-import "./resize";
 import "./wasd";
 import { files, inoFileName, resetFiles } from "./files";
 import { openFile } from "./editor";
@@ -11,17 +10,18 @@ import { renderExplorer } from "./explorer";
 import { renderFileBar } from "./filebar";
 import { setupDownload } from "./download";
 import { getSimulator } from "./sim";
-import { createSerialMonitorPanel } from "chimpanzee-ui";
+import { createSerialMonitorPanel, setupResize } from "chimpanzee-ui";
 import { updateUIforMode, isPhoneUA } from "chimpanzee-ui";
 
 // Import CSS
-import "chimpanzee-ui/index.css";
+import "chimpanzee-ui/css";
 
 initSimulator();
 const panel = createSerialMonitorPanel({ getSimulator });
 openFile(inoFileName());
 setupDownload();
 updateUIforMode();
+setupResize();
 
 if (isPhoneUA()) {
   document.getElementById("explorer").classList.add("hidden");
