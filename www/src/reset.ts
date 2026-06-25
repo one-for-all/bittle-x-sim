@@ -1,5 +1,5 @@
 import { getSimulator } from "./sim";
-import { toggleMode } from "./mode";
+import { toggleMode } from "chimpanzee-ui";
 
 document.getElementById("resetButton").addEventListener("click", () => {
   const simulator = getSimulator();
@@ -16,4 +16,6 @@ document.getElementById("resetButton").addEventListener("click", () => {
   }
 });
 
-document.getElementById("toggleModeButton").addEventListener("click", toggleMode);
+document
+  .getElementById("toggleModeButton")
+  .addEventListener("click", toggleMode);

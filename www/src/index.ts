@@ -9,11 +9,10 @@ import "./compile";
 import "./reset";
 import { renderExplorer } from "./explorer";
 import { renderFileBar } from "./filebar";
-import "./mode";
 import { setupDownload } from "./download";
 import { getSimulator } from "./sim";
 import { createSerialMonitorPanel } from "chimpanzee-ui";
-import { isPhoneUA } from "chimpanzee-ui";
+import { updateUIforMode, isPhoneUA } from "chimpanzee-ui";
 
 // Import CSS
 import "chimpanzee-ui/index.css";
@@ -22,6 +21,7 @@ initSimulator();
 const panel = createSerialMonitorPanel({ getSimulator });
 openFile(inoFileName());
 setupDownload();
+updateUIforMode();
 
 if (isPhoneUA()) {
   document.getElementById("explorer").classList.add("hidden");
