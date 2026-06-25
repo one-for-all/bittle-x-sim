@@ -9,11 +9,11 @@ import "./compile";
 import "./reset";
 import { renderExplorer } from "./explorer";
 import { renderFileBar } from "./filebar";
-import "./mobile";
 import "./mode";
 import { setupDownload } from "./download";
 import { getSimulator } from "./sim";
 import { createSerialMonitorPanel } from "chimpanzee-ui";
+import { isPhoneUA } from "chimpanzee-ui";
 
 // Import CSS
 import "chimpanzee-ui/index.css";
@@ -22,6 +22,11 @@ initSimulator();
 const panel = createSerialMonitorPanel({ getSimulator });
 openFile(inoFileName());
 setupDownload();
+
+if (isPhoneUA()) {
+  document.getElementById("explorer").classList.add("hidden");
+  document.getElementById("editorContainer").style.flex = `0 0 10px`;
+}
 
 document
   .getElementById("projectDialogButton")!
