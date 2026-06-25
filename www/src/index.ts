@@ -15,14 +15,12 @@ import { setupDownload } from "./download";
 import { getSimulator } from "./sim";
 import { createSerialMonitorPanel } from "chimpanzee-ui";
 
-const panel = createSerialMonitorPanel({ getSimulator });
-
 // Import CSS
 import "chimpanzee-ui/index.css";
 
 initSimulator();
+const panel = createSerialMonitorPanel({ getSimulator });
 openFile(inoFileName());
-
 setupDownload();
 
 document
