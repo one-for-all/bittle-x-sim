@@ -54,7 +54,7 @@ const rspackConfig = {
           from: "static",
           to: dist,
           globOptions: {
-            ignore: ["**/GEMINI.md"],
+            ignore: ["**/GEMINI.md", "**/index.html"],
           },
         },
       ],
@@ -75,6 +75,10 @@ const rspackConfig = {
       themes: ["vs-dark"],
     }),
 
+    new rspack.HtmlRspackPlugin({
+      template: "./static/index.html",
+    }),
+
     new rspack.CssExtractRspackPlugin({ filename: "css/main.css" }),
   ],
   // To disable warning on screen
@@ -89,6 +93,13 @@ const rspackConfig = {
     type: "filesystem",
     buildDependencies: {
       config: [__filename],
+    },
+  },
+  devServer: {
+    client: {
+      overlay: {
+        runtimeErrors: false,
+      },
     },
   },
 };
