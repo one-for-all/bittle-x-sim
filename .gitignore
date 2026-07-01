@@ -31,3 +31,6 @@ www/static/OpenCatEsp32/build/
 profile.json.gz
 
 www/motion.md
+
+# Generated at build time by www/scripts/gzip-meshes.js
+www/static/mesh/*.obj.gz
