@@ -1,6 +1,4 @@
 <?xml version="1.0" ?>
-<!-- Generated using onshape-to-robot -->
-<!-- Onshape https://cad.onshape.com/documents/3e708ce27c0b38dcdf8ce5c5/w/d2322db6571afcc498723ba0/e/6adea148584488a7fd0652e6 -->
 <robot name="onshape">
   <!-- Link chassis -->
   <link name="chassis">
