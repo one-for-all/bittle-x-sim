@@ -12,10 +12,15 @@ use gorilla_physics::{
     types::Float,
 };
 #[cfg(any(target_arch = "wasm32", rust_analyzer))]
-use gorilla_physics::{collision::halfspace::HalfSpace, hybrid::builders::import_static_body};
-use nalgebra::vector;
+use gorilla_physics::{
+    collision::halfspace::HalfSpace,
+    hybrid::{
+        builders::import_static_body,
+        static_body::{StaticBody, StaticCuboid},
+    },
+};
 #[cfg(any(target_arch = "wasm32", rust_analyzer))]
-use nalgebra::{Isometry3, Rotation3, Translation3, UnitQuaternion};
+use nalgebra::{Isometry3, Rotation3, Translation3, UnitQuaternion, vector};
 use urdf_rs::Robot;
 
 #[cfg(any(target_arch = "wasm32", rust_analyzer))]
@@ -195,19 +200,22 @@ pub async fn createBittleX() -> InterfaceHybrid {
     let mut meshes = URDFMeshes::new(&urdf_robot).await;
 
     let mut state = build_bittle_x(&mut meshes, &urdf_robot);
+    // let mut state = Hybrid::empty();
+    // let sphere = Articulated::new_sphere_at("sphere", 1.0, 0.02, &vector![0., 0., 1.0]);
+    // state.add_articulated(sphere);
 
     let controller = BittleXEsp32Controller::new().await;
     // let controller = NullArticulatedController {};
     state.set_controller(0, controller);
 
-    // // Add table
-    // let mut table = import_static_body("mesh/table/table.obj").await;
-    // table.update_pose(Isometry3::from_parts(
-    //     Translation3::new(0.6, 0., 0.),
-    //     UnitQuaternion::identity(),
-    // ));
-    // table.show_visual = false;
-    // state.add_static_body(table);
+    // Add table
+    let mut table = import_static_body("mesh/table/table.obj").await;
+    table.update_pose(Isometry3::from_parts(
+        Translation3::new(0.6, 0., 0.),
+        UnitQuaternion::identity(),
+    ));
+    table.show_visual = false;
+    state.add_static_body(table);
 
     // Add ramp
     // let mut ramp = import_static_body("mesh/ramp.obj").await;
@@ -224,7 +232,14 @@ pub async fn createBittleX() -> InterfaceHybrid {
     let cube = Articulated::new_cube_at("cube", m, w, &vector![-0.3, 0.2, 2. * w + 0.82]);
     state.add_articulated(cube);
 
-    state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.82));
+    // state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.82));
+    state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.));
+    // state.add_static_cuboid(StaticCuboid::new(
+    //     2.0,
+    //     0.6,
+    //     0.13,
+    //     Isometry3::translation(0.6, 0., 0.82 - 0.13 / 2.),
+    // ));
 
     InterfaceHybrid::new(state)
 }
