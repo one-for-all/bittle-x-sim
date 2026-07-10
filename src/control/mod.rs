@@ -101,8 +101,12 @@ impl ArticulatedController for BittleXEsp32Controller {
         let max_count = 10; // 100
         for _ in 0..n_steps {
             self.esp32.step();
-            if let Some(data) = self.uart_payload.pop_front() {
-                self.esp32.feed_uart(data);
+            // Hold pending uart data until the firmware serial driver is up,
+            // e.g. a command sent while the esp32 is still booting.
+            if !self.uart_payload.is_empty() && self.esp32.uart_ready() {
+                if let Some(data) = self.uart_payload.pop_front() {
+                    self.esp32.feed_uart(data);
+                }
             }
 
             count += 1;
