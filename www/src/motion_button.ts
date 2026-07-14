@@ -1,8 +1,7 @@
 import { getSimulator } from "./sim";
 
-const container = document.getElementById("movementButtonContainer");
-
 function createMotionButton(payload: string, label: string) {
+  const container = document.getElementById("movementButtonContainer");
   if (!container) return;
 
   const button = document.createElement("button");
