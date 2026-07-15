@@ -12,7 +12,7 @@ setupResetButton(
 
     hybrid.reboot_code_controller(0, "");
   },
-  cameraPosition,
+  // cameraPosition, // optionally reset camera
 );
 
 setupModeToggleButton();
