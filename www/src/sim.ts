@@ -5,6 +5,11 @@ import { Euler, Vector3 } from "three";
 
 let _simulator: Simulator | null = null;
 
+export const cameraPosition = {
+  eye: { x: 0.0, y: -1.2, z: 0.4 + 0.82 },
+  target: { x: 0.0, y: 0, z: 0.82 },
+};
+
 export function initSimulator() {
   let interfaceSimulator = null;
   let showGrid = true;
@@ -48,10 +53,6 @@ export function initSimulator() {
     simulator.addHybrid(state);
     simulator.updateHybrid();
 
-    let cameraPosition = {
-      eye: { x: 0.0, y: -1.2, z: 0.4 + 0.82 },
-      target: { x: 0.0, y: 0, z: 0.82 },
-    };
     simulator.graphics.lookAt(cameraPosition);
 
     simulator.run(60, 0); // 10
