@@ -11,6 +11,8 @@ onshape/
 www/pkg/
 
 *.png
+!www/static/favicon.png
+!docs/favicon.png
 
 /OpenCatEsp32/build/
 /OpenCatEsp32/bootloader_symbols.txt
