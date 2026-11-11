@@ -47,7 +47,7 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
         body_frame,
         WORLD_FRAME,
         &vec![0., -0.1, 0.06],
-        &vec![0., 0., PI / 2.],
+        &vec![0., 0., -PI / 2.],
     ));
 
     let head_frame = "head";
@@ -221,9 +221,9 @@ pub async fn createBittleX() -> InterfaceHybrid {
     // state.add_static_body(ramp);
 
     // A beverage can to judge the robot's size by, and for it to push around.
-    // It walks off toward +x (screen right, from the default camera), so the
-    // can stands behind its line, to the left of where it starts.
-    let can = build_beverage_can(&vector![-0.2, 0.1, 0.]);
+    // It faces -x (screen left, from the default camera) and walks off that
+    // way, so the can stands behind its line, to the right of where it starts.
+    let can = build_beverage_can(&vector![0.2, 0.1, 0.]);
     state.add_articulated(can);
 
     // state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.82));
