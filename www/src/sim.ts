@@ -1,13 +1,11 @@
 import { createBittleX } from "bittle-x";
 import { Simulator } from "gorilla-physics-ui";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { Euler, Vector3 } from "three";
 
 let _simulator: Simulator | null = null;
 
 export const cameraPosition = {
-  eye: { x: 0.0, y: -1.2, z: 0.4 + 0.82 },
-  target: { x: 0.0, y: 0, z: 0.82 },
+  eye: { x: 0.0, y: -1.2, z: 0.4 },
+  target: { x: 0.0, y: 0, z: 0.0 },
 };
 
 export function initSimulator() {
@@ -15,39 +13,6 @@ export function initSimulator() {
   let showGrid = true;
   let simulator = new Simulator(interfaceSimulator, showGrid);
   simulator.showHalfspaces = false;
-
-  let scenes = [
-    {
-      scenePath: "gamer_setup_pack.glb",
-      rotation: new Euler(Math.PI / 2),
-      position: new Vector3(0.6, 0, 0),
-    },
-    // {
-    //   scenePath: "cozy_living_room_baked.glb",
-    //   rotation: new Euler(Math.PI / 2, -Math.PI / 2, 0),
-    //   position: new Vector3(0, 0, -0.88),
-    // },
-  ];
-  let gltfLoader = new GLTFLoader();
-  for (const scene of scenes) {
-    gltfLoader.load(
-      scene.scenePath,
-      (gltf) => {
-        const gltfScene = gltf.scene;
-        gltfScene.setRotationFromEuler(scene.rotation);
-        (gltfScene.position.set(
-          scene.position.x,
-          scene.position.y,
-          scene.position.z,
-        ),
-          simulator.graphics.scene.add(gltfScene));
-      },
-      undefined,
-      (error) => {
-        console.error(error);
-      },
-    );
-  }
 
   createBittleX().then((state) => {
     simulator.addHybrid(state);

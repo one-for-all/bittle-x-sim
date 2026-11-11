@@ -574,6 +574,7 @@ dependencies = [
  "constcat",
  "ctrlc",
  "getrandom 0.2.17",
+ "gibbon-electronics",
  "num_enum",
  "plotters",
  "rand 0.8.5",
@@ -828,6 +829,10 @@ dependencies = [
  "wasip2",
  "wasm-bindgen",
 ]
+
+[[package]]
+name = "gibbon-electronics"
+version = "0.1.0"
 
 [[package]]
 name = "gif"

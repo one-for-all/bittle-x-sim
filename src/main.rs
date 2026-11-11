@@ -7,11 +7,10 @@ use bittle_x::{
 use esp32rs::{plot::plot, util::read_file};
 use gorilla_physics::{
     collision::halfspace::HalfSpace,
-    hybrid::{articulated::Articulated, control::NullArticulatedController, mesh::URDFMeshes},
+    hybrid::{control::NullArticulatedController, mesh::URDFMeshes},
     types::Float,
 };
 use nalgebra::Vector3;
-use nalgebra::vector;
 
 #[tokio::main]
 async fn main() {
@@ -21,13 +20,7 @@ async fn main() {
     let urdf_robot = urdf_rs::read_from_string(&urdf_file).unwrap();
     let mut state = build_bittle_x(&mut meshes, &urdf_robot);
 
-    // Add a cube to interact with
-    let m = 0.02;
-    let w = 0.1;
-    let cube = Articulated::new_cube_at("cube", m, w, &vector![-0.3, 0.2, 2. * w + 0.82]);
-    state.add_articulated(cube);
-
-    state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.82));
+    state.add_halfspace(HalfSpace::new(Vector3::z_axis(), 0.));
 
     // let controller = NullArticulatedController {};
     let controller = BittleXEsp32Controller::new().await;

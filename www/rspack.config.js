@@ -59,10 +59,6 @@ const rspackConfig = {
             ignore: ["**/GEMINI.md", "**/index.html", "**/mesh/*.obj"],
           },
         },
-        {
-          from: "static/mesh/table/table.obj",
-          to: `${dist}/mesh/table/table.obj`,
-        },
       ],
     }),
 
