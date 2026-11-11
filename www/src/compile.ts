@@ -5,9 +5,14 @@ import { currentFile, files, inoFileName } from "./files";
 import { editor } from "./editor";
 
 // Build and Run the code
-// const url = "http://localhost:8081";
-const url =
-  "https://esp32-compile-api-v2-0-12-452188812531.us-central1.run.app";
+// Served from localhost → use the local compile API container on :8081;
+// otherwise the hosted Cloud Run service
+const isLocalhost = ["localhost", "127.0.0.1", "[::1]"].includes(
+  location.hostname,
+);
+const url = isLocalhost
+  ? "http://localhost:8081"
+  : "https://esp32-compile-api-v2-0-12-452188812531.us-central1.run.app";
 
 document.getElementById("runButton").addEventListener("click", async () => {
   await compileCode();
