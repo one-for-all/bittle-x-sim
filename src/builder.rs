@@ -31,6 +31,10 @@ use {
 pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
     let mut state = Hybrid::empty();
     state.set_friction_mu(0.5);
+    // The contact solve was half of every step in Clarabel. Solved densely,
+    // robot and can apart, it is the same problem to a tighter tolerance for
+    // a quarter of the cost. See `Hybrid::set_dense_cone_solve`.
+    state.set_dense_cone_solve(true);
 
     #[rustfmt::skip]
     let zero_position_angles = [

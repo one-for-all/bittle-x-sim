@@ -1,0 +1,20 @@
+[package]
+name = "bittle-realtime"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+# The scene `createBittleX` builds, stepped natively -- see ../README.md.
+[dependencies]
+gorilla-physics = { path = "../../../../gorilla-physics/" }
+esp32rs = { path = "../../../../esp32rs/" }
+nalgebra = "0.33"
+urdf-rs = "0.9.0"
+futures = "0.3"
+
+[profile.release]
+# Line tables only, so samply/atos can name source lines; no effect on speed.
+debug = "line-tables-only"
+
+[lints.rust]
+unexpected_cfgs = { level = "allow", check-cfg = ['cfg(rust_analyzer)'] }

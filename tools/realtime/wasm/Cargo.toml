@@ -1,0 +1,27 @@
+[package]
+name = "bittle-realtime-wasm"
+publish = false
+version = "0.1.0"
+edition = "2024"
+
+# The scene `createBittleX` builds, compiled as the page compiles it and run
+# under Node -- see ../README.md.
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+gorilla-physics = { path = "../../../../gorilla-physics/" }
+esp32rs = { path = "../../../../esp32rs/" }
+nalgebra = { version = "0.33", features = [] }
+urdf-rs = "0.9.0"
+futures = "0.3"
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+
+[lints.rust]
+unexpected_cfgs = { level = "allow", check-cfg = ['cfg(rust_analyzer)'] }
+
+[package.metadata.wasm-pack.profile.profiling]
+wasm-opt = ["-O", "-g"]
+[package.metadata.wasm-pack.profile.profiling.wasm-bindgen]
+demangle-name-section = true
