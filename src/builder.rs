@@ -7,7 +7,7 @@ use gorilla_physics::{
         rigid::helper::{build_joint, build_rigid},
     },
     joint::Joint,
-    na::Vector3,
+    na::{Vector3, vector},
     spatial::transform::Transform3D,
     types::Float,
 };
@@ -16,8 +16,6 @@ use gorilla_physics::{
     collision::halfspace::HalfSpace,
     hybrid::static_body::{StaticBody, StaticCuboid},
 };
-#[cfg(any(target_arch = "wasm32", rust_analyzer))]
-use nalgebra::vector;
 use urdf_rs::Robot;
 
 #[cfg(any(target_arch = "wasm32", rust_analyzer))]
@@ -45,8 +43,7 @@ pub fn build_bittle_x(meshes: &mut URDFMeshes, urdf: &Robot) -> Hybrid {
 
     let body_frame = "body";
     let mut body = build_rigid(body_frame, "chassis", urdf, meshes, false);
-    add_bittle_shoulder_collision_sphere(&mut body, urdf);
-    add_bittle_tail_collision_point(&mut body, urdf);
+    add_bittle_body_colliders(&mut body, urdf);
     let body_joint = Joint::new_floating(Transform3D::new_xyz_rpy(
         body_frame,
         WORLD_FRAME,
@@ -281,8 +278,8 @@ fn add_collision_sphere_chain(
 
 /// Lines the thigh with spheres, from the hip to the far end of the knee.
 ///
-/// The knee point only touches the ground, so without these the thigh went
-/// through anything else, such as the can.
+/// The knee point alone used to be all of the thigh that collided, and a point
+/// met nothing but the ground, so the thigh went through the can.
 fn add_bittle_thigh_collision_spheres(rigid: &mut Rigid, which_leg: &str, urdf: &Robot) {
     // The knee's axis passes through the thigh's centreline
     let knee = joint_origin(urdf, &format!("{}_knee", which_leg));
@@ -323,6 +320,61 @@ fn add_bittle_shoulder_collision_sphere(body: &mut Rigid, urdf: &Robot) {
     }
 }
 
+fn add_bittle_body_colliders(body: &mut Rigid, urdf: &Robot) {
+    add_bittle_shoulder_collision_sphere(body, urdf);
+    add_bittle_chassis_collision_cuboids(body);
+    add_bittle_tail_collision_spheres(body, urdf);
+    add_bittle_tail_collision_point(body, urdf);
+}
+
+/// Two boxes around the chassis, in its frame (x across, y from head to tail,
+/// z up), measured off its meshes: one from the bottom of the battery case to
+/// the top of the frame, over the shoulder servos at either end, and one for
+/// the cover raised on the middle of it.
+///
+/// The shoulder spheres alone used to be all of the chassis that collided, so
+/// the can went through the rest of it. The bottom is kept a hair above the
+/// shoulder spheres', so lying flat the robot still rests on those.
+fn add_bittle_chassis_collision_cuboids(body: &mut Rigid) {
+    for (min, max) in [
+        // frame, battery case and shoulder servos
+        (vector![-0.0507, -0.0621, -0.012], vector![0.0382, 0.0668, 0.0162]),
+        // cover
+        (vector![-0.042, -0.0346, 0.0066], vector![0.0292, 0.0393, 0.0252]),
+    ] {
+        let size: Vector3<Float> = max - min;
+        body.add_collision_cuboid_at(&((min + max) / 2.), size.x, size.y, size.z);
+    }
+}
+
+/// Radius of the spheres lining the tail: about its thickness, and most of
+/// its half-width
+const TAIL_RADIUS: Float = 0.004;
+
+/// Lines the tail with spheres, from where it leaves the chassis boxes up its
+/// curve to the tip, its centreline measured off its mesh in the chassis
+/// frame. The last sphere's far side is at the tip.
+///
+/// The point at its tip used to be all of the tail that collided, and a point
+/// met nothing but the ground, so the tail went through the can.
+fn add_bittle_tail_collision_spheres(body: &mut Rigid, urdf: &Robot) {
+    let tip = joint_origin(urdf, "tail_frame");
+    let x = tip.x;
+    let mut line = vec![
+        vector![x, 0.040, 0.0156],
+        vector![x, 0.0613, 0.0209],
+        vector![x, 0.0738, 0.0294],
+        vector![x, 0.0788, 0.0335],
+    ];
+    let last = line[line.len() - 1];
+    let end = tip - (tip - last).normalize() * TAIL_RADIUS;
+    line.push(end);
+    for segment in line.windows(2) {
+        add_collision_sphere_chain(body, &segment[0], &segment[1], TAIL_RADIUS);
+    }
+    body.add_collision_sphere_at(&end, TAIL_RADIUS);
+}
+
 fn add_bittle_tail_collision_point(body: &mut Rigid, urdf: &Robot) {
     let joint_name = "tail_frame";
     let point_joint = urdf.joints.iter().find(|&j| j.name == joint_name).unwrap();
@@ -350,13 +402,13 @@ mod tests {
     use urdf_rs::Robot;
 
     use super::{
-        FOOT_RADIUS, add_bittle_shank_collision_spheres, add_bittle_thigh_collision_spheres,
-        joint_origin,
+        FOOT_RADIUS, add_bittle_body_colliders, add_bittle_shank_collision_spheres,
+        add_bittle_thigh_collision_spheres, joint_origin,
     };
     use crate::can::{CAN_RADIUS, build_beverage_can};
 
     const DT: Float = 1. / 3600.;
-    /// Height the leg part is held at
+    /// Height the robot part is held at
     const HEIGHT: Float = 0.3;
 
     fn urdf() -> Robot {
@@ -364,58 +416,98 @@ mod tests {
         urdf_rs::read_from_string(&std::fs::read_to_string(path).unwrap()).unwrap()
     }
 
-    fn leg_part(link: &str, urdf: &Robot) -> Rigid {
+    fn part(link: &str, urdf: &Robot) -> Rigid {
         build_rigid("part", link, urdf, &mut URDFMeshes::empty(), false)
     }
 
-    /// Holds a leg part still in the air, lying along world x and turned so
-    /// that it swings in the vertical plane, and drops the can upright onto
-    /// it from 5 mm above its top, the can's axis coming down at `x` along the
-    /// part and over its centreline, which is set `out` along the part's z. So
-    /// the can lands on the side a leg sweeps into things with.
+    /// Holds a part of the robot still in the air, its frame at `HEIGHT` and
+    /// turned by `rpy`, drops `dropped` onto it and lets it fall for 0.15 s:
+    /// long enough to fall 11 cm, or to come to rest on the part.
     ///
-    /// Returns the height of the can's bottom over the centreline after
-    /// 0.15 s: a can falling through has dropped 10 cm by then, one resting
-    /// on the part is a sphere's radius above.
-    fn can_dropped_on(part: Rigid, x: Float, out: Float) -> Float {
+    /// Returns how high the dropped body's frame ends up over the part's.
+    fn dropped_on(part: Rigid, rpy: [Float; 3], dropped: Articulated) -> Float {
         let mut state = Hybrid::empty();
-        // Turned a quarter about x, so the part's y, its swing plane, is up
-        // and its z runs along world -y
         let joint = Joint::new_fixed(Transform3D::new_xyz_rpy(
             "part",
             WORLD_FRAME,
             &vec![0., 0., HEIGHT],
-            &vec![PI / 2., 0., 0.],
+            &rpy.to_vec(),
         ));
         state.add_articulated(Articulated::new(vec![part], vec![joint]));
-        state.add_articulated(build_beverage_can(&vector![x, -out, HEIGHT + 0.01]));
+        state.add_articulated(dropped);
         for _ in 0..(0.15 / DT) as usize {
             state.step(DT, &vec![]);
         }
         state.articulated[1].bodies[0].pose.translation.z - HEIGHT
     }
 
+    /// Drops the can upright onto a leg part lying along world x and turned a
+    /// quarter about it, so that the part's y, the plane it swings in, is up:
+    /// the can lands on the side a leg sweeps into things with. It comes down
+    /// from 5 mm above with its axis at `x` along the part and over its
+    /// centreline, which is set `out` along the part's z -- now world -y.
+    ///
+    /// Returns the height of the can's bottom over the centreline: resting on
+    /// the part, a sphere's radius.
+    fn can_dropped_on_leg(part: Rigid, x: Float, out: Float) -> Float {
+        let can = build_beverage_can(&vector![x, -out, HEIGHT + 0.01]);
+        dropped_on(part, [PI / 2., 0., 0.], can)
+    }
+
     #[test]
     fn can_does_not_go_through_the_thigh() {
         let urdf = urdf();
-        let mut thigh = leg_part("bittle_x_leg", &urdf);
+        let mut thigh = part("bittle_x_leg", &urdf);
         add_bittle_thigh_collision_spheres(&mut thigh, "left_front", &urdf);
         // Over the middle of the thigh, which is set out as far as the knee
         let out = joint_origin(&urdf, "left_front_knee").z;
-        let z = can_dropped_on(thigh, -0.025, out);
+        let z = can_dropped_on_leg(thigh, -0.025, out);
         assert!(z > 0.004, "can fell to {z} on the thigh");
     }
 
     #[test]
     fn can_does_not_go_through_the_shank() {
         let urdf = urdf();
-        let mut shank = leg_part("bittle_x_shank_left", &urdf);
+        let mut shank = part("bittle_x_shank_left", &urdf);
         add_bittle_shank_collision_spheres(&mut shank, "left_front", &urdf);
         // Over the knee end, with all of the can's bottom short of the foot,
         // which used to be all of the shank that collided
         let foot = joint_origin(&urdf, "left_front_foot_frame");
         let x = foot.x + FOOT_RADIUS + CAN_RADIUS + 0.002;
-        let z = can_dropped_on(shank, x, foot.z);
+        let z = can_dropped_on_leg(shank, x, foot.z);
         assert!(z > 0.004, "can fell to {z} on the shank");
+    }
+
+    #[test]
+    fn can_does_not_go_through_the_chassis() {
+        let urdf = urdf();
+        let mut chassis = part("chassis", &urdf);
+        add_bittle_body_colliders(&mut chassis, &urdf);
+        // Upright, onto the middle of the cover, its bottom clear of the
+        // shoulder spheres, which used to be all of the chassis that collided
+        let cover_top = 0.0252;
+        let can = build_beverage_can(&vector![-0.0064, 0.0024, HEIGHT + cover_top + 0.005]);
+        let z = dropped_on(chassis, [0., 0., 0.], can);
+        assert!(
+            z > cover_top - 0.001,
+            "can fell to {z}, cover top at {cover_top}"
+        );
+    }
+
+    #[test]
+    fn cube_does_not_go_through_the_tail() {
+        let urdf = urdf();
+        let mut chassis = part("chassis", &urdf);
+        add_bittle_body_colliders(&mut chassis, &urdf);
+        // The can is too wide to land anywhere on the tail but its tip, so a
+        // 1 cm cube instead, onto the middle of the tail behind the chassis,
+        // whose top there is 32 mm up: short of the tip, which used to be all
+        // of the tail that collided, and clear of the chassis itself. It
+        // settles down the tail's slope, but stays up on it, over the top of
+        // the chassis, rather than falling past.
+        let w = 0.01;
+        let cube = Articulated::new_cube_at("cube", 0.01, w, &vector![-0.0064, 0.072, HEIGHT + 0.04]);
+        let z = dropped_on(chassis, [0., 0., 0.], cube);
+        assert!(z > 0.02, "cube fell to {z} on the tail");
     }
 }
