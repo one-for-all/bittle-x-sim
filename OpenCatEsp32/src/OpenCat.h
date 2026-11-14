@@ -84,7 +84,7 @@ String uniqueName = "";
 // #define WEB_SERVER // toggle web server
 // #define SHOW_FPS // toggle FPS display
 #ifndef VT
-// #define GYRO_PIN  // toggle the Inertia Measurement Unit (IMU), i.e. the gyroscope
+#define GYRO_PIN  // toggle the Inertia Measurement Unit (IMU), i.e. the gyroscope
 #endif
 #define SERVO_FREQ 240
 
@@ -415,7 +415,7 @@ byte buzzerVolume;
 float amplifierFactor = 100.0;  // to fit the actual amplifier range of BiBoard
 
 int delayLong = 20;
-int delayMid = 4; // 8; decreased for when imu not enabled
+int delayMid = 8;
 int delayException = 5;
 int delayShort = 3;
 int delayStep = 1;
@@ -460,7 +460,7 @@ int balanceSlope[2] = {1, 1};  // roll, pitch
 
 #include "tools.h"
 #include "QList/QList.h"
-// #include "taskQueue.h"
+#include "taskQueue.h"
 
 /* Dependencies for displayNsvPartition() */
 #include "esp_partition.h"  // To check ESP32 partitions
@@ -475,7 +475,7 @@ int balanceSlope[2] = {1, 1};  // roll, pitch
 // #include "bluetoothManager.h"
 #include "io.h"
 #ifdef GYRO_PIN
-// #include "imu.h"
+#include "imu.h"
 #endif
 #include "espServo.h"
 #include "motion.h"
@@ -495,9 +495,15 @@ void initRobot() {
   printToAllPorts(MODEL);
   PTF("Software version: ");
   printToAllPorts(SoftwareVersion);
+  i2cDetect(Wire);
 
   newBoard = newBoardQ();
   configSetup();
+
+#ifdef GYRO_PIN
+  if (updateGyroQ)
+    imuSetup();
+#endif
 
   servoSetup();
   lastCmd[0] = '\0';
@@ -505,6 +511,7 @@ void initRobot() {
   skill = new Skill();
   skillList = new SkillList();
 
+  tQueue = new TaskQueue();
   strcpy(newCmd, "rest");
   loadBySkillName("rest");
 

@@ -6,6 +6,9 @@ edition = "2024"
 [dependencies]
 gorilla-physics = { path = "../gorilla-physics/"}
 esp32rs = {path = "../esp32rs/"}
+# The IMU on the BiBoard: gibbon-electronics models the ICM-42670 the firmware
+# reads over I2C.
+gibbon-electronics = { path = "../gibbon-electronics/" }
 nalgebra = { version = "0.33", features = [] }
 urdf-rs = "0.9.0"
 futures = "0.3"

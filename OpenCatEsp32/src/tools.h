@@ -93,6 +93,10 @@ template<typename T> String list2String(T *arr, byte len = DOF) {
   return temp;
 }
 
+template<typename T> int8_t sign(T val) {  // upstream has it in sound.h, which the sim firmware leaves out
+  return (T(0) < val) - (val < T(0));
+}
+
 template<typename T> int strlenUntil(T *s, char terminator) {
   int l = 0;
   while (l < BUFF_LEN && s[l] != terminator) {

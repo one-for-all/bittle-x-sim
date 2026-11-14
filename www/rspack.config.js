@@ -38,7 +38,7 @@ const rspackConfig = {
         use: [rspack.CssExtractRspackPlugin.loader, "css-loader"],
       },
       {
-        test: /\.(ino|h|cpp|md|hex|txt)$/,
+        test: /\.(ino|h|c|cpp|hpp|md|hex|txt)$/,
         type: "asset/source",
       },
       {
@@ -106,4 +106,12 @@ const rspackConfig = {
   },
 };
 
-module.exports = rspackConfig;
+// Testing tools (see src/devTools.ts) are for the dev server only: `npm run
+// start` and `npm run prod` serve, while `npm run build` makes the production
+// site in docs/, where DEV_TOOLS is false and the tools are dropped as dead code.
+module.exports = (env) => {
+  rspackConfig.plugins.push(
+    new rspack.DefinePlugin({ DEV_TOOLS: JSON.stringify(!!env.RSPACK_SERVE) }),
+  );
+  return rspackConfig;
+};

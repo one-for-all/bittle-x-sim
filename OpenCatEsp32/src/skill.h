@@ -125,6 +125,9 @@ public:
 
     for (int i = 0; i < 2; i++) {
       expectedRollPitch[i] = (int8_t)newCmd[1 + i];
+#ifdef GYRO_PIN
+      yprTilt[2 - i] = 0;
+#endif
     }
     angleDataRatio = (int8_t)newCmd[3];
     byte baseHeader = 4;
@@ -252,7 +255,14 @@ public:
             serialPort = &Serial;
             source = "Serial";
           }
-        if (serialPort) {
+        if (serialPort                                                                     // user input
+            || (gyroBalanceQ                                                               // the IMU should be used for balancing
+                && ((imuException != IMU_EXCEPTION_FLIPPED && !strcmp(skillName, "rc"))    // recovered during recover
+                    || (imuException == IMU_EXCEPTION_FLIPPED && strcmp(skillName, "rc"))  // flipped during other skills
+                    ))) {
+#ifdef GYRO_PIN
+          print6Axis();
+#endif
           PTHL("imuException: ", imuException);
           PTLF("Behavior interrupted");
           interruptedDuringBehavior = true;
@@ -261,6 +271,36 @@ public:
         }
         transform(dutyAngles + c * frameSize, angleDataRatio, dutyAngles[DOF + c * frameSize] / 8.0);
         delay(abs(dutyAngles[DOF + 1 + c * frameSize] * 50));
+#ifdef GYRO_PIN  // if opt out the gyro, the calculation can be really fast
+        if (dutyAngles[DOF + 2 + c * frameSize]) {
+          int triggerAxis = dutyAngles[DOF + 2 + c * frameSize];
+          int triggerAngle = dutyAngles[DOF + 3 + c * frameSize];
+          float currentYpr = ypr[abs(triggerAxis)];
+          float previousYpr = currentYpr;
+          long triggerTimer = millis();
+          while (1) {
+            // readIMU();
+            print6Axis();
+            currentYpr = ypr[abs(triggerAxis)];
+            // PT(currentYpr);
+            // PTF("\t");
+            // PTL(triggerAngle);
+            if (
+              ((180 - fabs(currentYpr) > 2)                                                                                           // skip the angle when the reading jumps from 180 to -180
+               && (triggerAxis * currentYpr > triggerAxis * triggerAngle && triggerAxis * previousYpr < triggerAxis * triggerAngle))  // the sign of triggerAxis will deterine whether the current angle should be larger or smaller than the trigger angle
+              || millis() - triggerTimer > 2000) {                                                                                    // if the robot stucks by the trigger for more than 3 seconds, it will break.
+              PT(previousYpr);
+              PT(" => ");
+              PT(triggerAngle);
+              PT(" => ");
+              PTL(currentYpr);
+              PTLF("Trigger released");
+              break;
+            }
+            previousYpr = currentYpr;
+          }
+        }
+#endif
 
         if (repeat != 0 && c != 0 && c == loopCycle[1]) {
           c = loopCycle[0] - 1;
@@ -270,6 +310,18 @@ public:
       }
       gyroBalanceQ = gyroBalanceQlag;
     } else  {  // postures and gaits
+#ifdef GYRO_PIN
+      if (imuUpdated && gyroBalanceQ && !(frame % imuSkip)) {
+        //          PT(ypr[2]); PT('\t');
+        //          PT(RollPitchDeviation[0]); PT('\t');
+        //          printList(currentAdjust);
+        for (byte i = 0; i < 2; i++) {
+          RollPitchDeviation[i] = ypr[2 - i] - expectedRollPitch[i];                                                                          // all in degrees
+          RollPitchDeviation[i] = sign(ypr[2 - i]) * max(float(fabs(RollPitchDeviation[i]) - levelTolerance[i]), float(0)) + yprTilt[2 - i];  // filter out small angles
+        }
+        imuUpdated = false;
+      }
+#endif
       for (int jointIndex = 0; jointIndex < DOF; jointIndex++) {
 #ifndef HEAD
         if (jointIndex == 0)
@@ -296,6 +348,14 @@ public:
         } else {
           duty = dutyAngles[frame * frameSize + jointIndex - firstMotionJoint] * angleDataRatio;
         }
+        duty =
+#ifdef GYRO_PIN
+          +gyroBalanceQ * ((!imuException || imuException == IMU_EXCEPTION_LIFTED) ?  // not exception or the robot is lifted
+                             (!(frame % imuSkip) ? adjust(jointIndex, (period == 1)) : currentAdjust[jointIndex])
+                                                                                   : 0)
+            / (!fineAdjustQ && !mpuQ ? 4 : 1)  // reduce the adjust if not using mpu6050
+#endif
+          + duty;
         calibratedPWM(jointIndex, duty);
       }
       frame += tStep;
@@ -313,6 +373,7 @@ public:
             cycleCountingMode = false;
             completedCycles = 0;
             targetCycles = 0;
+            tQueue->addTask('k', "up");
             PTLF("Cycle target reached, stopping gait");
           }
         }
@@ -332,6 +393,12 @@ void loadBySkillName(const char *skillName) {
     skill->offsetLR = (lr == 'L' ? 30 : (lr == 'R' ? -30 : 0));
     skill->buildSkill(skillList->get(skillIndex)->index);
     strcpy(newCmd, skill->skillName);
+#ifdef GYRO_PIN
+    // keepDirectionQ = (skill->period > 1) ? false : true;
+    thresX = (skill->period > 1) ? 12000 : 5000;
+    thresY = (skill->period > 1) ? 10000 : 4000;
+    thresZ = (skill->period > 1) ? 15000 : 12000;
+#endif
 
     if (lr == 'R'                                                 // 'R' must mirror
         || ((lr == 'X' || lr != 'L')                              // 'L' should not mirror

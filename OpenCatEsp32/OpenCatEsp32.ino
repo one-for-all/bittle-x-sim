@@ -18,6 +18,10 @@ void setup() {
 }
 
 void loop() {
-  read_serial();
+  dealWithExceptions();  // IMU auto-recovery: fall over, lifted, etc.
+  if (!tQueue->cleared())
+    tQueue->popTask();
+  else
+    read_serial();
   reaction();
 }
