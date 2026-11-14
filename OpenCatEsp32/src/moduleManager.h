@@ -101,6 +101,10 @@ void read_serial() {
           }
           newCmd[cmdLen++] = serialPort->read();
           // PTHL(newCmd[cmdLen - 1], int8_t(newCmd[cmdLen - 1]));
+          // A text command ends at its newline: leave whatever follows -- the next command, sent while the robot was
+          // busy with a behavior -- for the next read, or the two run together into one unknown command.
+          if (terminator == '\n' && newCmd[cmdLen - 1] == '\n')
+            break;
         } while (serialPort->available());
         lastSerialTime = millis();
       }

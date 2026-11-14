@@ -730,8 +730,17 @@ void reaction() {  // Reminder:  reaction() is repeatedly called in the "forever
       printToAllPorts(token);  // behavior can confirm completion by sending the token back
 #ifdef GYRO_PIN
       if (xyzReal[2] > 0 && (fabs(ypr[1]) > 45 || fabs(ypr[2]) > 45)) {  // wait for imu to update
+        // Bounded, as the trigger wait in skill.h is: a robot the behavior left tilted for good (e.g. propped up on
+        // its rear after a jump or flip) never reads level, and waiting for it hung the firmware -- no commands, no
+        // fall recovery. Give up after a while, or at the next command, and let dealWithExceptions() deal with the
+        // pose.
+        long levelWait = millis();
         while (fabs(ypr[1]) > 10 || fabs(ypr[2]) > 10) {
           // print6Axis();
+          if (millis() - levelWait > 2000 || Serial.available()) {
+            PTLF("Not level after the behavior");
+            break;
+          }
           delay(IMU_PERIOD);
         }
       }

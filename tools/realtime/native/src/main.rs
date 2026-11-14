@@ -78,7 +78,8 @@ fn main() {
                 let degrees: Float = degrees.parse().unwrap();
                 builder::tip_over(&mut state, degrees.to_radians());
             } else {
-                state.controllers[0].send_uart(cmd);
+                // newline-terminated, as the page's motion buttons send them
+                state.controllers[0].send_uart(&format!("{cmd}\n"));
             }
             next_cmd += 1;
         }
