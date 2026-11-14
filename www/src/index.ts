@@ -13,6 +13,7 @@ import { renderExplorer } from "./explorer";
 import { renderFileBar } from "./filebar";
 import { setupDownload } from "./download";
 import { getSimulator } from "./sim";
+import { setupDevTools } from "./devTools";
 import { createSerialMonitorPanel, setupResize } from "chimpanzee-ui";
 import { updateUIforMode, isPhoneUA } from "chimpanzee-ui";
 
@@ -26,6 +27,9 @@ setupResize();
 
 initSimulator();
 const panel = createSerialMonitorPanel({ getSimulator });
+if (DEV_TOOLS) {
+  setupDevTools();
+}
 openFile(inoFileName());
 setupDownload();
 

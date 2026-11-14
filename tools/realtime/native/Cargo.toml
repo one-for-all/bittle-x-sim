@@ -8,6 +8,7 @@ publish = false
 [dependencies]
 gorilla-physics = { path = "../../../../gorilla-physics/" }
 esp32rs = { path = "../../../../esp32rs/" }
+gibbon-electronics = { path = "../../../../gibbon-electronics/" }
 nalgebra = "0.33"
 urdf-rs = "0.9.0"
 futures = "0.3"

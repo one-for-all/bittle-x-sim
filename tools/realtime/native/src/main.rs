@@ -5,7 +5,12 @@
 //!
 //! Usage: bittle-realtime [sim seconds] [time:command ...]
 //!   e.g. bittle-realtime 8 4.0:kwkF
-//! Env: QUIET=1 (totals only), UART=1 (print the console), NOCAN=1.
+//! A command `@tip<degrees>` instead tips the robot over about its long axis
+//! (`builder::tip_over`): @tip90 onto its left side, @tip-90 its right, @tip180
+//! its back. e.g. bittle-realtime 12 4.0:@tip180
+//! Env: QUIET=1 (totals only), UART=1 (print the console), NOCAN=1,
+//!      TRACE=1 (body attitude every half second), STATIC_DIR=<dir> (images
+//!      from there instead of www/static).
 #![allow(dead_code, unused_imports)]
 
 #[path = "../../../../src/can.rs"]
@@ -38,7 +43,11 @@ fn main() {
     let quiet = std::env::var("QUIET").is_ok();
 
     // Everything is read from where the page fetches it.
-    std::env::set_current_dir(concat!(env!("CARGO_MANIFEST_DIR"), "/../../../www/static")).unwrap();
+    // STATIC_DIR=<dir> boots another copy of that tree instead, e.g. ../../../docs for
+    // what is deployed.
+    let static_dir = std::env::var("STATIC_DIR")
+        .unwrap_or(concat!(env!("CARGO_MANIFEST_DIR"), "/../../../www/static").to_string());
+    std::env::set_current_dir(static_dir).unwrap();
     let urdf_file = std::fs::read_to_string("robot.urdf").unwrap();
     let urdf = urdf_rs::read_from_string(&urdf_file).unwrap();
     let mut meshes = URDFMeshes::empty();
@@ -64,7 +73,13 @@ fn main() {
     for s in 0..steps {
         let t = s as Float * dt;
         while next_cmd < cmds.len() && t >= cmds[next_cmd].0 {
-            state.controllers[0].send_uart(&cmds[next_cmd].1);
+            let cmd = &cmds[next_cmd].1;
+            if let Some(degrees) = cmd.strip_prefix("@tip") {
+                let degrees: Float = degrees.parse().unwrap();
+                builder::tip_over(&mut state, degrees.to_radians());
+            } else {
+                state.controllers[0].send_uart(cmd);
+            }
             next_cmd += 1;
         }
         state.step(dt, &input);
@@ -85,6 +100,19 @@ fn main() {
                     (window as Float * dt) / wall,
                     1e6 * wall / window as f64,
                     top.join(", ")
+                );
+            }
+            if std::env::var("TRACE").is_ok() {
+                // Where the body's top (z) and head (-y) point, in the world
+                let rotation = state.articulated[0].bodies[0].pose.rotation;
+                let up = rotation * Vector3::z();
+                let head = rotation * -Vector3::y();
+                println!(
+                    "  t={:5.2} up.z={:+.2} head.z={:+.2} height={:.3}",
+                    (s + 1) as Float * dt,
+                    up.z,
+                    head.z,
+                    state.articulated[0].bodies[0].pose.translation.z
                 );
             }
             wstart = Instant::now();

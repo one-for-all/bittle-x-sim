@@ -6,9 +6,9 @@ use gorilla_physics::{
         mesh::URDFMeshes,
         rigid::helper::{build_joint, build_rigid},
     },
-    joint::Joint,
-    na::{Vector3, vector},
-    spatial::transform::Transform3D,
+    joint::{Joint, JointPosition, JointVelocity},
+    na::{Isometry3, Translation3, UnitQuaternion, Vector3, vector},
+    spatial::{pose::Pose, spatial_vector::SpatialVector, transform::Transform3D},
     types::Float,
 };
 #[cfg(any(target_arch = "wasm32", rust_analyzer))]
@@ -241,6 +241,62 @@ pub async fn createBittleX() -> InterfaceHybrid {
     // ));
 
     InterfaceHybrid::new(state)
+}
+
+/// Dev tool for testing fall recovery: tips the robot over where it stands,
+/// rolled `roll` radians about its long axis -- +-pi/2 onto its left/right
+/// side, pi onto its back -- keeping its heading, joint angles and the
+/// firmware's state, as if it had just been knocked over. It is put back at
+/// spawn height, so it drops onto the ground rather than starting in contact
+/// with it.
+pub fn tip_over(state: &mut Hybrid, roll: Float) {
+    let articulated = &mut state.articulated[0];
+    let Joint::FloatingJoint(body_joint) = &articulated.joints[0] else {
+        panic!("joint 0 should be the floating body joint");
+    };
+    // The body's parent is the world, so this is the body's world pose
+    let iso = body_joint.transform.iso;
+    let init_iso = body_joint.init_iso;
+
+    // Heading, from where the body's long axis (y, head to tail) points in
+    // the world xy plane
+    let long_axis = iso.rotation * Vector3::y();
+    let yaw = long_axis.y.atan2(long_axis.x) - PI / 2.;
+
+    // Body +x is its left side; rolling about the long axis by +90 degrees
+    // points it down at the ground
+    let rotation = UnitQuaternion::from_axis_angle(&Vector3::z_axis(), yaw)
+        * UnitQuaternion::from_axis_angle(&Vector3::y_axis(), roll);
+    let translation =
+        Translation3::new(iso.translation.x, iso.translation.y, init_iso.translation.z);
+
+    // The floating joint's q is relative to the spawn transform
+    let q = init_iso.inverse() * Isometry3::from_parts(translation, rotation);
+    articulated.set_joint_q(
+        0,
+        JointPosition::Pose(Pose {
+            rotation: q.rotation,
+            translation: q.translation.vector,
+        }),
+    );
+
+    for i in 0..articulated.joints.len() {
+        let v = match articulated.joints[i] {
+            Joint::FloatingJoint(_) => JointVelocity::Spatial(SpatialVector::zero()),
+            Joint::FixedJoint(_) => continue,
+            _ => JointVelocity::Float(0.),
+        };
+        articulated.set_joint_v(i, v);
+    }
+}
+
+/// [`tip_over`] for the page, by `roll` in degrees. Only wired into the UI on
+/// the dev server, see DEV_TOOLS in rspack.config.js.
+#[cfg(any(target_arch = "wasm32", rust_analyzer))]
+#[allow(non_snake_case)]
+#[wasm_bindgen]
+pub fn bittleXTipOver(hybrid: &mut InterfaceHybrid, roll: Float) {
+    tip_over(hybrid.hybrid_mut(), roll.to_radians());
 }
 
 /// Foot sphere radius

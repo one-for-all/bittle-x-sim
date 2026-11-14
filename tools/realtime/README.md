@@ -19,6 +19,19 @@ wasm-pack build --release --target nodejs --out-dir pkg
 node run.mjs pkg 8 4.0:kwkF
 ```
 
+The native bench also checks the firmware's IMU auto-recovery: a command
+`@tip<degrees>` tips the robot over about its long axis at that time (the
+same `builder::tip_over` the dev server's "Lay on ... Side" / "Flip on Back"
+buttons call), and `TRACE=1` prints where its top and head point every half
+second. Recovered, it ends with `up.z=+1.00` and the console shows
+`EXCEPTION: Fall over`, `rc`, `up`:
+
+```sh
+TRACE=1 UART=1 cargo run --release -- 14 4.0:@tip180   # onto its back
+TRACE=1 UART=1 cargo run --release -- 16 4.0:@tip90    # onto its left side
+STATIC_DIR=../../../docs cargo run --release -- 6 2.0:kwkF   # the deployed images
+```
+
 The native bench reads the images from `www/static`, as the page does, through
 the native branch of `BittleXEsp32Controller::new` (its relative paths match
 the layout there). Both print a fingerprint at the end -- final poses and a
