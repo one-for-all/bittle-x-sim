@@ -733,7 +733,8 @@ void reaction() {  // Reminder:  reaction() is repeatedly called in the "forever
         // Bounded, as the trigger wait in skill.h is: a robot the behavior left tilted for good (e.g. propped up on
         // its rear after a jump or flip) never reads level, and waiting for it hung the firmware -- no commands, no
         // fall recovery. Give up after a while, or at the next command, and let dealWithExceptions() deal with the
-        // pose.
+        // pose. Giving up only works with an IMU estimate that survives the behavior: see the gyro range in
+        // icm42670Setup().
         long levelWait = millis();
         while (fabs(ypr[1]) > 10 || fabs(ypr[2]) > 10) {
           // print6Axis();

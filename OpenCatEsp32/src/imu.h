@@ -521,7 +521,13 @@ void calibrateICM() {
 void icm42670Setup(bool calibrateQ = true) {
   PTLF("\nInitializing ICM42670...");
   icm.begin();
-  icm.init(200, 2, 250);
+  // Differs from the original firmware, which runs the gyro at +-250 dps. A flip or jump spins the body far faster than
+  // that, the gyro clips, and the Madgwick filter comes out of it tens of degrees off, converging back at only ~35
+  // deg/s. The original hid this by waiting, unbounded, after a behavior until the robot read level. Here that wait is
+  // bounded (reaction.h), which recovery from cases such as being propped up on its rear after a jump needs -- a robot
+  // that stays tilted never reads level, and the unbounded wait hung the firmware. Bounded, the wait would give up on
+  // the stale estimate and react to it (e.g. "dropped" after a front flip), so the range is raised to keep it right.
+  icm.init(200, 2, 2000);
   // Wait icm to start
   delay(10);
 
