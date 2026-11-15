@@ -59,11 +59,16 @@ impl I2cDevice for ImuOnBus {
 /// A body-frame vector in the IMU's axes. The chassis frame of the URDF has
 /// the head along -y and the left side along +x (the head joint sits at
 /// y = -0.044, the left legs at x = +0.042), while the firmware reads the chip
-/// as x forward, y left, z up -- the frame `getImuException` is written in,
-/// and the only one its flip test (|roll| > 85, z below -0.1 g) and lift test
-/// (pitch under -50 or over 75) make sense in.
+/// as x toward the tail, y right, z up. Its ICM42670 driver takes pitch as
+/// asin(x / g), so this is the frame in which the head going up reads as
+/// negative pitch, as the skills expect: sit holds -30, str and buttUp lean
+/// forward at +20 and +15, and `getImuException` calls a pitch under -50
+/// lifted. Read the other way round, the posture balance pushes a sitting
+/// robot further off its pose until it trembles. Roll's sign doesn't matter
+/// to the exceptions: the flip test takes |roll| > 85 with z below -0.1 g,
+/// and the side test |y|.
 fn body_to_imu(v: Vector3<Float>) -> [Float; 3] {
-    [-v.y, v.x, v.z]
+    [v.y, -v.x, v.z]
 }
 
 /// The corner of the low-pass that stands in for the robot's give between a
