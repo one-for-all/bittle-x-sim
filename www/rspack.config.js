@@ -8,6 +8,34 @@ const dist = path.resolve(__dirname, "../docs");
 
 const featureGPU = process.env.FEATURE_GPU === "1";
 
+const wasmPack = new WasmPackPlugin({
+  crateDirectory: path.resolve(__dirname, "../"),
+  extraArgs: featureGPU ? "--features gpu" : "",
+  watchDirectories: [
+    path.resolve(__dirname, "../../gorilla-physics/src"),
+    path.resolve(__dirname, "../../esp32rs/src"),
+    path.resolve(__dirname, "static"),
+  ],
+});
+
+// wasm-pack-plugin only reports a failed wasm-pack run on the *second*
+// compilation (a webpack workaround), so a one-shot `rspack` build prints the
+// error, bundles whatever is left in ../pkg, and still exits 0. Fail the build
+// instead, so deploy.sh never ships a stale or broken wasm.
+const failOnWasmPackError = {
+  apply(compiler) {
+    compiler.hooks.thisCompilation.tap("FailOnWasmPackError", (compilation) => {
+      // Child compilations (HTML, Monaco workers) reuse this hook; report once.
+      if (compilation.compiler !== compiler) return;
+      if (!compiler.watchMode && wasmPack.error != null) {
+        compilation.errors.push(
+          new Error(`wasm-pack failed: ${wasmPack.error.message}`),
+        );
+      }
+    });
+  },
+};
+
 const rspackConfig = {
   mode: isDev ? "development" : "production",
   entry: "./src/index.ts",
@@ -66,15 +94,8 @@ const rspackConfig = {
       template: "./static/index.html",
     }),
 
-    new WasmPackPlugin({
-      crateDirectory: path.resolve(__dirname, "../"),
-      extraArgs: featureGPU ? "--features gpu" : "",
-      watchDirectories: [
-        path.resolve(__dirname, "../../gorilla-physics/src"),
-        path.resolve(__dirname, "../../esp32rs/src"),
-        path.resolve(__dirname, "static"),
-      ],
-    }),
+    wasmPack,
+    failOnWasmPackError,
 
     new MonacoWebpackPlugin({
       languages: ["cpp", "markdown"],

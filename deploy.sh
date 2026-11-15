@@ -28,6 +28,18 @@ if [[ -n "$(git status --porcelain)" ]]; then
   die "working tree is not clean; commit or stash first"
 fi
 
+# A dev server (`npm run start` / `npm run prod`) watches the sources and reruns
+# wasm-pack into the same ../pkg the build uses; the two clobber each other and
+# the build can bundle a half-written or stale wasm. Refuse while one is running.
+project_dir="$(pwd -P)"
+for pid in $(pgrep -f 'rspack|wasm-pack' || true); do
+  cwd="$(lsof -a -p "$pid" -d cwd -Fn 2>/dev/null | sed -n 's/^n//p')"
+  if [[ "$cwd" == "$project_dir" || "$cwd" == "$project_dir"/* ]]; then
+    ps -o pid=,command= -p "$pid" >&2
+    die "a dev server or wasm-pack build is running in this project; stop it first"
+  fi
+done
+
 git fetch --quiet "$REMOTE" "$BRANCH"
 if ! git merge-base --is-ancestor "$REMOTE/$BRANCH" HEAD; then
   die "local $BRANCH is behind $REMOTE/$BRANCH; pull first"
